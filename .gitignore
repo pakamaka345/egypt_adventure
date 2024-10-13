@@ -1,0 +1,23 @@
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Compiled object files, libraries, executables
+*.obj
+*.o
+*.a
+*.lib
+*.so
+*.dll
+*.exe
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+*.swp
+
+# Directories
+build/

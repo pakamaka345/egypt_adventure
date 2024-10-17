@@ -4,6 +4,9 @@ CMakeCache.txt
 cmake_install.cmake
 Makefile
 
+.vscode/
+
+
 # Compiled object files, libraries, executables
 *.obj
 *.o

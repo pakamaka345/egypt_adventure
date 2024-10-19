@@ -6,6 +6,8 @@ Makefile
 
 .vscode/
 
+src/output/
+
 
 # Compiled object files, libraries, executables
 *.obj

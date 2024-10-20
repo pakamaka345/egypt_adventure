@@ -1,93 +1,70 @@
-# pgl_2425_jmb_egypt_adventure
+# Egypt Adventure
+**Design by:** Nikita Lysiuk  
+**Platforms:** PC (Windows and Linux)  
+**Rating:** T
 
+---
 
+## Game Story
+Archaeologist Piter Miller has dedicated over 15 years to the study of history and archaeology. Occasionally, he is sent on perilous expeditions to gather artifacts. This time, he finds himself in Egypt, poised to explore the ancient pyramid of Tutankhamun. Although he has traversed numerous temples and dungeons, he has never encountered anything extraordinary. This journey, however, is different. Within the dark halls of the pyramid, Piter will confront skeletons, mummies, and an overwhelming aura of mysticism that will forever alter his perception of reality. Will he uncover the artifact and escape the pyramid, or will he be swallowed by its shadows?
 
-## Getting started
+## Gameplay
+*Egypt Adventure* invites players to explore the depths of Tutankhamun's pyramid, consisting of three ominous floors. The top floor harbors the greatest threat—Tutankhamun himself, who guards his crown. As a roguelike game, each floor is procedurally generated, ensuring unique layouts filled with danger. Players must navigate through darkness armed only with a revolver and a flickering torch, seeking treasures and battling nightmarish foes.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Game Flow
+Players can search chests and loot from fallen enemies. Starting with a revolver and a torch, Piter encounters mystical beings wielding ancient magic. To survive, he must collect protective relics and manage limited resources. As the torch burns out, darkness envelops him, making each choice crucial.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Character and Control
+You play as Piter Miller, a seasoned archaeologist burdened by a tragic past. Basic movement mechanics allow for navigation, while shooting and reloading mechanics govern combat. Players can gather items to enhance Piter’s abilities and defenses.
 
-## Add your files
+## Main Gameplay Concepts
+1. **Core Gameplay Elements**
+   - **Genre:** Roguelike, Survival Horror, Adventure.
+   - **Mechanics:** Explore randomly generated levels, uncover treasures, combat nightmarish enemies (mummies, skeletons, bats), and gather limited resources.
+   - **Levels:** Three distinct floors of the pyramid, culminating in a final confrontation with Tutankhamun.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+2. **Game Structure**
+   - **Levels:** Each level is uniquely generated with hidden rooms and unpredictable enemies.
+   - **Progression:** Players must find stairs to descend to the next floor, culminating in a showdown on the final level.
+   - **Death System:** Death results in a reset, generating new levels and adversaries.
 
-```
-cd existing_repo
-git remote add origin https://umcs.schneiderp.ovh/nikita.lysiuk/pgl_2425_jmb_egypt_adventure.git
-git branch -M main
-git push -uf origin main
-```
+3. **Unique Gameplay Elements**
+   - **Random Generation:** Ensures each playthrough is a fresh experience.
+   - **Light System:** Players use torches to illuminate their surroundings, adding a layer of tension.
+   - **Combat System:** Limited ammunition necessitates careful planning in encounters.
 
-## Integrate with your tools
+## Game World
+### Pyramid of Tutankhamun (Main Setting)
+The game unfolds entirely within the foreboding pyramid, comprising three floors:
 
-- [ ] [Set up project integrations](https://umcs.schneiderp.ovh/nikita.lysiuk/pgl_2425_jmb_egypt_adventure/-/settings/integrations)
+- **Floor 1 (Entrance Halls):** Dark corridors and dim rooms, relying heavily on torches for navigation.
+- **Floor 2 (Ancient Catacombs):** A labyrinthine maze filled with traps and lurking enemies, creating an oppressive atmosphere.
+- **Floor 3 (King's Chamber):** The climactic area where players confront Tutankhamun, fraught with danger and mystery.
 
-## Collaborate with your team
+## Interface
+### General Layout
+The game is presented in a minimalist ASCII art style within a console interface. Players navigate using simple key commands for movement and interactions.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Key Elements
+- **Game World View:** Displays the current area using ASCII characters (e.g., `#` for walls, `@` for Piter, `M` for mummies).
+- **Player Stats Bar:** Displays essential stats (HP, SP, Ammo, Torch Time) at the top or bottom for easy monitoring.
+- **Inventory Panel:** Lists items discovered, including relics and torches.
+- **Text Log:** Provides narrative context and atmospheric details, enhancing immersion.
 
-## Test and Deploy
+## Mechanics and Power-ups
+### Gameplay Mechanics
+- **Randomized Dungeon Layout:** Each session presents a new pyramid layout, fostering replayability.
+- **Combat:** Piter uses his revolver against various enemies while managing scarce ammunition.
+- **Torch Mechanics:** Players must gather and manage torches to navigate dark areas.
+- **Health and Shield Points:** HP reflects health, while SP indicates temporary shields from relics.
 
-Use the built-in continuous integration in GitLab.
+### Power-ups
+- **Health Potions:** Restore HP.
+- **Shield Relics:** Provide temporary protection.
+- **Ammo Pickups:** Replenish limited ammunition.
+- **Torch Refills:** Extend the duration of the current torch.
+- **Special Relics:** Enhance abilities or reveal hidden areas within the pyramid.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+---
 
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Prepare for a chilling exploration as you delve into the shadows of the Pyramid of Tutankhamun.

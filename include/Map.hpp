@@ -1,11 +1,11 @@
 #pragma once 
 #include <vector>
-#include "Pole.hpp"
+#include "Tile.hpp"
 
 class Map
 {
 private: 
-    std::vector<std::vector<Pole>> map;
+    std::vector<std::vector<Tile>> map;
     int width;
     int height;
 
@@ -14,8 +14,8 @@ public:
     Map(int width, int height);
     ~Map() = default;
 
-    bool canPlaceItem(int x, int y);
-    bool canPlaceEntity(int x, int y);
+    bool canPlaceItem(int x, int y, std::unique_ptr<Item>& item);
+    bool canPlaceEntity(int x, int y, std::unique_ptr<Entity>& entity);
 
     void placeItem(int x, int y, std::unique_ptr<Item> item);
     void placeEntity(int x, int y, std::unique_ptr<Entity> entity);
@@ -27,8 +27,8 @@ public:
 
     void draw();
 
+    void setTile(int x, int y, TileType::TileType TileType);
+
 private:
     void initMap(std::string pathToInitFile);
-
-    void setPole(int x, int y, PoleType::PoleType poleType);
 };

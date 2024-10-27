@@ -2,10 +2,21 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include "Player.hpp"
+#include "Torch.hpp"
 
 Map::Map(int width, int height)
     : width(width), height(height)
 {
+    map.resize(height);
+    for (int y = 0; y < height; y++)
+    {
+        map[y].resize(width);
+        for (int x = 0; x < width; x++)
+        {
+            map[y][x].setTileType(TileType::TileType::WALL);
+        }
+    }
 }
 
 Map::Map(std::string pathToInitFile)
@@ -13,57 +24,57 @@ Map::Map(std::string pathToInitFile)
     initMap(pathToInitFile);
 }
 
-bool Map::canPlaceItem(int x, int y)
+bool Map::canPlaceItem(int x, int y, std::unique_ptr<Item>& item)
 {
     if (x >= 0 && x < width && y >= 0 && y < height)
-        return !map[x][y].hasItem();
+        return !map[y][x].hasItem() && item->canBePlacedOn(map[y][x].getTileType());
     return false;
 }
 
-bool Map::canPlaceEntity(int x, int y)
+bool Map::canPlaceEntity(int x, int y, std::unique_ptr<Entity>& entity)
 {
     if (x >= 0 && x < width && y >= 0 && y < height)
-        return !map[x][y].hasEntity();
+        return !map[y][x].hasEntity();
     return false;
 }
 
 void Map::placeItem(int x, int y, std::unique_ptr<Item> item) 
 {
-    if (canPlaceItem(x, y))
+    if (canPlaceItem(x, y, item))
     {
-        map[x][y].setItem(std::move(item));
+        map[y][x].setItem(std::move(item));
     } else {
-        std::cerr << "Could not place item at (" << x << ", " << y << ")\n";
+        throw std::runtime_error("Could not place item at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
 }
 
 void Map::placeEntity(int x, int y, std::unique_ptr<Entity> entity)
 {
-    if (canPlaceEntity(x, y))
+    if (canPlaceEntity(x, y, entity))
     {
-        map[x][y].setEntity(std::move(entity));
+        map[y][x].setEntity(std::move(entity));
     } else {
-        std::cerr << "Could not place entity at (" << x << ", " << y << ")\n";
+        throw std::runtime_error("Could not place entity at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
 }
 
 void Map::removeItem(int x, int y)
 {
-    if (map[x][y].hasItem() || x >= 0 && x < width && y >= 0 && y < height)
+    if (x >= 0 && x < width && y >= 0 && y < height && map[x][y].hasItem())
     {
-        map[x][y].removeItem();
+        map[y][x].removeItem();
     } else {
-        std::cerr << "Could not remove item at (" << x << ", " << y << ")\n";
+        throw std::runtime_error("Could not remove item at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
 }
 
 void Map::removeEntity(int x, int y)
 {
-    if (map[x][y].hasEntity() || x >= 0 && x < width && y >= 0 && y < height)
+    if (x >= 0 && x < width && y >= 0 && y < height && map[x][y].hasEntity())
     {
-        map[x][y].removeEntity();
+        map[y][x].removeEntity();
     } else {
-        std::cerr << "Could not remove entity at (" << x << ", " << y << ")\n";
+        throw std::runtime_error("Could not remove entity at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
 }
 
@@ -72,91 +83,105 @@ void Map::listEntitiesAndItems(std::string pathToWrite)
     std::ofstream file(pathToWrite, std::ios::out);
     if (file.is_open())
     {
-        for (int x = 0; x < width; x++)
+        for (int y = 0; y < height; y++)
         {
-            for (int y = 0; y < height; y++)
+            for (int x = 0; x < width; x++)
             {
-                if (map[x][y].hasEntity())
+                if (map[y][x].hasEntity())
                 {
-                    file << "Entity: " << map[x][y].getEntity()->getName() << " at (" << x << ", " << y << ")\n";
+                    file << "Entity: " << map[y][x].getEntity()->getName() << " at (" << x << ", " << y << ")\n";
                 }
-                if (map[x][y].hasItem())
+                if (map[y][x].hasItem())
                 {
-                    file << "Item: " << map[x][y].getItem()->getName() << " at (" << x << ", " << y << ")\n";
+                    file << "Item: " << map[y][x].getItem()->getName() << " at (" << x << ", " << y << ")\n";
                 }
             }
         }
         file.close();
     } else {
-        std::cerr << "Could not open file to write entities and items\n";
+        throw std::runtime_error("Could not open file to write entities and items\n");
     }
 }
 
 void Map::draw()
 {
     std::cout << "----------------------------------------------------\n";
-    for (int x = 0; x < width; x++)
+    for (int y = 0; y < height; y++)
     {
-        for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
         {
-            map[x][y].draw(); 
-
+            map[y][x].draw();
         }
+        std::cout << "\n";
     }
     //TODO after I add the player class and it will be dynamic
-    std::cout << "Piter Miller\n";
-    std::cout << "Info: \n";
-    std::cout << "Health: 100\n"; 
-    std::cout << "Ammo: 6/6\n";
-    std::cout << "light 1:14";
-    std::cout << "3 artifacts are active\n";
-    std::cout << "press 'I' to open inventory\n";
-    std::cout << "w,a,s,d to move\n";
-    std::cout << "'e' to interact\n";
+    // std::cout << "Piter Miller\n";
+    // std::cout << "Info: \n";
+    // std::cout << "Health: 100\n"; 
+    // std::cout << "Ammo: 6/6\n";
+    // std::cout << "light 1:14";
+    // std::cout << "3 artifacts are active\n";
+    // std::cout << "press 'I' to open inventory\n";
+    // std::cout << "w,a,s,d to move\n";
+    // std::cout << "'e' to interact\n";
+    // Move to interface class
     std::cout << "----------------------------------------------------\n";
 }
 
 void Map::initMap(std::string pathToInitFile)
 {
     std::ifstream file(pathToInitFile, std::ios::in);
-
+    //file.imbue(std::locale("en_US.UTF-8"));
     if (file.is_open())
     {
         file >> width >> height;
-        map.resize(width);
-        for (int x = 0; x < width; x++)
+        file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        map.resize(height);
+        for (int y = 0; y < height; y++)
         {
-            map[x].resize(height);
-            for (int y = 0; y < height; y++)
+            map[y].resize(width);
+        }
+        for (int y = 0; y < height; y++)
+        {
+            std::string line;
+            std::getline(file, line); 
+            for (int x = 0; x < width; x++)
             {
-                switch (file.get())
+                switch (line[x])
                 {
-                    case char(178):
-                        map[x][y].setPoleType(PoleType::PoleType::WALL);
+                    case '#':  
+                        map[y][x].setTileType(TileType::TileType::WALL);
                         break;
-                    case ' ':
-                        map[x][y].setPoleType(PoleType::PoleType::FLOOR);
+                    case ' ':  
+                        map[y][x].setTileType(TileType::TileType::FLOOR);
                         break;
-                    case '@': 
-                        map[x][y].setPoleType(PoleType::PoleType::FLOOR);
-                        placeEntity(x, y, std::make_unique<Player>("Piter Miller", 100, 10, '@'));
-                        break;
-                    case 'T':
-                        map[x][y].setPoleType(PoleType::PoleType::FLOOR);
-                        placeItem(x, y, std::make_unique<Torch>("Torch", 1, true, 'T'));
-                        break;
+                     case '@': 
+                         map[y][x].setTileType(TileType::TileType::FLOOR);
+                         placeEntity(x, y, std::make_unique<Player>("Piter Miller", 100, 10, '@', x, y));
+                         break;
+                     case 'T': 
+                         map[y][x].setTileType(TileType::TileType::WALL);
+                         placeItem(x, y, std::make_unique<Torch>("Torch", 1, true, 'T', x, y));
+                         break;
+                    default:  
+                        throw std::runtime_error("Unexpected character in map file at (" + std::to_string(x) + ", " + std::to_string(y) + ") the character is: " + line[y] + "\n");
                 }
             }
         }
-        file.close();
+        std::cout << "Map initialized successfully\n";
+        file.close(); 
     }
     else
     {
-        std::cerr << "Could not open file to read map\n";
+        throw std::runtime_error("Could not open file to initialize map\n");
     }
 }
 
-void Map::setPole(int x, int y, PoleType::PoleType poleType)
+void Map::setTile(int x, int y, TileType::TileType TileType)
 {
-    map[x][y].setPoleType(poleType);
+    if (x >= 0 && x < width && y >= 0 && y < height)
+        map[y][x].setTileType(TileType);
+    else 
+        throw std::runtime_error("Could not set tile at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
 }

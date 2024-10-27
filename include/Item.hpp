@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
+#include "GameObject.hpp"
 
-class Item
+class Item : public GameObject
 {
 private:
     std::string name;
@@ -10,15 +11,13 @@ private:
     bool isUsable;
 
 public:
-    Item(std::string name, int weight, bool isUsable, char symbol);
+    Item(std::string name, int weight, bool isUsable, char symbol, int x, int y);
     ~Item() = default;
-
-    virtual void draw() = 0;
 
     virtual void use() = 0;
 
     std::string getName();
-    char getSymbol();
+    char getSymbol() const;
     int getWeight();
     bool getIsUsable();
 

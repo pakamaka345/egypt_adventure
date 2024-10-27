@@ -1,21 +1,28 @@
 #pragma once
-#include "PoleType.hpp"
+#include "TileType.hpp"
 #include "Entity.hpp"
 #include "Item.hpp"
 #include <memory>
 
 
-class Pole
+class Tile
 {
 private:
     std::unique_ptr<Entity> entity;
     std::unique_ptr<Item> item;
-    PoleType::PoleType poleType;
+    TileType::TileType TileType;
     char symbol;
 
 public:
-    Pole(PoleType::PoleType poleType);
-    ~Pole() = default;
+    Tile();
+    Tile(TileType::TileType TileType);
+    ~Tile() = default;
+
+    Tile(const Tile&) = delete;
+    Tile& operator=(const Tile&) = delete;
+
+    Tile(Tile&&) noexcept = default;
+    Tile& operator=(Tile&&) noexcept = default;
 
     void setEntity(std::unique_ptr<Entity> entity);
     void setItem(std::unique_ptr<Item> item);
@@ -23,8 +30,8 @@ public:
     std::unique_ptr<Entity> getEntity();
     std::unique_ptr<Item> getItem();
 
-    PoleType::PoleType getPoleType();
-    void setPoleType(PoleType::PoleType poleType);
+    TileType::TileType getTileType();
+    void setTileType(TileType::TileType TileType);
 
     bool hasEntity();
     bool hasItem();
@@ -39,5 +46,5 @@ public:
     virtual void draw();
 
 private:
-    virtual void setSymbol(PoleType::PoleType poleType);
+    virtual void setSymbol(TileType::TileType TileType);
 };

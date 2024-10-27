@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
+#include "GameObject.hpp"
 
-class Entity
+class Entity : public GameObject
 {
 private:
     char symbol;
@@ -10,10 +11,9 @@ private:
     int strength;
 
 public:
-    Entity(std::string name, int health, int strength, char symbol);
+    Entity(std::string name, int health, int strength, char symbol, int x, int y);
     virtual ~Entity() = default;
 
-    virtual void draw() const = 0;
     virtual void attack(Entity& target) = 0;
 
     std::string getName() const;

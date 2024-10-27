@@ -1,7 +1,7 @@
 #include "Item.hpp"
 
-Item::Item(std::string name, int weight, bool isUsable, char symbol)
-    : name(name), weight(weight), isUsable(isUsable), symbol(symbol)
+Item::Item(std::string name, int weight, bool isUsable, char symbol, int x, int y)
+    : GameObject(x, y), name(name), weight(weight), isUsable(isUsable), symbol(symbol)
 {
 }
 
@@ -10,7 +10,7 @@ std::string Item::getName()
     return name;
 }   
 
-char Item::getSymbol()
+char Item::getSymbol() const
 {
     return symbol;
 }

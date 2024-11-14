@@ -1,7 +1,7 @@
 #pragma once
 #include "TileType.hpp"
-#include "Entity.hpp"
-#include "Item.hpp"
+#include "entities/Entity.hpp"
+#include "items/Item.hpp"
 #include <memory>
 
 

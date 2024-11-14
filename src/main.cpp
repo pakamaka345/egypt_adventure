@@ -1,9 +1,9 @@
 #include <iostream>
 #include <memory>
 #include <string>
-#include "Map.hpp"
-#include "Player.hpp"
-#include "Torch.hpp"
+#include "GameView.hpp"
+#include "entities/Player.hpp"
+#include "items/Torch.hpp"
 
 
 void displayMenu() {
@@ -106,7 +106,7 @@ int main() {
     //std::locale::global(std::locale("en_US.UTF-8"));
 
     try {
-        Map map("../../assets/maps/map.txt"); 
+        GameView map("../assets/maps/map.txt"); 
 
         runInterface(map); 
     } catch (std::exception& e) {

@@ -3,7 +3,7 @@
 #include <cassert>
 #include "Map.hpp"
 #include "Item.hpp"
-#include "Entity.hpp"
+#include "entities/Entity.hpp"
 
 void testPlaceItem() {
     Map map(5, 5);

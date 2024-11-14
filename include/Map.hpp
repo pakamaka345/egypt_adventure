@@ -1,10 +1,10 @@
 #pragma once 
 #include <vector>
-#include "Tile.hpp"
+#include "tiles/Tile.hpp"
 
 class Map
 {
-private: 
+protected:
     std::vector<std::vector<Tile>> map;
     int width;
     int height;
@@ -25,7 +25,7 @@ public:
 
     void listEntitiesAndItems(std::string pathToWrite);
 
-    void draw();
+    virtual void draw() = 0;
 
     void setTile(int x, int y, TileType::TileType TileType);
 

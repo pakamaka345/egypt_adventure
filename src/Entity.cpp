@@ -1,4 +1,4 @@
-#include "Entity.hpp"
+#include "entities/Entity.hpp"
 
 Entity::Entity(std::string name, int health, int strength, char symbol, int x, int y)
     : GameObject(x, y), name(name), health(health), strength(strength), symbol(symbol)

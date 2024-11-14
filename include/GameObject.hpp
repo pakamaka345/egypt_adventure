@@ -1,5 +1,5 @@
 #pragma once
-#include "TileType.hpp"
+#include "tiles/TileType.hpp"
 
 class GameObject
 {

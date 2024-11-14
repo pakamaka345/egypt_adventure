@@ -1,4 +1,4 @@
-#include "Item.hpp"
+#include "items/Item.hpp"
 
 Item::Item(std::string name, int weight, bool isUsable, char symbol, int x, int y)
     : GameObject(x, y), name(name), weight(weight), isUsable(isUsable), symbol(symbol)

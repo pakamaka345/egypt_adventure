@@ -2,8 +2,9 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
-#include "Player.hpp"
-#include "Torch.hpp"
+#include "entities/Player.hpp"
+#include "items/Torch.hpp"
+#include <limits>
 
 Map::Map(int width, int height)
     : width(width), height(height)
@@ -101,31 +102,6 @@ void Map::listEntitiesAndItems(std::string pathToWrite)
     } else {
         throw std::runtime_error("Could not open file to write entities and items\n");
     }
-}
-
-void Map::draw()
-{
-    std::cout << "----------------------------------------------------\n";
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            map[y][x].draw();
-        }
-        std::cout << "\n";
-    }
-    //TODO after I add the player class and it will be dynamic
-    // std::cout << "Piter Miller\n";
-    // std::cout << "Info: \n";
-    // std::cout << "Health: 100\n"; 
-    // std::cout << "Ammo: 6/6\n";
-    // std::cout << "light 1:14";
-    // std::cout << "3 artifacts are active\n";
-    // std::cout << "press 'I' to open inventory\n";
-    // std::cout << "w,a,s,d to move\n";
-    // std::cout << "'e' to interact\n";
-    // Move to interface class
-    std::cout << "----------------------------------------------------\n";
 }
 
 void Map::initMap(std::string pathToInitFile)

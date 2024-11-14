@@ -1,4 +1,4 @@
-#include "Player.hpp"
+#include "entities/Player.hpp"
 #include <iostream>
 
 Player::Player(std::string name, int health, int strength, char symbol, int x, int y)

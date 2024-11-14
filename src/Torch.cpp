@@ -1,4 +1,4 @@
-#include "Torch.hpp"
+#include "items/Torch.hpp"
 #include <iostream>
 
 Torch::Torch(std::string name, int weight, bool isUsable, char symbol, int x, int y)

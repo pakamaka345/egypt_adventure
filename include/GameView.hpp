@@ -8,7 +8,7 @@ private:
     //std::shared_ptr<Interface> interface;
 
 public:
-    GameView(std::string pathToInitFile);
+    explicit GameView(std::string pathToInitFile);
     GameView(int width, int height);
     virtual ~GameView() = default;
 

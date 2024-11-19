@@ -26,3 +26,4 @@ src/output/
 
 # Directories
 build/
+cmake-build-debug/

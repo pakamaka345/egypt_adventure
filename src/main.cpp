@@ -84,7 +84,7 @@ void runInterface(Map& map) {
                     break;
 
                 case 6: 
-                    map.listEntitiesAndItems("../../assets/maps/list.txt");
+                    map.listEntitiesAndItems("../assets/maps/list.txt");
                     std::cout << "Information about entities and items has been saved to the file.\n";
                     break;
 

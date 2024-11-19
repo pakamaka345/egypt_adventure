@@ -104,7 +104,7 @@ void Tile::setSymbol(TileType::TileType TileType)
             symbol = ' ';
             break;
         case TileType::TileType::WALL:
-            symbol = char(178);
+            symbol = '#';
             break;
     }
 }

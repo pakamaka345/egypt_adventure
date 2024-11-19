@@ -1,26 +1,23 @@
 #pragma once
 #include <string>
+#include <memory>
 #include "GameObject.hpp"
+#include "entities/Entity.hpp"
 
 class Item : public GameObject
 {
-private:
+protected:
     std::string name;
-    char symbol;
-    int weight;
-    bool isUsable;
+    std::string description;
 
 public:
-    Item(std::string name, int weight, bool isUsable, char symbol, int x, int y);
-    ~Item() = default;
+    Item(std::string& name, std::string& description, int x, int y, char symbol);
+    ~Item() override = default;
 
-    virtual void use() = 0;
+    virtual void use(std::shared_ptr<Entity> target) = 0;
 
-    std::string getName();
-    char getSymbol() const;
-    int getWeight();
-    bool getIsUsable();
+    [[nodiscard]] std::string& getName();
+    [[nodiscard]] std::string& getDescription();
 
-    void setName(std::string name);
-    void setSymbol(char symbol);
+    [[nodiscard]] bool canBePlacedOn(TileType::TileType tileType) const override;
 };

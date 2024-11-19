@@ -1,37 +1,26 @@
+#include <utility>
+
 #include "items/Item.hpp"
 
-Item::Item(std::string name, int weight, bool isUsable, char symbol, int x, int y)
-    : GameObject(x, y), name(name), weight(weight), isUsable(isUsable), symbol(symbol)
+Item::Item(std::string& name, std::string& description, int x, int y, char symbol)
+    : name(name), description(description), GameObject(x, y, symbol)
 {
 }
 
-std::string Item::getName()
-{
+std::string& Item::getName() {
     return name;
-}   
-
-char Item::getSymbol() const
-{
-    return symbol;
 }
 
-int Item::getWeight()
-{
-    return weight;
+std::string& Item::getDescription() {
+    return description;
 }
 
-bool Item::getIsUsable()
-{
-    return isUsable;
+bool Item::canBePlacedOn(TileType::TileType tileType) const {
+    return tileType == TileType::TileType::FLOOR;
 }
 
-void Item::setName(std::string name)
-{
-    this->name = name;
-}
 
-void Item::setSymbol(char symbol)
-{
-    this->symbol = symbol;
-}
+
+
+
 

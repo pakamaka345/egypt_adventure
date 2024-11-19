@@ -3,7 +3,8 @@
 #include <vector>
 #include <memory>
 #include "GameObject.hpp"
-#include "items/amulets/Amulet.hpp"
+
+class Amulet;
 
 /**
  * \brief The Entity class represents a character in the game.
@@ -25,14 +26,17 @@ protected:
     AmuletList activeAmulets;
 
 public:
-    Entity(const std::string& name, float attackDamage, int health, float defense,
+    Entity(std::string& name, float attackDamage, int health, float defense,
            float priority, float dodgeChance, int x, int y, char symbol);
 
     bool isAlive() const;
 
-    std::string& getName() const;
-
-
+    std::string& getName();
+    int getHealth() const;
+    float getAttackDamage() const;
+    float getDefense() const;
+    float getPriority() const;
+    float getDodgeChance() const;
 
 
 public:

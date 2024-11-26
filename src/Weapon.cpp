@@ -1,29 +1,35 @@
 #include "weapons/Weapon.hpp"
+#include <stdexcept>
+#include <utility>
 
-Weapon::Weapon(std::string& name, std::pair<float, float>& physicalDamage, std::pair<float, float>& magicalDamage)
-    : name(name), physicalDamage(physicalDamage), magicalDamage(magicalDamage)
+Weapon::Weapon(std::string name, int magazineSize)
+    : name(std::move(name)), magazine(), magazineSize(magazineSize)
 {
 }
 
-std::string& Weapon::getName()
-{
-    return name;
+void Weapon::addBullet(Bullet &bullet) {
+    if (magazine.size() < magazineSize) {
+        magazine.push_back(bullet);
+    } else {
+        throw std::runtime_error("Magazine is full");
+    }
 }
 
-std::pair<float, float>& Weapon::getPhysicalDamage() {
-    return physicalDamage;
-}
+void Weapon::shoot(Entity &target) {
+    if (magazine.empty()) {
+        throw std::runtime_error("No bullets in the magazine!");
+    }
 
-std::pair<float, float>& Weapon::getMagicalDamage() {
-    return magicalDamage;
-}
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 8);
 
-void Weapon::increasePhysicalDamage(float value) {
-    physicalDamage.first += value;
-    physicalDamage.second += value;
-}
+    Bullet bullet = magazine.back();
+    magazine.pop_back();
 
-void Weapon::increaseMagicalDamage(float value) {
-    magicalDamage.first += value;
-    magicalDamage.second += value;
+    int diceRoll = dis(gen);
+
+    float physicalDamage = (bullet.getPhysicalDamage() * float(diceRoll) / 8.0f) * (1 - target.getDefense());
+    float magicalDamage = (bullet.getMagicalDamage() * float(diceRoll) / 8.0f) * (1 - target.getDefense());
+    target.takeDamage(physicalDamage, magicalDamage);
 }

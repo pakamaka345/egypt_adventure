@@ -9,7 +9,11 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-add_executable(EgyptAdventure ${SOURCES})
+add_executable(EgyptAdventure ${SOURCES}
+        src/Bullet.cpp
+        src/Inventory.cpp
+        include/PriorityQueue.hpp
+)
 
 if (WIN32)
     target_link_libraries(EgyptAdventure winmm)

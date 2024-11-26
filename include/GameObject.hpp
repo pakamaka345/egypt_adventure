@@ -5,9 +5,7 @@ class GameObject
 {
 public: 
     GameObject(int x, int y, char symbol) : posX(x), posY(y), symbol(symbol) {}
-    virtual ~GameObject() = default;    
-
-    virtual void draw() const = 0;
+    virtual ~GameObject() = default;
 
     [[nodiscard]] int getX() const { return posX; }
     [[nodiscard]] int getY() const { return posY; }

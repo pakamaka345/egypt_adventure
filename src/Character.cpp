@@ -34,25 +34,33 @@ void Character::removeFromInventory(const std::string &itemName) {
 }
 
 void Character::attack(Entity &target) {
-    if (revolver->getAmmo() > 0) {
-        this->attackRange = 5.0f;
-        if (canAttack(target)) {
-            revolver->shoot(target);
+    if (isReady()) {
+        if (revolver->getAmmo() > 0) {
+            this->attackRange = 5.0f;
+            if (canAttack(target)) {
+                revolver->shoot(target);
+            }
+            revolver->shootWithMiss();
+            resetCooldown(this->priority);
+        } else {
+            this->attackRange = 1.0f;
+            if (canAttack(target)) {
+                std::random_device rd;
+                std::mt19937 gen(rd());
+                std::uniform_int_distribution<> dis(1, 8);
+
+                int diceRoll = dis(gen);
+                float physicalDamage = (attackDamage * float(diceRoll) / 8.0f) * (1 - target.getDefense());
+
+                target.takeDamage(physicalDamage, 0);
+            }
+
+            resetCooldown(this->priority);
+            throw std::runtime_error("No ammo in revolver");
         }
     } else {
-        this->attackRange = 1.0f;
-        if (canAttack(target)) {
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_int_distribution<> dis(1, 8);
-
-            int diceRoll = dis(gen);
-            float physicalDamage = (attackDamage * float(diceRoll) / 8.0f) * (1 - target.getDefense());
-
-            target.takeDamage(physicalDamage, 0);
-        }
-
-        throw std::runtime_error("No ammo in revolver");
+        reduceCooldown();
+        throw std::runtime_error("Character is on cooldown");
     }
 }
 

@@ -33,3 +33,11 @@ void Weapon::shoot(Entity &target) {
     float magicalDamage = (bullet.getMagicalDamage() * float(diceRoll) / 8.0f) * (1 - target.getDefense());
     target.takeDamage(physicalDamage, magicalDamage);
 }
+
+void Weapon::shootWithMiss() {
+    if (magazine.empty()) {
+        throw std::runtime_error("No bullets in the magazine!");
+    }
+
+    magazine.pop_back();
+}

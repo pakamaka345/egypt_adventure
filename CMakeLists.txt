@@ -18,6 +18,9 @@ add_executable(EgyptAdventure ${SOURCES}
         src/WallTile.cpp
         include/tiles/FloorTile.hpp
         src/FloorTile.cpp
+        src/PriorityQueue.cpp
+        include/BattleSystem.hpp
+        src/BattleSystem.cpp
 )
 
 if (WIN32)

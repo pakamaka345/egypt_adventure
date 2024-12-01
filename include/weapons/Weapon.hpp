@@ -19,6 +19,7 @@ public:
 
     void addBullet(Bullet& bullet);
     void shoot(Entity& target);
+    void shootWithMiss();
 
 
     int getAmmo() { return int(magazine.size()); }

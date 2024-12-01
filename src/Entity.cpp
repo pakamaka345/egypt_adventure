@@ -73,7 +73,7 @@ float Entity::getPriority() const {
     return priority;
 }
 
-int Entity::getCooldown() const {
+float Entity::getCooldown() const {
     return cooldown;
 }
 

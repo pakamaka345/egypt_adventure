@@ -28,7 +28,7 @@ protected:
     float attackDamage;
     float defense;
     float priority;
-    int cooldown;
+    float cooldown;
     float dodgeChance;
     AmuletList activeAmulets;
 
@@ -46,8 +46,8 @@ public:
     bool canAttack(Entity& target) const;
 
     bool isReady() { return cooldown <= 0; }
-    void reduceCooldown() { cooldown = std::max(0, cooldown - 1); }
-    void resetCooldown() { cooldown = int(priority); }
+    void reduceCooldown() { cooldown = std::max(0.0f, cooldown - 1); }
+    void resetCooldown(float turn) { cooldown = turn; }
 
     std::string& getName();
     float getHealth() const;
@@ -56,7 +56,7 @@ public:
     float getAttackDamage() const;
     float getDefense() const;
     float getPriority() const;
-    int getCooldown() const;
+    float getCooldown() const;
     float getDodgeChance() const;
 
 

@@ -1,12 +1,12 @@
-#pragma once
-
 namespace TileType
 {
-    enum class TileType
-    {
-        FLOOR = 0,  
-        WALL = 1,
-        DOOR,
-        STAIRS,
+    enum Type {
+        EMPTY,
+        WALL,
+        FLOOR,
+        CLOSED_DOOR,
+        OPEN_DOOR,
+        STAIRS_UP,
+        STAIRS_DOWN,
     };
 }

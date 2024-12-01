@@ -7,6 +7,7 @@
 #include <random>
 #include <stdexcept>
 #include "GameObject.hpp"
+#include "tiles/Tile.hpp"
 #include "items/amulets/Amulet.hpp"
 
 /**
@@ -32,13 +33,13 @@ protected:
     AmuletList activeAmulets;
 
 public:
-    Entity(std::string& name, int attackRange, float attackDamage, float health, float defense,
+    Entity(const std::string& name, int attackRange, float attackDamage, float health, float defense,
            float priority, float dodgeChance, int x, int y, char symbol);
     ~Entity() override = default;
 
     void addAmulet(const std::shared_ptr<Amulet>& amulet);
     void removeAmulet(const std::shared_ptr<Amulet>& amulet);
-    bool canBePlacedOn(TileType::TileType tileType) const override;
+    bool canBePlacedOn(TileType::Type tileType) const override;
 
     bool isAlive() const;
 
@@ -46,7 +47,7 @@ public:
 
     bool isReady() { return cooldown <= 0; }
     void reduceCooldown() { cooldown = std::max(0, cooldown - 1); }
-    void resetCooldown(int turns) { cooldown = turns; }
+    void resetCooldown() { cooldown = int(priority); }
 
     std::string& getName();
     float getHealth() const;
@@ -79,6 +80,6 @@ public:
     virtual void heal(float amount) = 0;
 
     // TODO - Add a method to move the entity
-    virtual void move(int x, int y) = 0;
+    virtual void move(int dx, int dy) = 0;
 };
 

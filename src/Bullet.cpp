@@ -2,7 +2,7 @@
 #include "entities/Character.hpp"
 
 Bullet::Bullet(float physicalDamage, float magicalDamage,
-               std::string &name, std::string &description, int x, int y, char symbol)
+               const std::string &name, const std::string &description, int x, int y, char symbol)
         : physicalDamage(physicalDamage), magicalDamage(magicalDamage), Item(name, description, x, y, symbol)
 {
 }

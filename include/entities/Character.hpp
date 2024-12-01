@@ -27,7 +27,7 @@ protected:
     // int visibilityRange;
 
 public:
-    Character(std::string& name, int x, int y, char symbol);
+    Character(const std::string& name, int x, int y, char symbol);
     ~Character() override = default;
 
     void reloadRevolver();
@@ -38,6 +38,7 @@ public:
     void attack(Entity& target) override;
     void takeDamage(float physicalDamage, float magicalDamage) override;
     void heal(float amount) override;
+    void move(int dx, int dy) override;
 
     std::shared_ptr<Weapon> getRevolver();
 };

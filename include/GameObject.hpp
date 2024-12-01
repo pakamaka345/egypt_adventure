@@ -16,7 +16,7 @@ public:
     void setY(int y) { posY = y; }
     void setSymbol(char s) { symbol = s; }
 
-    [[nodiscard]] virtual bool canBePlacedOn(TileType::TileType tileType) const = 0;
+    [[nodiscard]] virtual bool canBePlacedOn(TileType::Type tileType) const = 0;
 
 protected:
     int posX;

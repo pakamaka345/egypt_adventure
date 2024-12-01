@@ -2,12 +2,14 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
-#include "entities/Player.hpp"
-#include "items/Torch.hpp"
 #include <limits>
+#include "entities/Character.hpp"
+#include "items/Bullet.hpp"
+#include "tiles/WallTile.hpp"
+#include "tiles/FloorTile.hpp"
 
 Map::Map(int width, int height)
-    : width(width), height(height)
+    : width(width), height(height), entities(), items()
 {
     map.resize(height);
     for (int y = 0; y < height; y++)
@@ -15,45 +17,47 @@ Map::Map(int width, int height)
         map[y].resize(width);
         for (int x = 0; x < width; x++)
         {
-            map[y][x].setTileType(TileType::TileType::WALL);
+            map[y][x] = std::make_shared<Tile>(TileType::Type::EMPTY, x, y, '.');
         }
     }
 }
 
-Map::Map(std::string pathToInitFile)
+Map::Map(std::string& pathToInitFile) : entities(), items(), width(0), height(0)
 {
     initMap(pathToInitFile);
 }
 
-bool Map::canPlaceItem(int x, int y, std::unique_ptr<Item>& item)
+bool Map::canPlaceItem(int x, int y, std::shared_ptr<Item>& item)
 {
     if (x >= 0 && x < width && y >= 0 && y < height)
-        return !map[y][x].hasItem() && item->canBePlacedOn(map[y][x].getTileType());
+        return item->canBePlacedOn(map[y][x]->getTileType());
     return false;
 }
 
-bool Map::canPlaceEntity(int x, int y, std::unique_ptr<Entity>& entity)
+bool Map::canPlaceEntity(int x, int y, std::shared_ptr<Entity>& entity)
 {
     if (x >= 0 && x < width && y >= 0 && y < height)
-        return !map[y][x].hasEntity();
+        return (!map[y][x]->hasEntity() && entity->canBePlacedOn(map[y][x]->getTileType()));
     return false;
 }
 
-void Map::placeItem(int x, int y, std::unique_ptr<Item> item) 
+void Map::placeItem(int x, int y, std::shared_ptr<Item>& item)
 {
     if (canPlaceItem(x, y, item))
     {
-        map[y][x].setItem(std::move(item));
+        map[y][x]->addItem(item);
+        items.push_back(item);
     } else {
         throw std::runtime_error("Could not place item at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
 }
 
-void Map::placeEntity(int x, int y, std::unique_ptr<Entity> entity)
+void Map::placeEntity(int x, int y, std::shared_ptr<Entity>& entity)
 {
     if (canPlaceEntity(x, y, entity))
     {
-        map[y][x].setEntity(std::move(entity));
+        map[y][x]->setEntity(entity);
+        entities.push_back(entity);
     } else {
         throw std::runtime_error("Could not place entity at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
@@ -61,9 +65,9 @@ void Map::placeEntity(int x, int y, std::unique_ptr<Entity> entity)
 
 void Map::removeItem(int x, int y)
 {
-    if (x >= 0 && x < width && y >= 0 && y < height && map[x][y].hasItem())
+    if (x >= 0 && x < width && y >= 0 && y < height && map[x][y]->hasItems())
     {
-        map[y][x].removeItem();
+        map[y][x]->removeItem();
     } else {
         throw std::runtime_error("Could not remove item at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
@@ -71,40 +75,49 @@ void Map::removeItem(int x, int y)
 
 void Map::removeEntity(int x, int y)
 {
-    if (x >= 0 && x < width && y >= 0 && y < height && map[x][y].hasEntity())
+    if (x >= 0 && x < width && y >= 0 && y < height && map[x][y]->hasEntity())
     {
-        map[y][x].removeEntity();
+        map[y][x]->removeEntity();
     } else {
         throw std::runtime_error("Could not remove entity at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
 }
 
-void Map::listEntitiesAndItems(std::string pathToWrite)
+void Map::listEntitiesAndItems(std::string& pathToWrite)
 {
     std::ofstream file(pathToWrite, std::ios::out);
     if (file.is_open())
     {
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                if (map[y][x].hasEntity())
-                {
-                    file << "Entity: " << map[y][x].getEntity()->getName() << " at (" << x << ", " << y << ")\n";
-                }
-                if (map[y][x].hasItem())
-                {
-                    file << "Item: " << map[y][x].getItem()->getName() << " at (" << x << ", " << y << ")\n";
-                }
-            }
+        file << "Entities:\n";
+        for (auto& entity : entities) {
+            file << entity->getName() << " health:" << entity->getHealth() << " at (" << entity->getX() << ", " << entity->getY() << " symbol: " << entity->getSymbol() << ")\n";
         }
+        file << "\nItems:\n";
+        for (auto& item : items) {
+            file << item->getName() << " at (" << item->getX() << ", " << item->getY() << " symbol: " << item->getSymbol() << ")\n";
+        }
+
         file.close();
     } else {
         throw std::runtime_error("Could not open file to write entities and items\n");
     }
 }
 
-void Map::initMap(std::string pathToInitFile)
+void Map::setTile(std::shared_ptr<Tile>& tile)
+{
+    int x = tile->getX();
+    int y = tile->getY();
+    if (x >= 0 && x < width && y >= 0 && y < height)
+        map[y][x] = tile;
+    else
+        throw std::runtime_error("Could not set tile at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
+}
+
+std::shared_ptr<Tile>& Map::getTile(int x, int y) {
+    return map[y][x];
+}
+
+void Map::initMap(std::string& pathToInitFile)
 {
     std::ifstream file(pathToInitFile, std::ios::in);
     //file.imbue(std::locale("en_US.UTF-8"));
@@ -126,20 +139,31 @@ void Map::initMap(std::string pathToInitFile)
             {
                 switch (line[x])
                 {
-                    case '#':  
-                        map[y][x].setTileType(TileType::TileType::WALL);
+                    case '#': {
+                        std::shared_ptr<Tile> wall = std::make_shared<WallTile>(x, y);
+                        map[y][x] = wall;
                         break;
-                    case ' ':  
-                        map[y][x].setTileType(TileType::TileType::FLOOR);
+                    }
+                    case ' ': {
+                        std::shared_ptr<Tile> floor = std::make_shared<FloorTile>(x, y);
+                        map[x][y] = floor;
                         break;
-                     case '@': 
-                         map[y][x].setTileType(TileType::TileType::FLOOR);
-                         placeEntity(x, y, std::make_unique<Player>("Piter Miller", 100, 10, '@', x, y));
-                         break;
-                     case 'T': 
-                         map[y][x].setTileType(TileType::TileType::WALL);
-                         placeItem(x, y, std::make_unique<Torch>("Torch", 1, true, 'T', x, y));
-                         break;
+                    }
+                    case '@': {
+                        std::shared_ptr<Tile> floor = std::make_shared<FloorTile>(x, y);
+                        map[x][y] = floor;
+                        std::shared_ptr<Entity> player = std::make_shared<Character>("Piter Miller", x, y, '@');
+                        placeEntity(x, y, player);
+                        break;
+                    }
+                    case 'B': {
+                        std::shared_ptr<Tile> floor = std::make_shared<FloorTile>(x, y);
+                        map[x][y] = floor;
+                        std::shared_ptr<Item> bullet = std::make_shared<Bullet>(25.0f, 0.0f, "bullet",
+                                                                                "simple round bullet", x, y, 'B');
+                        placeItem(x, y, bullet);
+                        break;
+                    }
                     default:  
                         throw std::runtime_error("Unexpected character in map file at (" + std::to_string(x) + ", " + std::to_string(y) + ") the character is: " + line[y] + "\n");
                 }
@@ -154,10 +178,3 @@ void Map::initMap(std::string pathToInitFile)
     }
 }
 
-void Map::setTile(int x, int y, TileType::TileType TileType)
-{
-    if (x >= 0 && x < width && y >= 0 && y < height)
-        map[y][x].setTileType(TileType);
-    else 
-        throw std::runtime_error("Could not set tile at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
-}

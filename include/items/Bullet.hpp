@@ -9,7 +9,7 @@ protected:
 
 public:
     explicit Bullet(float physicalDamage, float magicalDamage,
-                    std::string& name, std::string& description, int x, int y, char symbol);
+                    const std::string& name, const std::string& description, int x, int y, char symbol);
     ~Bullet() override = default;
 
     void use(Entity& target) override;

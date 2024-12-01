@@ -13,6 +13,11 @@ add_executable(EgyptAdventure ${SOURCES}
         src/Bullet.cpp
         src/Inventory.cpp
         include/PriorityQueue.hpp
+        include/tiles/TileType.hpp
+        include/tiles/WallTile.hpp
+        src/WallTile.cpp
+        include/tiles/FloorTile.hpp
+        src/FloorTile.cpp
 )
 
 if (WIN32)

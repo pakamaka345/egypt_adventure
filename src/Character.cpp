@@ -1,6 +1,6 @@
 #include "entities/Character.hpp"
 
-Character::Character(std::string &name, int x, int y, char symbol)
+Character::Character(const std::string &name, int x, int y, char symbol)
     : revolver(std::make_shared<Weapon>("Revolver", 6))
     , inventory()
     , Entity(name, 5, 10.0f, 50.0f, 0.3f, 5.0f, 0.2f, x, y, symbol)
@@ -62,6 +62,10 @@ void Character::takeDamage(float physicalDamage, float magicalDamage) {
 
 void Character::heal(float amount) {
     health = std::min(maxHealth, (health + amount));
+}
+
+void Character::move(int dx, int dy) {
+
 }
 
 std::shared_ptr<Weapon> Character::getRevolver() {

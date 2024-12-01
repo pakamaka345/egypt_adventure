@@ -1,7 +1,7 @@
 #include "entities/Entity.hpp"
 
 
-Entity::Entity(std::string &name, int attackRange,  float attackDamage, float health, float defense, float priority,
+Entity::Entity(const std::string& name, int attackRange,  float attackDamage, float health, float defense, float priority,
                float dodgeChance, int x, int y, char symbol)
                : name(name), attackRange(attackRange), attackDamage(attackDamage), health(health), maxHealth(health), defense(defense), priority(priority), cooldown(0),
                dodgeChance(dodgeChance), activeAmulets(), GameObject(x, y, symbol)
@@ -24,8 +24,8 @@ void Entity::removeAmulet(const std::shared_ptr<Amulet>& amulet) {
             );
 }
 
-bool Entity::canBePlacedOn(TileType::TileType tileType) const {
-    return tileType == TileType::TileType::FLOOR;
+bool Entity::canBePlacedOn(TileType::Type tileType) const {
+    return tileType == TileType::Type::FLOOR;
 }
 
 bool Entity::isAlive() const {
@@ -71,6 +71,10 @@ float Entity::getDefense() const {
 
 float Entity::getPriority() const {
     return priority;
+}
+
+int Entity::getCooldown() const {
+    return cooldown;
 }
 
 float Entity::getDodgeChance() const {

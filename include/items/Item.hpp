@@ -11,7 +11,7 @@ protected:
     std::string description;
 
 public:
-    Item(std::string& name, std::string& description, int x, int y, char symbol);
+    Item(const std::string& name, const std::string& description, int x, int y, char symbol);
     ~Item() override = default;
 
     virtual void use(Entity& target) = 0;
@@ -19,5 +19,5 @@ public:
     std::string& getName();
     std::string& getDescription();
 
-    [[nodiscard]] bool canBePlacedOn(TileType::TileType tileType) const override;
+    [[nodiscard]] bool canBePlacedOn(TileType::Type tileType) const override;
 };

@@ -2,8 +2,6 @@
 #include <memory>
 #include <string>
 #include "GameView.hpp"
-#include "entities/Player.hpp"
-#include "items/Torch.hpp"
 
 
 void displayMenu() {

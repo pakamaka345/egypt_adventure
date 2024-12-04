@@ -1,6 +1,8 @@
 #pragma once
 #include <queue>
-#include "entities/Entity.hpp"
+#include <memory>
+
+class Entity;
 
 class PriorityQueue {
 private:

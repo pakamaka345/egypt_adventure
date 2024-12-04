@@ -1,4 +1,5 @@
 #include "BattleSystem.hpp"
+#include "entities/Entity.hpp"
 #include <random>
 #include <fstream>
 #include <iostream>
@@ -53,7 +54,7 @@ void BattleSystem::startBattle() {
         double roll = dis(gen) / 20.0f;
         double attackRoll = attacker->getAttackDamage() / 100.0f;
         double defense = target->getDodgeChance();
-        if (roll + attackRoll < defense) {
+        if (roll + attackRoll >= defense) {
             try {
                 attacker->attack(*target);
                 std::cout << attacker->getName() << " attacks " << target->getName() << ". Target`s health: " << target->getHealth() << std::endl;

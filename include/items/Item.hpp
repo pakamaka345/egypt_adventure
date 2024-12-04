@@ -4,6 +4,9 @@
 
 class Entity;
 
+/**
+ * \brief Base class for all items in the game.
+ */
 class Item : public GameObject
 {
 protected:

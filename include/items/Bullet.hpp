@@ -1,9 +1,17 @@
 #pragma once
 #include "items/Item.hpp"
 
+class Entity;
+class Character;
+class Weapon;
+
+/**
+ * \brief Bullet class represents a bullet item that can be used by a weapon.
+ * Can be parent class for different types of bullets.
+ */
 class Bullet : public Item
 {
-protected:
+private:
     float physicalDamage;
     float magicalDamage;
 

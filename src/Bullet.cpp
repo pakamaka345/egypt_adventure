@@ -1,5 +1,6 @@
 #include "items/Bullet.hpp"
 #include "entities/Character.hpp"
+#include "weapons/Weapon.hpp"
 
 Bullet::Bullet(float physicalDamage, float magicalDamage,
                const std::string &name, const std::string &description, int x, int y, char symbol)

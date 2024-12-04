@@ -1,4 +1,6 @@
 #include "tiles/Tile.hpp"
+#include "entities/Entity.hpp"
+#include "items/Item.hpp"
 #include <iostream>
 #include <utility>
 

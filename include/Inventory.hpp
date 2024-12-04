@@ -4,8 +4,9 @@
 #include <utility>
 #include <memory>
 #include <optional>
-#include "items/Item.hpp"
 
+class Item;
+class Entity;
 
 class Inventory
 {

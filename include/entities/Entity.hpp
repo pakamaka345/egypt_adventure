@@ -7,8 +7,11 @@
 #include <random>
 #include <stdexcept>
 #include "GameObject.hpp"
-#include "tiles/Tile.hpp"
-#include "items/amulets/Amulet.hpp"
+#include "effects/EffectManager.hpp"
+
+class Item;
+class Amulet;
+class Effect;
 
 /**
  * \brief The Entity class represents a game object that can be attacked and can attack other entities.
@@ -31,6 +34,7 @@ protected:
     float cooldown;
     float dodgeChance;
     AmuletList activeAmulets;
+    EffectManager effectManager;
 
 public:
     Entity(const std::string& name, int attackRange, float attackDamage, float health, float defense,
@@ -39,11 +43,15 @@ public:
 
     void addAmulet(const std::shared_ptr<Amulet>& amulet);
     void removeAmulet(const std::shared_ptr<Amulet>& amulet);
+
+
     bool canBePlacedOn(TileType::Type tileType) const override;
-
     bool isAlive() const;
-
     bool canAttack(Entity& target) const;
+
+    void applyEffects(const std::shared_ptr<Effect>& effect);
+    void updateEffects();
+    void removeEffects();
 
     bool isReady() { return cooldown <= 0; }
     void reduceCooldown() { cooldown = std::max(0.0f, cooldown - 1); }
@@ -58,7 +66,17 @@ public:
     float getPriority() const;
     float getCooldown() const;
     float getDodgeChance() const;
+    AmuletList& getActiveAmulets();
+    EffectManager& getEffectManager();
 
+    void setHealth(float health);
+    void setMaxHealth(float maxHealth);
+    void setAttackRange(int attackRange);
+    void setAttackDamage(float attackDamage);
+    void setDefense(float defense);
+    void setPriority(float priority);
+    void setCooldown(float cooldown);
+    void setDodgeChance(float dodgeChance);
 
 public:
     /**

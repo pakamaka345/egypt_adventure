@@ -1,9 +1,10 @@
 #pragma once
 #include "GameObject.hpp"
-#include "entities/Entity.hpp"
-#include "items/Item.hpp"
 #include <memory>
 #include <list>
+
+class Entity;
+class Item;
 
 class Tile : public GameObject
 {

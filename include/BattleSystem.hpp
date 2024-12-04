@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
-#include "entities/Entity.hpp"
 #include "PriorityQueue.hpp"
+
+class Entity;
 
 class BattleSystem
 {

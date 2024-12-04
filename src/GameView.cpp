@@ -17,7 +17,7 @@ void GameView::draw()
     {
         for (int x = 0; x < width; x++)
         {
-            map[y][x].draw();
+
         }
         std::cout << "\n";
     }

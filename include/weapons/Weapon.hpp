@@ -2,11 +2,14 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "items/Bullet.hpp"
-#include "entities/Entity.hpp"
 
+class Bullet;
 class Entity;
 
+/**
+ * \brief Weapon class. In this implementation is a only a one type of weapon.
+ * Can be changed to be a base class for different types of weapons.
+ */
 class Weapon
 {
 protected:
@@ -22,8 +25,8 @@ public:
     void shootWithMiss();
 
 
-    int getAmmo() { return int(magazine.size()); }
-    [[nodiscard]] int getMagazineSize() const { return magazineSize; }
-    std::vector<Bullet>& getMagazine() { return magazine; }
-    std::string& getName() { return name; }
+    int getAmmo();
+    int getMagazineSize();
+    std::vector<Bullet>& getMagazine();
+    std::string& getName();
 };

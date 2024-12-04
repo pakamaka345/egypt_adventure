@@ -1,16 +1,18 @@
 #include "entities/Character.hpp"
+#include "weapons/Weapon.hpp"
+#include "items/Bullet.hpp"
 
 Character::Character(const std::string &name, int x, int y, char symbol)
     : revolver(std::make_shared<Weapon>("Revolver", 6))
     , inventory()
-    , Entity(name, 5, 10.0f, 50.0f, 0.3f, 5.0f, 0.2f, x, y, symbol)
+    , Entity(name, 5, 10.0f, 50.0f, 0.3f, 2.0f, 0.2f, x, y, symbol)
 {
 }
 
 void Character::reloadRevolver() {
     try {
         for (auto& amulet : activeAmulets) {
-            amulet->deactivate(*this);
+            amulet->removeAmuletEffect(*this);
         }
 
         while (revolver->getAmmo() <= revolver->getMagazineSize() && inventory.hasItem("bullet")) {
@@ -18,7 +20,7 @@ void Character::reloadRevolver() {
         }
 
         for (auto& amulet : activeAmulets) {
-            amulet->use(*this);
+            amulet->applyAmuletEffect(*this);
         }
     } catch (const std::invalid_argument& e) {
         throw std::runtime_error("No bullets in inventory");
@@ -31,6 +33,14 @@ void Character::addToInventory(const std::shared_ptr<Item> &item) {
 
 void Character::removeFromInventory(const std::string &itemName) {
     inventory.removeItem(itemName);
+}
+
+void Character::useItemWithRemoving(const std::string &itemName, Entity &target) {
+    inventory.useItemWithRemoving(itemName, target);
+}
+
+void Character::useItem(const std::string &itemName, Entity &target) {
+    inventory.useItem(itemName, target);
 }
 
 void Character::attack(Entity &target) {
@@ -76,6 +86,10 @@ void Character::move(int dx, int dy) {
 
 }
 
-std::shared_ptr<Weapon> Character::getRevolver() {
+const Inventory &Character::getInventory() const {
+    return inventory;
+}
+
+const std::shared_ptr<Weapon> &Character::getRevolver() const {
     return revolver;
 }

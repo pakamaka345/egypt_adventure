@@ -10,18 +10,13 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_executable(EgyptAdventure ${SOURCES}
-        src/Bullet.cpp
-        src/Inventory.cpp
-        include/PriorityQueue.hpp
-        include/tiles/TileType.hpp
-        include/tiles/WallTile.hpp
-        src/WallTile.cpp
-        include/tiles/FloorTile.hpp
-        src/FloorTile.cpp
-        src/PriorityQueue.cpp
-        include/BattleSystem.hpp
-        src/BattleSystem.cpp
-)
+        src/Effect.cpp
+        include/effects/HealEffect.hpp
+        src/HealEffect.cpp
+        include/effects/EffectManager.hpp
+        src/EffectManager.cpp
+        include/items/HealPotion.hpp
+        src/HealPotion.cpp)
 
 if (WIN32)
     target_link_libraries(EgyptAdventure winmm)

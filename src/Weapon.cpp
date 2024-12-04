@@ -1,6 +1,9 @@
 #include "weapons/Weapon.hpp"
+#include "entities/Entity.hpp"
+#include "items/Bullet.hpp"
 #include <stdexcept>
 #include <utility>
+#include <random>
 
 Weapon::Weapon(std::string name, int magazineSize)
     : name(std::move(name)), magazine(), magazineSize(magazineSize)
@@ -40,4 +43,20 @@ void Weapon::shootWithMiss() {
     }
 
     magazine.pop_back();
+}
+
+int Weapon::getAmmo() {
+    return int(magazine.size());
+}
+
+int Weapon::getMagazineSize() {
+    return magazineSize;
+}
+
+std::vector<Bullet>& Weapon::getMagazine() {
+    return magazine;
+}
+
+std::string& Weapon::getName() {
+    return name;
 }

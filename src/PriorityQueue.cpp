@@ -1,4 +1,5 @@
 #include "PriorityQueue.hpp"
+#include "entities/Entity.hpp"
 #include <random>
 
 void PriorityQueue::addEntity(const std::shared_ptr<Entity> &entity) {

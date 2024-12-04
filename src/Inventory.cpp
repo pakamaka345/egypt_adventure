@@ -1,4 +1,6 @@
 #include "Inventory.hpp"
+#include "items/Item.hpp"
+#include "entities/Entity.hpp"
 #include <stdexcept>
 
 Inventory::Inventory() : items()

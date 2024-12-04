@@ -2,7 +2,9 @@
 #include "entities/Entity.hpp"
 #include "items/amulets/DamageBooster.hpp"
 #include "Inventory.hpp"
-#include "weapons/Weapon.hpp"
+
+class Weapon;
+class Bullet;
 
 /**
  *  \brief Character class that will be used to create the main character.
@@ -11,7 +13,7 @@
  */
 class Character : public Entity
 {
-protected:
+private:
     std::shared_ptr<Weapon> revolver;
     Inventory inventory;
     /**
@@ -34,11 +36,14 @@ public:
 
     void addToInventory(const std::shared_ptr<Item>& item);
     void removeFromInventory(const std::string& itemName);
+    void useItemWithRemoving(const std::string& itemName, Entity& target);
+    void useItem(const std::string& itemName, Entity& target);
 
     void attack(Entity& target) override;
     void takeDamage(float physicalDamage, float magicalDamage) override;
     void heal(float amount) override;
     void move(int dx, int dy) override;
 
-    std::shared_ptr<Weapon> getRevolver();
+    const Inventory& getInventory() const;
+    const std::shared_ptr<Weapon>& getRevolver() const;
 };

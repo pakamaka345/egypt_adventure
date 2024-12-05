@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <utility>
+#include "items/Item.hpp"
 
 class Item;
 

@@ -2,7 +2,7 @@
 #include "entities/Entity.hpp"
 
 HealEffect::HealEffect(int duration, float healAmount)
-    : healAmount(healAmount), Effect("Heal effect", duration)
+    : healAmount(healAmount), Effect("heal effect", duration)
 {
 }
 

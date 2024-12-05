@@ -29,8 +29,12 @@ void Inventory::removeItem(const std::string& itemName) {
 
 void Inventory::useItemWithRemoving(const std::string &itemName, Entity& target) {
     if (getItem(itemName) != std::nullopt) {
-        items[itemName].item->use(target);
-        removeItem(itemName);
+        try {
+            items[itemName].item->use(target);
+            removeItem(itemName);
+        } catch (std::invalid_argument& e) {
+            throw std::runtime_error("Failed to use item: " + std::string(e.what()));
+        }
     } else {
         throw std::invalid_argument("Item not found in inventory to use");
     }
@@ -38,7 +42,11 @@ void Inventory::useItemWithRemoving(const std::string &itemName, Entity& target)
 
 void Inventory::useItem(const std::string &itemName, Entity &target) {
     if (getItem(itemName) != std::nullopt) {
-        items[itemName].item->use(target);
+        try {
+            items[itemName].item->use(target);
+        } catch (std::invalid_argument& e) {
+            throw std::runtime_error("Failed to use item: " + std::string(e.what()));
+        }
     } else {
         throw std::invalid_argument("Item not found in inventory to use");
     }

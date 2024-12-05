@@ -1,7 +1,12 @@
 #include "BattleSystem.hpp"
 #include "entities/Entity.hpp"
+#include "entities/Character.hpp"
+#include "entities/Scarab.hpp"
+#include "entities/Skeleton.hpp"
+#include "entities/Mummy.hpp"
+#include "entities/Phantom.hpp"
+#include "entities/SandGolem.hpp"
 #include <random>
-#include <fstream>
 #include <iostream>
 
 BattleSystem::BattleSystem(const std::string &pathToInitFile) {
@@ -40,6 +45,8 @@ void BattleSystem::startBattle() {
             continue;
         }
 
+        attacker->update();
+
         auto target = findTarget();
         if (target == nullptr) {
             throw std::runtime_error("No target found");
@@ -68,8 +75,9 @@ void BattleSystem::startBattle() {
             double healRoll = heal(gen) / 100.0f;
             if (attacker->getHealth() / attacker->getMaxHealth() < 0.75 && roll <= 0.25) {
                 std::uniform_real_distribution<> amount(0, 25);
-                attacker->heal(float(amount(gen)));
-                std::cout << attacker->getName() << " heals himself. Health: " << attacker->getHealth() << "/" << attacker->getMaxHealth() << std::endl;
+                auto HP = float(amount(gen));
+                attacker->heal(HP);
+                std::cout << attacker->getName() << " heals himself on " << HP << " Health: " << attacker->getHealth() << "/" << attacker->getMaxHealth() << std::endl;
             }
             std::uniform_real_distribution<> run(1, 100);
             double runRoll = run(gen) / 100.0f;
@@ -86,6 +94,7 @@ void BattleSystem::startBattle() {
     std::cout << "Battle ended" << std::endl;
     std::cout << "Winner: " << queue.popEntity()->getName() << std::endl;
     std::cout << "Number of turns: " << counter << std::endl;
+    clearBattle();
 }
 
 std::vector<std::shared_ptr<Entity>>& BattleSystem::getEntitiesList() {
@@ -106,4 +115,20 @@ std::shared_ptr<Entity> BattleSystem::findTarget() {
 
     for (const auto& e : entities) queue.addEntity(e);
     return nullptr;
+}
+
+void BattleSystem::readEntitiesFromFile(const std::string &pathToInitFile) {
+    auto character = std::make_shared<Character>("Character", 1, 1, '@');
+    auto scarab = std::make_shared<Scarab>("Scarab", 1, 5.0f, 15.0f, 0.1f, 1.0f, 0.1f, 1, 1, 'S');
+    auto skeleton = std::make_shared<Skeleton>("Skeleton", 5, 15.0f, 35.0f, 0.2f, 2.0f, 0.3f, 1, 1, 'K');
+    auto mummy = std::make_shared<Mummy>("Mummy", 4, 20.0f, 65.0f, 0.2f, 4.0f, 0.3f, 1, 1, 'M');
+    auto phantom = std::make_shared<Phantom>("Phantom", 3, 25.0f, 75.0f, 0.5f, 5.0f, 0.3f, 1, 1, 'P');
+    auto sandGolem = std::make_shared<SandGolem>("Sand Golem", 6, 30.0f, 150.0f, 0.6f, 10.0f, 0.4f, 1, 1, 'G');
+
+    addEntityToList(character);
+    addEntityToList(scarab);
+    addEntityToList(skeleton);
+    addEntityToList(mummy);
+    addEntityToList(phantom);
+    addEntityToList(sandGolem);
 }

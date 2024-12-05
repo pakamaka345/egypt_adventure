@@ -62,6 +62,11 @@ bool Entity::canAttack(Entity &target) const {
     return radius <= attackRange;
 }
 
+void Entity::update() {
+    updateEffects();
+    reduceCooldown();
+}
+
 std::string &Entity::getName() {
     return name;
 }

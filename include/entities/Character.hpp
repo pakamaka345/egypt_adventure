@@ -1,10 +1,11 @@
 #pragma once
 #include "entities/Entity.hpp"
-#include "items/amulets/DamageBooster.hpp"
 #include "Inventory.hpp"
 
 class Weapon;
 class Bullet;
+class Item;
+class Amulet;
 
 /**
  *  \brief Character class that will be used to create the main character.
@@ -43,6 +44,8 @@ public:
     void takeDamage(float physicalDamage, float magicalDamage) override;
     void heal(float amount) override;
     void move(int dx, int dy) override;
+    void update() override;
+    std::shared_ptr<Entity> clone() const override;
 
     const Inventory& getInventory() const;
     const std::shared_ptr<Weapon>& getRevolver() const;

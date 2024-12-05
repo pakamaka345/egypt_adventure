@@ -28,5 +28,6 @@ public:
 private:
     std::shared_ptr<Entity> findTarget();
 
+    // Now will just create the entities class but after i wanna replace this method to a Config class
     void readEntitiesFromFile(const std::string& pathToInitFile);
 };

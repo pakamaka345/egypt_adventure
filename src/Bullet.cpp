@@ -9,12 +9,12 @@ Bullet::Bullet(float physicalDamage, float magicalDamage,
 }
 
 void Bullet::use(Entity &target) {
-    try {
-        auto& character = dynamic_cast<Character&>(target);
-        character.getRevolver()->addBullet(*this);
-    } catch (const std::bad_cast& e) {
-        throw std::runtime_error("Cannot use bullet on non-character entity");
+
+    auto* character = dynamic_cast<Character*>(&target);
+    if (!character) {
+        throw std::invalid_argument("Target must be a Character to use a bullet.");
     }
+    character->getRevolver()->addBullet(*this);
 }
 
 void Bullet::increasePhysicalDamage(float value) {

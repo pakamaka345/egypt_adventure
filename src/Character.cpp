@@ -1,6 +1,7 @@
 #include "entities/Character.hpp"
 #include "weapons/Weapon.hpp"
 #include "items/Bullet.hpp"
+#include "items/amulets/Amulet.hpp"
 
 Character::Character(const std::string &name, int x, int y, char symbol)
     : revolver(std::make_shared<Weapon>("Revolver", 6))
@@ -69,7 +70,6 @@ void Character::attack(Entity &target) {
             throw std::runtime_error("No ammo in revolver");
         }
     } else {
-        reduceCooldown();
         throw std::runtime_error("Character is on cooldown");
     }
 }
@@ -83,7 +83,15 @@ void Character::heal(float amount) {
 }
 
 void Character::move(int dx, int dy) {
+    //TODO movement logic after with GameController class
+}
 
+void Character::update() {
+    Entity::update();
+}
+
+std::shared_ptr<Entity> Character::clone() const {
+    return std::make_shared<Character>(*this);
 }
 
 const Inventory &Character::getInventory() const {
@@ -93,3 +101,4 @@ const Inventory &Character::getInventory() const {
 const std::shared_ptr<Weapon> &Character::getRevolver() const {
     return revolver;
 }
+

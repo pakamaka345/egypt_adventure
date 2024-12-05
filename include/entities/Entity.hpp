@@ -99,5 +99,12 @@ public:
 
     // TODO - Add a method to move the entity
     virtual void move(int dx, int dy) = 0;
+
+    /**
+     * \brief Virtual method for updating the entity.
+     */
+    virtual void update();
+
+    virtual std::shared_ptr<Entity> clone() const = 0;
 };
 

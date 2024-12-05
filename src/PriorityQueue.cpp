@@ -8,7 +8,9 @@ void PriorityQueue::addEntity(const std::shared_ptr<Entity> &entity) {
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dist(0.0, 0.000001);
-    queue.push({ (cooldown + dist(gen)), entity });
+    float random = dist(gen);
+    cooldown += random;
+    queue.push({ cooldown, entity });
 }
 
 void PriorityQueue::removeEntity(const std::shared_ptr<Entity> &entity) {

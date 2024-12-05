@@ -5,6 +5,10 @@
 void EffectManager::addEffect(const std::shared_ptr<Effect> &effect, Entity &target) {
     activeEffects.push_back(effect);
     effect->apply(target);
+    if (effect->isExpired()) {
+        effect->remove(target);
+        activeEffects.pop_back();
+    }
 }
 
 void EffectManager::updateEffects(Entity &target) {

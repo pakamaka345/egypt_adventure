@@ -16,7 +16,7 @@ void Character::reloadRevolver() {
             amulet->removeAmuletEffect(*this);
         }
 
-        while (revolver->getAmmo() <= revolver->getMagazineSize() && inventory.hasItem("bullet")) {
+        while (revolver->getAmmo() < revolver->getMagazineSize() && inventory.hasItem("bullet")) {
             inventory.useItemWithRemoving("bullet", *this);
         }
 

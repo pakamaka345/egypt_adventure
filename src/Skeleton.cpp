@@ -36,7 +36,7 @@ void Skeleton::takeDamage(float physicalDamage, float magicalDamage) {
 }
 
 void Skeleton::heal(float amount) {
-    health = std::min(0.0f, health + (amount * -1.0f));
+    health = std::max(0.0f, health + (amount * -1.0f));
 }
 
 void Skeleton::move(int dx, int dy) {

@@ -7,7 +7,7 @@ void PriorityQueue::addEntity(const std::shared_ptr<Entity> &entity) {
     float cooldown = entity->getCooldown();
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dist(0.0, 0.000001);
+    std::uniform_real_distribution<float> dist(0.00, 0.01);
     float random = dist(gen);
     cooldown += random;
     queue.push({ cooldown, entity });

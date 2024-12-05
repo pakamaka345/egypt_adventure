@@ -6,6 +6,7 @@
 #include "entities/Mummy.hpp"
 #include "entities/Phantom.hpp"
 #include "entities/SandGolem.hpp"
+#include "items/Bullet.hpp"
 #include <random>
 #include <iostream>
 
@@ -39,17 +40,18 @@ void BattleSystem::clearBattle() {
 void BattleSystem::startBattle() {
     int counter = 1;
     while (queue.size() > 1) {
+        updateEntities();
+
         auto attacker = queue.popEntity();
+        std::cout << attacker->getName() << " has cooldown: " << attacker->getCooldown() << std::endl;
         if (!attacker->isAlive()) {
             std::cout << attacker->getName() << " is dead" << std::endl;
             continue;
         }
 
-        attacker->update();
-
         auto target = findTarget();
         if (target == nullptr) {
-            throw std::runtime_error("No target found");
+            break;
         }
 
         // Calculate if attacker hits target like in dnd
@@ -60,14 +62,18 @@ void BattleSystem::startBattle() {
         std::uniform_real_distribution<> dis(1, 20);
         double roll = dis(gen) / 20.0f;
         double attackRoll = attacker->getAttackDamage() / 100.0f;
-        double defense = target->getDodgeChance();
+        double defense = target->getDodgeChance() + target->getDefense();
         if (roll + attackRoll >= defense) {
             try {
+                float prevHealth = target->getHealth();
                 attacker->attack(*target);
                 std::cout << attacker->getName() << " attacks " << target->getName() << ". Target`s health: " << target->getHealth() << std::endl;
+                std::cout << "Damage: " << prevHealth - target->getHealth() << std::endl;
+                std::cout << "Target has " << target->getEffectManager().getActiveEffects().size() << " effects" << std::endl;
             } catch (const std::runtime_error& e) {
                 std::cout << e.what() << std::endl;
                 queue.addEntity(attacker);
+                std::cout << attacker->getName() << " attacks " << target->getName() << ". Target`s health: " << target->getHealth() << std::endl;
                 continue;
             }
         } else {
@@ -81,14 +87,15 @@ void BattleSystem::startBattle() {
             }
             std::uniform_real_distribution<> run(1, 100);
             double runRoll = run(gen) / 100.0f;
-            if (roll <= 0.05) {
+            if (roll <= 0.065) {
                 std::cout << attacker->getName() << " runs away" << std::endl;
                 continue;
             }
         }
-
         queue.addEntity(attacker);
         counter++;
+
+        std::cout << std::endl;
     }
 
     std::cout << "Battle ended" << std::endl;
@@ -117,6 +124,17 @@ std::shared_ptr<Entity> BattleSystem::findTarget() {
     return nullptr;
 }
 
+void BattleSystem::updateEntities() {
+    std::vector<std::shared_ptr<Entity>> entities;
+    while (!queue.isEmpty()) {
+        auto entity = queue.popEntity();
+        entity->update();
+        entities.push_back(entity);
+    }
+
+    for (const auto& e : entities) queue.addEntity(e);
+}
+
 void BattleSystem::readEntitiesFromFile(const std::string &pathToInitFile) {
     auto character = std::make_shared<Character>("Character", 1, 1, '@');
     auto scarab = std::make_shared<Scarab>("Scarab", 1, 5.0f, 15.0f, 0.1f, 1.0f, 0.1f, 1, 1, 'S');
@@ -124,6 +142,13 @@ void BattleSystem::readEntitiesFromFile(const std::string &pathToInitFile) {
     auto mummy = std::make_shared<Mummy>("Mummy", 4, 20.0f, 65.0f, 0.2f, 4.0f, 0.3f, 1, 1, 'M');
     auto phantom = std::make_shared<Phantom>("Phantom", 3, 25.0f, 75.0f, 0.5f, 5.0f, 0.3f, 1, 1, 'P');
     auto sandGolem = std::make_shared<SandGolem>("Sand Golem", 6, 30.0f, 150.0f, 0.6f, 10.0f, 0.4f, 1, 1, 'G');
+
+    for (int i = 0; i < 64; i++) {
+        auto bullet = std::make_shared<Bullet>(20, 20, "bullet", "simple bullet", 2, 2, 'B');
+        character->addToInventory(bullet);
+    }
+
+    character->reloadRevolver();
 
     addEntityToList(character);
     addEntityToList(scarab);

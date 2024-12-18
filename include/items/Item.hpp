@@ -2,25 +2,23 @@
 #include <string>
 #include "GameObject.hpp"
 
+class Entity;
+
+/**
+ * \brief Base class for all items in the game.
+ */
 class Item : public GameObject
 {
-private:
+protected:
     std::string name;
-    char symbol;
-    int weight;
-    bool isUsable;
+    std::string description;
 
 public:
-    Item(std::string name, int weight, bool isUsable, char symbol, int x, int y);
-    ~Item() = default;
+    Item(const std::string& name, const std::string& description, int x, int y, char symbol);
+    ~Item() override = default;
 
-    virtual void use() = 0;
+    virtual void use(Entity& target) = 0;
 
-    std::string getName();
-    char getSymbol() const;
-    int getWeight();
-    bool getIsUsable();
-
-    void setName(std::string name);
-    void setSymbol(char symbol);
+    std::string& getName();
+    std::string& getDescription();
 };

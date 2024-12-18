@@ -3,15 +3,16 @@
 #include <memory>
 
 
-class GameView : public Map {
+class GameView {
 private:
     //std::shared_ptr<Interface> interface;
 
-public:
-    GameView(std::string pathToInitFile);
-    GameView(int width, int height);
-    virtual ~GameView() = default;
 
-    void draw() override;
+public:
+//    explicit GameView(std::string pathToInitFile);
+//    GameView(int width, int height);
+//    virtual ~GameView() = default;
+//
+//    void draw() override;
 };
 

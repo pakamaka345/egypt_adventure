@@ -1,110 +1,87 @@
 #include "tiles/Tile.hpp"
+#include "entities/Entity.hpp"
+#include "items/Item.hpp"
 #include <iostream>
+#include <utility>
 
 Tile::Tile()
-    : TileType(TileType::TileType::FLOOR)
-    , entity(nullptr)
-    , item(nullptr)
+    : entity(nullptr), items(), tileType(TileType::Type::EMPTY)
+    , GameObject(0, 0, ' ')
 {
-    setSymbol(TileType::TileType::FLOOR);
 }
 
-Tile::Tile(TileType::TileType TileType)
-    : TileType(TileType)
-    , entity(nullptr)
-    , item(nullptr)
+Tile::Tile(int x, int y, char symbol)
+    : entity(nullptr), items(), tileType(TileType::Type::EMPTY)
+    , GameObject(x, y, symbol)
 {
-    setSymbol(TileType);
 }
 
-void Tile::setEntity(std::unique_ptr<Entity> entity)
+Tile::Tile(int x, int y)
+    : entity(nullptr), items(), tileType(TileType::Type::EMPTY)
+    , GameObject(x, y, '.')
 {
-    this->entity = std::move(entity);
 }
 
-void Tile::setItem(std::unique_ptr<Item> item)
+Tile::Tile(TileType::Type tileType, int x, int y, char symbol)
+    : entity(nullptr), items(), tileType(tileType)
+    , GameObject(x, y, symbol)
 {
-    this->item = std::move(item);
 }
 
-std::unique_ptr<Entity> Tile::getEntity()
-{
-    return std::move(entity);
+void Tile::setEntity(std::shared_ptr<Entity> entity) {
+    if (!hasEntity()) {
+        this->entity = std::move(entity);
+    } else {
+        throw std::runtime_error("Tile already has an entity");
+    }
 }
 
-std::unique_ptr<Item> Tile::getItem()
-{
-    return std::move(item);
+std::shared_ptr<Entity>& Tile::getEntity() {
+    return entity;
 }
 
-TileType::TileType Tile::getTileType()
-{
-    return TileType;
+void Tile::removeEntity() {
+    if (hasEntity()) {
+        entity = nullptr;
+    }
 }
 
-void Tile::setTileType(TileType::TileType TileType)
-{
-    this->TileType = TileType;
-    setSymbol(TileType);
-}
-
-bool Tile::hasEntity()
-{
+bool Tile::hasEntity() {
     return entity != nullptr;
 }
 
-bool Tile::hasItem()
-{
-    return item != nullptr;
+void Tile::addItem(const std::shared_ptr<Item>& item) {
+    items.push_back(item);
 }
 
-void Tile::removeEntity()
-{
-    if (hasEntity()) entity.reset();
+void Tile::addItems(std::list<std::shared_ptr<Item>> items) {
+    this->items.insert(this->items.end(), items.begin(), items.end());
 }
 
-void Tile::removeItem()
-{
-    if (hasItem()) item.reset();    
+std::list<std::shared_ptr<Item>>& Tile::getItems() {
+    return items;
 }
 
-void Tile::draw()
-{
-    if (hasEntity()) 
-    {
-        entity->draw();
-        return;
-    }
-    else if (hasItem()) 
-    {
-        item->draw();
-        return;
-    }
-    else
-    {
-        std::cout << symbol;
-    }
+std::shared_ptr<Item>& Tile::getItem() {
+    return items.front();
 }
 
-char Tile::getSymbol()
-{
-    return symbol;
-}   
-
-bool Tile::isWalkable()
-{
-    return TileType != TileType::TileType::WALL;
+void Tile::removeItem() {
+    return items.pop_front();
 }
 
-void Tile::setSymbol(TileType::TileType TileType) 
-{
-    switch (TileType)
-    {
-        case TileType::TileType::FLOOR:
-            symbol = ' ';
-            break;
-        case TileType::TileType::WALL:
-            symbol = char(178);
-            break;
-    }
+bool Tile::hasItems() {
+    return !items.empty();
+}
+
+TileType::Type Tile::getTileType() {
+    return tileType;
+}
+
+void Tile::setTileType(TileType::Type tileType) {
+    this->tileType = tileType;
+}
+
+bool Tile::isWalkable() const {
+    return false;
 }

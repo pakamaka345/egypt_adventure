@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeProjectFlavorService">
+    <option name="flavorId" value="CMakePlainProjectFlavor" />
+  </component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_TOOLCHAIN_FILE=/home/pakamaka345/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c6604720-d94a-4777-9be7-b636247a2cde" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="C++ Class(My)" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="BattleSystem" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLabMergeRequestFiltersHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPENED&quot;,
+    &quot;assignee&quot;: {
+      &quot;type&quot;: &quot;org.jetbrains.plugins.gitlab.mergerequest.ui.filters.GitLabMergeRequestsFiltersValue.MergeRequestsMemberFilterValue.MergeRequestsAssigneeFilterValue&quot;,
+      &quot;username&quot;: &quot;nikita.lysiuk&quot;,
+      &quot;fullname&quot;: &quot;Nikita Lysiuk&quot;
+    }
+  }
+}</component>
+  <component name="GitLabMergeRequestsSettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;first&quot;: &quot;git@umcs.schneiderp.ovh:nikita.lysiuk/pgl_2425_jmb_egypt_adventure.git&quot;,
+    &quot;second&quot;: &quot;50cfb016-df7f-477b-a752-6fcf1ca3ac5d&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2024" />
+    <option name="minorVersion" value="2" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2oyjwsWQeT5Bscbijgxp8yxJhRS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "CMake Application.EgyptAdventure.executor": "Run",
+    "CMake Application.battle_test.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RdControllerToolWindowsLayoutState" isNewUi="true">
+    <layout>
+      <window_info id="Bookmarks" show_stripe_button="false" side_tool="true" />
+      <window_info id="Welcome to GitHub Copilot" show_stripe_button="false" />
+      <window_info id="Commit_Guest" show_stripe_button="false" />
+      <window_info id="Pull Requests" show_stripe_button="false" />
+      <window_info id="Learn" show_stripe_button="false" />
+      <window_info id="DFA" show_stripe_button="false" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16273421" />
+      <window_info id="Commit" order="1" weight="0.17106175" />
+      <window_info id="Merge Requests" order="2" weight="0.17522553" />
+      <window_info id="Structure" order="3" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TypeScript" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Python Packages" show_stripe_button="false" />
+      <window_info anchor="bottom" id="File Transfer" show_stripe_button="false" />
+      <window_info anchor="bottom" id="clangd" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Problems" order="1" />
+      <window_info anchor="bottom" id="Problems View" order="2" weight="0.32961994" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.07798165" />
+      <window_info anchor="bottom" id="Services" order="4" />
+      <window_info anchor="bottom" id="CMake" order="5" weight="0.32961994" />
+      <window_info anchor="bottom" id="Messages" order="6" weight="0.482962" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.32961994" />
+      <window_info anchor="bottom" id="Run" order="8" weight="0.482962" />
+      <window_info anchor="bottom" id="Vcpkg" order="9" weight="0.3846658" />
+      <window_info anchor="bottom" id="Find" order="10" weight="0.3283093" />
+      <window_info anchor="right" id="make" show_stripe_button="false" side_tool="true" />
+      <window_info anchor="right" id="github.copilotToolWindow" show_stripe_button="false" />
+      <window_info anchor="right" id="Coverage" show_stripe_button="false" side_tool="true" />
+      <window_info anchor="right" id="Python Console" show_stripe_button="false" />
+      <window_info anchor="right" content_ui="combo" id="Notifications" order="0" weight="0.25" />
+      <window_info anchor="right" id="AIAssistant" order="1" weight="0.25" />
+      <window_info anchor="right" id="Debug" order="2" weight="0.37855655" />
+      <window_info anchor="right" id="Database" order="3" weight="0.25" />
+      <window_info anchor="right" id="Gradle" order="4" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="5" weight="0.25" />
+      <window_info anchor="right" id="GitHub Copilot Chat" order="6" weight="0.32997918" />
+      <window_info anchor="right" id="Meson" order="7" />
+    </layout>
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/include/config" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c6604720-d94a-4777-9be7-b636247a2cde" name="Changes" comment="" />
+      <created>1731848952799</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731848952799</updated>
+      <workItem from="1731848954777" duration="521000" />
+      <workItem from="1731849486827" duration="908000" />
+      <workItem from="1731850403224" duration="165000" />
+      <workItem from="1731850612385" duration="270000" />
+      <workItem from="1732028422675" duration="248000" />
+      <workItem from="1732028692378" duration="144000" />
+      <workItem from="1732029135256" duration="7235000" />
+      <workItem from="1732036430611" duration="5865000" />
+      <workItem from="1732176342267" duration="5050000" />
+      <workItem from="1732325488743" duration="10974000" />
+      <workItem from="1732405100559" duration="10067000" />
+      <workItem from="1732624915850" duration="16689000" />
+      <workItem from="1733020643689" duration="9219000" />
+      <workItem from="1733070326044" duration="23000" />
+      <workItem from="1733070412721" duration="4634000" />
+      <workItem from="1733075093497" duration="2087000" />
+      <workItem from="1733086659909" duration="9756000" />
+      <workItem from="1733227289591" duration="12578000" />
+      <workItem from="1733264334082" duration="826000" />
+      <workItem from="1733265195661" duration="144000" />
+      <workItem from="1733267892598" duration="110000" />
+      <workItem from="1733268263392" duration="223000" />
+      <workItem from="1733268505700" duration="4674000" />
+      <workItem from="1733273702072" duration="212000" />
+      <workItem from="1733328245398" duration="132000" />
+      <workItem from="1733328406949" duration="9819000" />
+      <workItem from="1733343619084" duration="214000" />
+      <workItem from="1733347212887" duration="11608000" />
+      <workItem from="1733386890263" duration="4901000" />
+      <workItem from="1733419372870" duration="1224000" />
+      <workItem from="1733851242386" duration="540000" />
+      <workItem from="1733852025706" duration="199000" />
+      <workItem from="1733961196993" duration="3057000" />
+      <workItem from="1733997053910" duration="6559000" />
+      <workItem from="1734187242626" duration="7527000" />
+      <workItem from="1734206880013" duration="8324000" />
+      <workItem from="1734530033986" duration="581000" />
+      <workItem from="1734554513409" duration="7527000" />
+      <workItem from="1734562275466" duration="79000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

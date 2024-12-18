@@ -52,205 +52,205 @@ build cmake_object_order_depends_target_EgyptAdventureLib: phony || .
 build CMakeFiles/EgyptAdventureLib.dir/src/BattleSystem.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/BattleSystem.cpp || cmake_object_order_depends_target_EgyptAdventureLib
   DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/BattleSystem.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/Bullet.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Bullet.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Bullet.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/Character.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Character.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Character.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/Config.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Config.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Config.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/Effect.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Effect.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Effect.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/EffectManager.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/EffectManager.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/EffectManager.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/Entity.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Entity.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Entity.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/FearEffect.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/FearEffect.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/FearEffect.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/FloorTile.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/FloorTile.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/FloorTile.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
 
 build CMakeFiles/EgyptAdventureLib.dir/src/GameView.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/GameView.cpp || cmake_object_order_depends_target_EgyptAdventureLib
   DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/GameView.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/GroupAttackBonus.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/GroupAttackBonus.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/GroupAttackBonus.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/HealEffect.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/HealEffect.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/HealEffect.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/HealPotion.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/HealPotion.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/HealPotion.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
 
 build CMakeFiles/EgyptAdventureLib.dir/src/Inventory.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Inventory.cpp || cmake_object_order_depends_target_EgyptAdventureLib
   DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Inventory.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/Item.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Item.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Item.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
 
 build CMakeFiles/EgyptAdventureLib.dir/src/Map.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Map.cpp || cmake_object_order_depends_target_EgyptAdventureLib
   DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Map.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/Mummy.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Mummy.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Mummy.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
-  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
-
-build CMakeFiles/EgyptAdventureLib.dir/src/Phantom.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Phantom.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Phantom.cpp.o.d
-  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
 
 build CMakeFiles/EgyptAdventureLib.dir/src/PriorityQueue.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/PriorityQueue.cpp || cmake_object_order_depends_target_EgyptAdventureLib
   DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/PriorityQueue.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
 
-build CMakeFiles/EgyptAdventureLib.dir/src/SandGolem.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/SandGolem.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/SandGolem.cpp.o.d
+build CMakeFiles/EgyptAdventureLib.dir/src/config/Config.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/config/Config.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/config/Config.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/config
 
-build CMakeFiles/EgyptAdventureLib.dir/src/SandShield.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/SandShield.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/SandShield.cpp.o.d
+build CMakeFiles/EgyptAdventureLib.dir/src/effects/Effect.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/effects/Effect.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/effects/Effect.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/effects
 
-build CMakeFiles/EgyptAdventureLib.dir/src/SandTile.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/SandTile.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/SandTile.cpp.o.d
+build CMakeFiles/EgyptAdventureLib.dir/src/effects/EffectManager.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/effects/EffectManager.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/effects/EffectManager.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/effects
 
-build CMakeFiles/EgyptAdventureLib.dir/src/Scarab.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Scarab.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Scarab.cpp.o.d
+build CMakeFiles/EgyptAdventureLib.dir/src/effects/FearEffect.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/effects/FearEffect.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/effects/FearEffect.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/effects
 
-build CMakeFiles/EgyptAdventureLib.dir/src/Skeleton.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Skeleton.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Skeleton.cpp.o.d
+build CMakeFiles/EgyptAdventureLib.dir/src/effects/GroupAttackBonus.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/effects/GroupAttackBonus.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/effects/GroupAttackBonus.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/effects
 
-build CMakeFiles/EgyptAdventureLib.dir/src/Tile.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Tile.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Tile.cpp.o.d
+build CMakeFiles/EgyptAdventureLib.dir/src/effects/HealEffect.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/effects/HealEffect.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/effects/HealEffect.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/effects
 
-build CMakeFiles/EgyptAdventureLib.dir/src/Torch.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Torch.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Torch.cpp.o.d
+build CMakeFiles/EgyptAdventureLib.dir/src/effects/SandShield.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/effects/SandShield.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/effects/SandShield.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/effects
 
-build CMakeFiles/EgyptAdventureLib.dir/src/WallTile.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/WallTile.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/WallTile.cpp.o.d
+build CMakeFiles/EgyptAdventureLib.dir/src/entities/Character.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/entities/Character.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/entities/Character.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/entities
 
-build CMakeFiles/EgyptAdventureLib.dir/src/Weapon.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/Weapon.cpp || cmake_object_order_depends_target_EgyptAdventureLib
-  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/Weapon.cpp.o.d
+build CMakeFiles/EgyptAdventureLib.dir/src/entities/Entity.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/entities/Entity.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/entities/Entity.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
-  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/entities
+
+build CMakeFiles/EgyptAdventureLib.dir/src/entities/Mummy.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/entities/Mummy.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/entities/Mummy.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/entities
+
+build CMakeFiles/EgyptAdventureLib.dir/src/entities/Phantom.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/entities/Phantom.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/entities/Phantom.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/entities
+
+build CMakeFiles/EgyptAdventureLib.dir/src/entities/SandGolem.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/entities/SandGolem.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/entities/SandGolem.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/entities
+
+build CMakeFiles/EgyptAdventureLib.dir/src/entities/Scarab.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/entities/Scarab.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/entities/Scarab.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/entities
+
+build CMakeFiles/EgyptAdventureLib.dir/src/entities/Skeleton.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/entities/Skeleton.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/entities/Skeleton.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/entities
+
+build CMakeFiles/EgyptAdventureLib.dir/src/items/Bullet.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/items/Bullet.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/items/Bullet.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/items
+
+build CMakeFiles/EgyptAdventureLib.dir/src/items/HealPotion.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/items/HealPotion.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/items/HealPotion.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/items
+
+build CMakeFiles/EgyptAdventureLib.dir/src/items/Item.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/items/Item.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/items/Item.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/items
+
+build CMakeFiles/EgyptAdventureLib.dir/src/items/Torch.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/items/Torch.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/items/Torch.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/items
 
 build CMakeFiles/EgyptAdventureLib.dir/src/main.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/main.cpp || cmake_object_order_depends_target_EgyptAdventureLib
   DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/main.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+
+build CMakeFiles/EgyptAdventureLib.dir/src/tiles/FloorTile.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/tiles/FloorTile.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/tiles/FloorTile.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/tiles
+
+build CMakeFiles/EgyptAdventureLib.dir/src/tiles/SandTile.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/tiles/SandTile.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/tiles/SandTile.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/tiles
+
+build CMakeFiles/EgyptAdventureLib.dir/src/tiles/Tile.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/tiles/Tile.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/tiles/Tile.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/tiles
+
+build CMakeFiles/EgyptAdventureLib.dir/src/tiles/WallTile.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/tiles/WallTile.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/tiles/WallTile.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/tiles
+
+build CMakeFiles/EgyptAdventureLib.dir/src/weapons/Weapon.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/weapons/Weapon.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/weapons/Weapon.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/weapons
 
 
 # =============================================================================
@@ -260,7 +260,7 @@ build CMakeFiles/EgyptAdventureLib.dir/src/main.cpp.o: CXX_COMPILER__EgyptAdvent
 #############################################
 # Link the static library libEgyptAdventureLib.a
 
-build libEgyptAdventureLib.a: CXX_STATIC_LIBRARY_LINKER__EgyptAdventureLib_Debug CMakeFiles/EgyptAdventureLib.dir/src/BattleSystem.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Bullet.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Character.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Config.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Effect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/EffectManager.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Entity.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/FearEffect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/FloorTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/GameView.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/GroupAttackBonus.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/HealEffect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/HealPotion.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Inventory.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Item.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Map.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Mummy.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Phantom.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/PriorityQueue.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/SandGolem.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/SandShield.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/SandTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Scarab.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Skeleton.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Tile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Torch.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/WallTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Weapon.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/main.cpp.o
+build libEgyptAdventureLib.a: CXX_STATIC_LIBRARY_LINKER__EgyptAdventureLib_Debug CMakeFiles/EgyptAdventureLib.dir/src/BattleSystem.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/GameView.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Inventory.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Map.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/PriorityQueue.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/config/Config.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/Effect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/EffectManager.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/FearEffect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/GroupAttackBonus.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/HealEffect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/SandShield.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Character.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Entity.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Mummy.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Phantom.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/SandGolem.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Scarab.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Skeleton.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/Bullet.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/HealPotion.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/Item.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/Torch.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/main.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/FloorTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/SandTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/Tile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/WallTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/weapons/Weapon.cpp.o
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   POST_BUILD = :
@@ -280,7 +280,7 @@ build cmake_object_order_depends_target_EgyptAdventure: phony || cmake_object_or
 build CMakeFiles/EgyptAdventure.dir/src/main.cpp.o: CXX_COMPILER__EgyptAdventure_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/main.cpp || cmake_object_order_depends_target_EgyptAdventure
   DEP_FILE = CMakeFiles/EgyptAdventure.dir/src/main.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventure.dir
   OBJECT_FILE_DIR = CMakeFiles/EgyptAdventure.dir/src
 
@@ -313,7 +313,7 @@ build cmake_object_order_depends_target_battle_test: phony || cmake_object_order
 build CMakeFiles/battle_test.dir/test/battleTest.cpp.o: CXX_COMPILER__battle_test_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/test/battleTest.cpp || cmake_object_order_depends_target_battle_test
   DEP_FILE = CMakeFiles/battle_test.dir/test/battleTest.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
-  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/include
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/battle_test.dir
   OBJECT_FILE_DIR = CMakeFiles/battle_test.dir/test
 
@@ -379,14 +379,14 @@ build all: phony libEgyptAdventureLib.a EgyptAdventure battle_test
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeDependentOption.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-C.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-CXX.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-Initialize.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /home/pakamaka345/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-C.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-CXX.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-Initialize.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeDependentOption.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-C.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-CXX.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-Initialize.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /home/pakamaka345/.vcpkg-clion/vcpkg/scripts/buildsystems/vcpkg.cmake /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake: phony
+build /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCXXInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeCommonLanguageInclude.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeGenericSystem.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeInitializeConfigs.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeLanguageInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInformation.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-C.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU-CXX.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Compiler/GNU.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-C.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU-CXX.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-GNU.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux-Initialize.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/Linux.cmake /home/pakamaka345/.cache/JetBrains/RemoteDev/dist/7c26c46eeb42c_CLion-242.20224.214/bin/cmake/linux/x64/share/cmake-3.29/Modules/Platform/UnixPaths.cmake /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/CMakeLists.txt CMakeCache.txt CMakeFiles/3.29.6/CMakeCCompiler.cmake CMakeFiles/3.29.6/CMakeCXXCompiler.cmake CMakeFiles/3.29.6/CMakeSystem.cmake: phony
 
 
 #############################################

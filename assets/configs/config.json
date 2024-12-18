@@ -1,0 +1,68 @@
+{
+  "Character": {
+    "name": "PiterMiler",
+    "x": 1,
+    "y": 1,
+    "symbol": "@"
+  },
+  "Scarab": {
+    "name": "Scarab",
+    "attackRange": 1,
+    "attackDamage": 5.0,
+    "health": 15.0,
+    "defense": 0.1,
+    "priority": 1.0,
+    "dodgeChance": 0.05,
+    "x": 1,
+    "y": 1,
+    "symbol": "S"
+  },
+  "Skeleton": {
+    "name": "Skeleton",
+    "attackRange": 3,
+    "attackDamage": 20.0,
+    "health": 30.0,
+    "defense": 0.2,
+    "priority": 1.5,
+    "dodgeChance": 0.1,
+    "x": 1,
+    "y": 1,
+    "symbol": "K"
+  },
+  "Mummy": {
+    "name": "Mummy",
+    "attackRange": 2,
+    "attackDamage": 30.0,
+    "health": 50.0,
+    "defense": 0.3,
+    "priority": 2.0,
+    "dodgeChance": 0.15,
+    "x": 1,
+    "y": 1,
+    "symbol": "M"
+  },
+  "Phantom": {
+    "name": "Phantom",
+    "attackRange": 3,
+    "attackDamage": 30.0,
+    "health": 60.0,
+    "defense": 0.4,
+    "priority": 3.0,
+    "dodgeChance": 0.25,
+    "x": 1,
+    "y": 1,
+    "symbol": "P"
+  },
+  "SandGolem": {
+    "name": "SandGolem",
+    "attackRange": 1,
+    "attackDamage": 50.0,
+    "health": 200.0,
+    "defense": 0.5,
+    "priority": 4.0,
+    "dodgeChance": 0.3,
+    "x": 1,
+    "y": 1,
+    "symbol": "g"
+  }
+}

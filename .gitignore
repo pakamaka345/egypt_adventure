@@ -5,6 +5,8 @@ cmake_install.cmake
 Makefile
 
 .vscode/
+.idea/
+cmake-build-debug/
 
 src/output/
 
@@ -26,3 +28,4 @@ src/output/
 
 # Directories
 build/
+cmake-build-debug/

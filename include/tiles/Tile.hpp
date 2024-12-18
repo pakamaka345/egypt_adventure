@@ -40,15 +40,5 @@ public:
 
     TileType::Type getTileType();
     void setTileType(TileType::Type tileType);
-
-    /**
-     * \brief Can be placed on will be used to check if the tile can be walked on
-     */
-    bool canBePlacedOn(TileType::Type tileType) const override;
-
-protected:
-    /**
-     * \brief Helper function "IsWalkable" will be used in canBePlacedOn but in child classes will be overriden
-     */
-     virtual bool isWalkable(TileType::Type tileType) const;
+    virtual bool isWalkable() const;
 };

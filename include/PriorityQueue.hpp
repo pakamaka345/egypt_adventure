@@ -23,6 +23,7 @@ public:
 
     void addEntity(const std::shared_ptr<Entity>& entity);
     void removeEntity(const std::shared_ptr<Entity>& entity);
+    std::shared_ptr<Entity> entityAt(int index) const;
     void clear();
 
     std::shared_ptr<Entity> popEntity();

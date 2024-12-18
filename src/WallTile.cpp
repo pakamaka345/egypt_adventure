@@ -5,6 +5,6 @@ WallTile::WallTile(int x, int y)
 {
 }
 
-bool WallTile::isWalkable(TileType::Type tileType) const {
+bool WallTile::isWalkable() const {
     return false;
 }

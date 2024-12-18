@@ -13,10 +13,6 @@ std::string& Item::getDescription() {
     return description;
 }
 
-bool Item::canBePlacedOn(TileType::Type tileType) const {
-    return tileType == TileType::Type::FLOOR;
-}
-
 
 
 

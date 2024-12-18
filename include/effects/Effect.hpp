@@ -17,8 +17,22 @@ public:
     Effect(const std::string& name, int duration);
     virtual ~Effect() = default;
 
+    /**
+     * @brief Applies when the effect is created.
+     * @param target
+     */
     virtual void apply(Entity& target) = 0;
+
+    /**
+     * @brief Updates the effect every tick(turn).
+     * @param target
+     */
     virtual void onTick(Entity& target) = 0;
+
+    /**
+     * @brief Does something when the effect is removed.
+     * @param target
+     */
     virtual void remove(Entity& target) = 0;
 
     int getDuration() const;

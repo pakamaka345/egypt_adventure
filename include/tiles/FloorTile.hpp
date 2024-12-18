@@ -6,6 +6,5 @@ public:
     FloorTile(int x, int y);
     ~FloorTile() override = default;
 
-protected:
-    bool isWalkable(TileType::Type tileType) const override;
+    bool isWalkable() const override;
 };

@@ -21,6 +21,4 @@ public:
 
     std::string& getName();
     std::string& getDescription();
-
-    [[nodiscard]] bool canBePlacedOn(TileType::Type tileType) const override;
 };

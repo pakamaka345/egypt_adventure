@@ -25,6 +25,16 @@ void PriorityQueue::removeEntity(const std::shared_ptr<Entity> &entity) {
     queue = newQueue;
 }
 
+std::shared_ptr<Entity> PriorityQueue::entityAt(int index) const {
+    if (index < 0 || index >= queue.size()) return nullptr;
+
+    std::priority_queue<QueueItem> tempQueue = queue;
+    for (int i = 0; i < index; i++) {
+        tempQueue.pop();
+    }
+    return tempQueue.top().entity;
+}
+
 void PriorityQueue::clear() {
     while (!queue.empty()) {
         queue.pop();

@@ -82,11 +82,6 @@ void Tile::setTileType(TileType::Type tileType) {
     this->tileType = tileType;
 }
 
-bool Tile::canBePlacedOn(TileType::Type tileType) const {
-    return isWalkable(tileType);
+bool Tile::isWalkable() const {
+    return false;
 }
-
-bool Tile::isWalkable(TileType::Type tileType) const {
-    return tileType != TileType::Type::EMPTY;
-}
-

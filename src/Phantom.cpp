@@ -1,5 +1,6 @@
 #include "entities/Phantom.hpp"
 #include "effects/FearEffect.hpp"
+#include "dice/DiceRoll.hpp"
 
 Phantom::Phantom(const std::string &name, int attackRange, float attackDamage, float health, float defense,
                  float priority, float dodgeChance, int x, int y, char symbol)
@@ -10,17 +11,15 @@ Phantom::Phantom(const std::string &name, int attackRange, float attackDamage, f
 void Phantom::attack(Entity &target) {
     if (isReady()) {
         if (canAttack(target)) {
-            std::random_device rd;
-            std::mt19937 gen(rd());
-            std::uniform_int_distribution<> dis(1, 8);
-            int diceRoll = dis(gen);
+            DiceRoll dice(8);
+            int diceRoll = dice.roll();
 
-            float physicalDamage = (attackDamage * float(diceRoll) / 8.0f) * (1.0f - target.getDefense());
-            float magicalDamage = (attackDamage * float(diceRoll) / 8.0f) * (1.0f - target.getDefense());
+            float physicalDamage = (attackDamage * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
+            float magicalDamage = (attackDamage * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
             target.takeDamage(physicalDamage, magicalDamage);
 
-            diceRoll = dis(gen);
-            if (diceRoll <= 4) {
+            diceRoll = dice.roll();
+            if (diceRoll <= 2) {
                 auto fearEffect = std::make_shared<FearEffect>(3, 1.5f);
                 target.applyEffects(fearEffect);
             }
@@ -32,14 +31,17 @@ void Phantom::attack(Entity &target) {
 }
 
 void Phantom::takeDamage(float physicalDamage, float magicalDamage) {
-    health = std::max(0.0f, health - (physicalDamage * 0.1f) - (magicalDamage));
+    health = std::max(0.0f, health - (physicalDamage * 0.1f) - (magicalDamage * 1.3f));
 }
 
 void Phantom::heal(float amount) {
     health = std::min(maxHealth, health + amount);
 }
 
-void Phantom::move(int dx, int dy) {}
+void Phantom::move(int dx, int dy) {
+    this->setX(this->getX() + dx);
+    this->setY(this->getY() + dy);
+}
 
 void Phantom::update() {
     Entity::update();

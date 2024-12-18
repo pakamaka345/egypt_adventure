@@ -5,6 +5,6 @@ FloorTile::FloorTile(int x, int y)
 {
 }
 
-bool FloorTile::isWalkable(TileType::Type tileType) const {
+bool FloorTile::isWalkable() const {
     return true;
 }

@@ -11,7 +11,7 @@ void displayMenu() {
 }
 
 int main() {
-    BattleSystem battleSystem("");
+    BattleSystem battleSystem("../assets/configs/config.json");
     auto entityList = battleSystem.getEntitiesList();
 
     std::cout << "Hello to the battle system!" << std::endl;
@@ -49,7 +49,10 @@ int main() {
             }
             case 3: {
                 try {
-                    battleSystem.startBattle();
+                    int rounds;
+                    std::cout << "Enter number of rounds: ";
+                    std::cin >> rounds;
+                    battleSystem.startBattle(rounds);
                     displayMenu();
                     break;
                 } catch (std::runtime_error& e) {

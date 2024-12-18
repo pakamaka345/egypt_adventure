@@ -21,7 +21,7 @@ public:
     void removeEntityFromBattle(const std::shared_ptr<Entity>& entity);
     void clearBattle();
 
-    void startBattle();
+    void startBattle(int rounds);
 
     std::vector<std::shared_ptr<Entity>>& getEntitiesList();
 
@@ -30,5 +30,5 @@ private:
     void updateEntities();
 
     // Now will just create the entities class but after i wanna replace this method to a Config class
-    void readEntitiesFromFile(const std::string& pathToInitFile);
+    void readEntitiesFromFile(const std::string &pathToInitFile);
 };

@@ -1,6 +1,8 @@
 #pragma once
 #include "entities/Entity.hpp"
 
+class Map;
+
 /**
  * \brief Mummy is a the most familiar enemy to the player.
  * It has a worse priority than the player, but health and attack damage a bit better.
@@ -21,6 +23,8 @@ public:
     void move(int dx, int dy) override;
     void update() override;
     std::shared_ptr<Entity> clone() const override;
+
+    void summonMinions(Map& map);
 
 private:
     void regenerate();

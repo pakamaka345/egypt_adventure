@@ -9,7 +9,15 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-add_library(EgyptAdventureLib ${SOURCES})
+add_library(EgyptAdventureLib ${SOURCES}
+        include/effects/GroupAttackBonus.hpp
+        src/GroupAttackBonus.cpp
+        include/effects/SandShield.hpp
+        src/SandShield.cpp
+        src/SandTile.cpp
+        include/config/Config.hpp
+        include/nlohmann/json.hpp
+        src/Config.cpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

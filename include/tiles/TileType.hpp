@@ -8,5 +8,6 @@ namespace TileType
         OPEN_DOOR,
         STAIRS_UP,
         STAIRS_DOWN,
+        SAND,
     };
 }

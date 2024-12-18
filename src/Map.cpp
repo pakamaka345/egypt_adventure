@@ -27,23 +27,23 @@ Map::Map(std::string& pathToInitFile) : entities(), items(), width(0), height(0)
     initMap(pathToInitFile);
 }
 
-bool Map::canPlaceItem(int x, int y, std::shared_ptr<Item>& item)
+bool Map::canPlaceItem(int x, int y)
 {
-    if (x >= 0 && x < width && y >= 0 && y < height)
-        return item->canBePlacedOn(map[y][x]->getTileType());
+    if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
+        return true;
     return false;
 }
 
-bool Map::canPlaceEntity(int x, int y, std::shared_ptr<Entity>& entity)
+bool Map::canPlaceEntity(int x, int y)
 {
-    if (x >= 0 && x < width && y >= 0 && y < height)
-        return (!map[y][x]->hasEntity() && entity->canBePlacedOn(map[y][x]->getTileType()));
+    if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
+        return (!map[y][x]->hasEntity() && map[y][x]->isWalkable());
     return false;
 }
 
 void Map::placeItem(int x, int y, std::shared_ptr<Item>& item)
 {
-    if (canPlaceItem(x, y, item))
+    if (canPlaceItem(x, y))
     {
         map[y][x]->addItem(item);
         items.push_back(item);
@@ -54,7 +54,7 @@ void Map::placeItem(int x, int y, std::shared_ptr<Item>& item)
 
 void Map::placeEntity(int x, int y, std::shared_ptr<Entity>& entity)
 {
-    if (canPlaceEntity(x, y, entity))
+    if (canPlaceEntity(x, y))
     {
         map[y][x]->setEntity(entity);
         entities.push_back(entity);
@@ -83,6 +83,22 @@ void Map::removeEntity(int x, int y)
     }
 }
 
+std::vector<std::pair<int, int>> Map::getFreePositionsAround(int x, int y, int radius, int count) {
+    std::vector<std::pair<int, int>> freePositions;
+    for (int dx = -radius; dx <= radius; dx++) {
+        for (int dy = -radius; dy <= radius; dy++) {
+            std::pair<int, int> candidate(x + dx, y + dy);
+            if (canPlaceEntity(candidate.first, candidate.second) && (dx != 0 || dy != 0)) {
+                freePositions.emplace_back(candidate);
+                if (freePositions.size() == count) {
+                    return freePositions;
+                }
+            }
+        }
+    }
+    return freePositions;
+}
+
 void Map::listEntitiesAndItems(std::string& pathToWrite)
 {
     std::ofstream file(pathToWrite, std::ios::out);
@@ -103,11 +119,17 @@ void Map::listEntitiesAndItems(std::string& pathToWrite)
     }
 }
 
+bool Map::isInsideMap(int x, int y) {
+    if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
+        return true;
+    return false;
+}
+
 void Map::setTile(std::shared_ptr<Tile>& tile)
 {
     int x = tile->getX();
     int y = tile->getY();
-    if (x >= 0 && x < width && y >= 0 && y < height)
+    if (isInsideMap(x, y))
         map[y][x] = tile;
     else
         throw std::runtime_error("Could not set tile at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");

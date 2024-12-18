@@ -41,10 +41,6 @@ void Entity::removeEffects() {
     effectManager.clearEffects(*this);
 }
 
-bool Entity::canBePlacedOn(TileType::Type tileType) const {
-    return tileType == TileType::Type::FLOOR;
-}
-
 bool Entity::isAlive() const {
     return health > 0;
 }

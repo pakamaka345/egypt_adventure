@@ -9,6 +9,11 @@
  */
 class Skeleton : public Entity
 {
+private:
+    int resurrection;
+    //TODO: Винести в Entity
+    int distanceTo(Entity& target) const;
+
 public:
     Skeleton(const std::string& name, int attackRange, float attackDamage,
              float health, float defense, float priority, float dodgeChance,

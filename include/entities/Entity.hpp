@@ -44,8 +44,6 @@ public:
     void addAmulet(const std::shared_ptr<Amulet>& amulet);
     void removeAmulet(const std::shared_ptr<Amulet>& amulet);
 
-
-    bool canBePlacedOn(TileType::Type tileType) const override;
     bool isAlive() const;
     bool canAttack(Entity& target) const;
 

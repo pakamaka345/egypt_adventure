@@ -5,7 +5,5 @@ class WallTile : public Tile {
 public:
     WallTile(int x, int y);
     ~WallTile() override = default;
-
-protected:
-    bool isWalkable(TileType::Type tileType) const override;
+    bool isWalkable() const override;
 };

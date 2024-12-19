@@ -203,6 +203,13 @@ build CMakeFiles/EgyptAdventureLib.dir/src/items/Item.cpp.o: CXX_COMPILER__Egypt
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/items
 
+build CMakeFiles/EgyptAdventureLib.dir/src/items/ThrowableItem.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/items/ThrowableItem.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/items/ThrowableItem.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/items
+
 build CMakeFiles/EgyptAdventureLib.dir/src/items/Torch.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/items/Torch.cpp || cmake_object_order_depends_target_EgyptAdventureLib
   DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/items/Torch.cpp.o.d
   FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
@@ -216,6 +223,20 @@ build CMakeFiles/EgyptAdventureLib.dir/src/main.cpp.o: CXX_COMPILER__EgyptAdvent
   INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src
+
+build CMakeFiles/EgyptAdventureLib.dir/src/states/GameState.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/states/GameState.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/states/GameState.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/states
+
+build CMakeFiles/EgyptAdventureLib.dir/src/states/LevelState.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/states/LevelState.cpp || cmake_object_order_depends_target_EgyptAdventureLib
+  DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/states/LevelState.cpp.o.d
+  FLAGS = -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -I/home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src
+  OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
+  OBJECT_FILE_DIR = CMakeFiles/EgyptAdventureLib.dir/src/states
 
 build CMakeFiles/EgyptAdventureLib.dir/src/tiles/FloorTile.cpp.o: CXX_COMPILER__EgyptAdventureLib_unscanned_Debug /home/pakamaka345/C++Projects/pgl_2425_jmb_egypt_adventure/src/tiles/FloorTile.cpp || cmake_object_order_depends_target_EgyptAdventureLib
   DEP_FILE = CMakeFiles/EgyptAdventureLib.dir/src/tiles/FloorTile.cpp.o.d
@@ -260,7 +281,7 @@ build CMakeFiles/EgyptAdventureLib.dir/src/weapons/Weapon.cpp.o: CXX_COMPILER__E
 #############################################
 # Link the static library libEgyptAdventureLib.a
 
-build libEgyptAdventureLib.a: CXX_STATIC_LIBRARY_LINKER__EgyptAdventureLib_Debug CMakeFiles/EgyptAdventureLib.dir/src/BattleSystem.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/GameView.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Inventory.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Map.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/PriorityQueue.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/config/Config.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/Effect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/EffectManager.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/FearEffect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/GroupAttackBonus.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/HealEffect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/SandShield.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Character.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Entity.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Mummy.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Phantom.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/SandGolem.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Scarab.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Skeleton.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/Bullet.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/HealPotion.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/Item.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/Torch.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/main.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/FloorTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/SandTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/Tile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/WallTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/weapons/Weapon.cpp.o
+build libEgyptAdventureLib.a: CXX_STATIC_LIBRARY_LINKER__EgyptAdventureLib_Debug CMakeFiles/EgyptAdventureLib.dir/src/BattleSystem.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/GameView.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Inventory.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/Map.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/PriorityQueue.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/config/Config.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/Effect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/EffectManager.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/FearEffect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/GroupAttackBonus.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/HealEffect.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/effects/SandShield.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Character.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Entity.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Mummy.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Phantom.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/SandGolem.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Scarab.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/entities/Skeleton.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/Bullet.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/HealPotion.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/Item.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/ThrowableItem.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/items/Torch.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/main.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/states/GameState.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/states/LevelState.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/FloorTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/SandTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/Tile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/tiles/WallTile.cpp.o CMakeFiles/EgyptAdventureLib.dir/src/weapons/Weapon.cpp.o
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles/EgyptAdventureLib.dir
   POST_BUILD = :

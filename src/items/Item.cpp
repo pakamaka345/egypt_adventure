@@ -5,6 +5,14 @@ Item::Item(const std::string& name, const std::string& description, int x, int y
 {
 }
 
+bool Item::canBeUsedOnEnemies() const {
+    return false;
+}
+
+bool Item::isConsumable() const {
+    return true;
+}
+
 std::string& Item::getName() {
     return name;
 }

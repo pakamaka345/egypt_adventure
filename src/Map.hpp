@@ -7,13 +7,12 @@ class Map
 {
 protected:
     std::vector<std::vector<std::shared_ptr<Tile>>> map;
-    std::list<std::shared_ptr<Entity>> entities;
-    std::list<std::shared_ptr<Item>> items;
     int width;
     int height;
 
 public:
     explicit Map(std::string& pathToInitFile);
+    Map(const Map& generatedMap);
     Map(int width, int height);
     ~Map() = default;
 

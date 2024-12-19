@@ -55,6 +55,8 @@ public:
     void reduceCooldown() { cooldown = std::max(0.0f, cooldown - 1); }
     void resetCooldown(float turn) { cooldown = turn; }
 
+    int distanceTo(Entity& target) const;
+
     std::string& getName();
     float getHealth() const;
     float getMaxHealth() const;
@@ -95,7 +97,6 @@ public:
      */
     virtual void heal(float amount) = 0;
 
-    // TODO - Add a method to move the entity
     virtual void move(int dx, int dy) = 0;
 
     /**

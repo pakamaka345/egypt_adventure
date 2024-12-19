@@ -58,6 +58,15 @@ bool Entity::canAttack(Entity &target) const {
     return radius <= attackRange;
 }
 
+int Entity::distanceTo(Entity &target) const {
+    if (target.getX() == this->getX()) {
+        return std::abs(target.getY() - this->getY());
+    } else if (target.getY() == this->getY()) {
+        return std::abs(target.getX() - this->getX());
+    }
+    return -1;
+}
+
 void Entity::update() {
     updateEffects();
     reduceCooldown();

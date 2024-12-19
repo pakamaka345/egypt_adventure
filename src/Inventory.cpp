@@ -27,28 +27,27 @@ void Inventory::removeItem(const std::string& itemName) {
     }
 }
 
-void Inventory::useItemWithRemoving(const std::string &itemName, Entity& target) {
-    if (getItem(itemName) != std::nullopt) {
-        try {
-            items[itemName].item->use(target);
-            removeItem(itemName);
-        } catch (std::invalid_argument& e) {
-            throw std::runtime_error("Failed to use item: " + std::string(e.what()));
-        }
-    } else {
-        throw std::invalid_argument("Item not found in inventory to use");
-    }
-}
-
 void Inventory::useItem(const std::string &itemName, Entity &target) {
     if (getItem(itemName) != std::nullopt) {
         try {
-            items[itemName].item->use(target);
+            auto item = items[itemName].item;
+            if (item->canBeUsedOnEnemies() && &target == &getCharacter()) {
+                //TODO change to EventManager
+                return;
+            }
+
+            item->use(target);
+
+            if (item->isConsumable()) {
+                removeItem(itemName);
+            }
         } catch (std::invalid_argument& e) {
             throw std::runtime_error("Failed to use item: " + std::string(e.what()));
+            //TODO change to EventManager
         }
     } else {
         throw std::invalid_argument("Item not found in inventory to use");
+        //TODO change to EventManager
     }
 }
 
@@ -67,4 +66,8 @@ int Inventory::getItemCount(const std::string& itemName) {
 
 bool Inventory::hasItem(const std::string &itemName) {
     return items.find(itemName) != items.end();
+}
+
+Entity &Inventory::getCharacter() {
+    //TODO GameInstance::getPlayer();
 }

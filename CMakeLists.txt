@@ -9,7 +9,13 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-add_library(EgyptAdventureLib ${SOURCES})
+add_library(EgyptAdventureLib ${SOURCES}
+        src/items/ThrowableItem.cpp
+        src/items/ThrowableItem.hpp
+        src/states/LevelState.cpp
+        src/states/LevelState.hpp
+        src/states/GameState.cpp
+        src/states/GameState.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

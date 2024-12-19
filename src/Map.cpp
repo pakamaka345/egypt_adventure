@@ -9,7 +9,7 @@
 #include "tiles/FloorTile.hpp"
 
 Map::Map(int width, int height)
-    : width(width), height(height), entities(), items()
+    : width(width), height(height)
 {
     map.resize(height);
     for (int y = 0; y < height; y++)
@@ -22,7 +22,14 @@ Map::Map(int width, int height)
     }
 }
 
-Map::Map(std::string& pathToInitFile) : entities(), items(), width(0), height(0)
+Map::Map(const Map &generatedMap)
+{
+    this->map = generatedMap.map;
+    this->width = generatedMap.width;
+    this->height = generatedMap.height;
+}
+
+Map::Map(std::string& pathToInitFile) : width(0), height(0)
 {
     initMap(pathToInitFile);
 }
@@ -46,7 +53,6 @@ void Map::placeItem(int x, int y, std::shared_ptr<Item>& item)
     if (canPlaceItem(x, y))
     {
         map[y][x]->addItem(item);
-        items.push_back(item);
     } else {
         throw std::runtime_error("Could not place item at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
@@ -57,7 +63,6 @@ void Map::placeEntity(int x, int y, std::shared_ptr<Entity>& entity)
     if (canPlaceEntity(x, y))
     {
         map[y][x]->setEntity(entity);
-        entities.push_back(entity);
     } else {
         throw std::runtime_error("Could not place entity at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
@@ -105,13 +110,7 @@ void Map::listEntitiesAndItems(std::string& pathToWrite)
     if (file.is_open())
     {
         file << "Entities:\n";
-        for (auto& entity : entities) {
-            file << entity->getName() << " health:" << entity->getHealth() << " at (" << entity->getX() << ", " << entity->getY() << " symbol: " << entity->getSymbol() << ")\n";
-        }
-        file << "\nItems:\n";
-        for (auto& item : items) {
-            file << item->getName() << " at (" << item->getX() << ", " << item->getY() << " symbol: " << item->getSymbol() << ")\n";
-        }
+
 
         file.close();
     } else {

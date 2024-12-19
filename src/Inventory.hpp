@@ -25,11 +25,12 @@ public:
 
     void addItem(const std::shared_ptr<Item>& item);
     void removeItem(const std::string& itemName);
-    void useItemWithRemoving(const std::string& itemName, Entity& target);
-    void useItem(const std::string& itemName, Entity& target);
+    void useItem(const std::string& itemName, Entity& target = getCharacter());
 
     std::optional<std::shared_ptr<Item>> getItem(const std::string& itemName);
     int getItemCount(const std::string& itemName);
     std::unordered_map<std::string, InventoryItem> getItems() const { return items; }
     bool hasItem(const std::string& itemName);
+
+    static Entity& getCharacter();
 };

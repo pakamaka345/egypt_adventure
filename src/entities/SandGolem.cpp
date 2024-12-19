@@ -6,6 +6,7 @@
 #include "Map.hpp"
 #include "tiles/Tile.hpp"
 #include "tiles/SandTile.hpp"
+#include "states/GameState.hpp"
 
 SandGolem::SandGolem(const std::string &name, int attackRange, float attackDamage, float health, float defense, float priority,
              float dodgeChance, int x, int y, char symbol)
@@ -49,7 +50,8 @@ void SandGolem::move(int dx, int dy) {
 void SandGolem::update() {
     Entity::update();
 
-    //TODO: Add GameState instance and use heal method
+    Map& map = GameState::getInstance().getCurrentLevel().getMap();
+    healOnSand(map);
 }
 
 std::shared_ptr<Entity> SandGolem::clone() const {

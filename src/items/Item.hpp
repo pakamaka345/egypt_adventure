@@ -18,6 +18,8 @@ public:
     ~Item() override = default;
 
     virtual void use(Entity& target) = 0;
+    virtual bool canBeUsedOnEnemies() const;
+    virtual bool isConsumable() const;
 
     std::string& getName();
     std::string& getDescription();

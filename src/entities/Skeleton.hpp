@@ -1,7 +1,6 @@
 #pragma once
 #include "entities/Entity.hpp"
 
-// TODO: Maybe add methods to do smth after death (like a resurrection)
 /**
  * \brief Skeleton is a second type of enemy in the game.
  * They have a higher attack range but also have same priority as the player.
@@ -11,8 +10,6 @@ class Skeleton : public Entity
 {
 private:
     int resurrection;
-    //TODO: Винести в Entity
-    int distanceTo(Entity& target) const;
 
 public:
     Skeleton(const std::string& name, int attackRange, float attackDamage,

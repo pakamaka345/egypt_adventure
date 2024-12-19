@@ -83,7 +83,8 @@ void Character::heal(float amount) {
 }
 
 void Character::move(int dx, int dy) {
-    //TODO movement logic after with GameController class
+    this->setX(this->getX() + dx);
+    this->setY(this->getY() + dy);
 }
 
 void Character::update() {

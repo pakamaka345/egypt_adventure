@@ -26,30 +26,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ffbbab71-560c-4c4a-9d62-d5a29295d718" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/items/ThrowableItem.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/items/ThrowableItem.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/states/GameState.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/states/GameState.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/states/LevelState.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/states/LevelState.hpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_deps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/.ninja_log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/battle_test" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/battle_test" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/build.ninja" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Inventory.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Inventory.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Inventory.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Inventory.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Map.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Character.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Character.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Entity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Entity.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Entity.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Entity.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/SandGolem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/SandGolem.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Skeleton.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Skeleton.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/Skeleton.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/Skeleton.hpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/items/Item.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/items/Item.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/items/Item.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/items/Item.hpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +93,7 @@
       <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info anchor="bottom" id="Problems" order="1" />
       <window_info anchor="bottom" id="Problems View" order="2" weight="0.32961994" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.33093053" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.32961994" />
       <window_info anchor="bottom" id="Services" order="4" />
       <window_info anchor="bottom" id="CMake" order="5" weight="0.32961994" />
       <window_info anchor="bottom" id="Messages" order="6" weight="0.32961994" />
@@ -171,7 +148,7 @@
       <option name="presentableId" value="Default" />
       <updated>1734563127207</updated>
       <workItem from="1734563130241" duration="327000" />
-      <workItem from="1734563499794" duration="5769000" />
+      <workItem from="1734563499794" duration="5928000" />
     </task>
     <servers />
   </component>

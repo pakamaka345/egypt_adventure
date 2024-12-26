@@ -37,8 +37,6 @@ public:
 
     void addToInventory(const std::shared_ptr<Item>& item);
     void removeFromInventory(const std::string& itemName);
-    void useItemWithRemoving(const std::string& itemName, Entity& target);
-    void useItem(const std::string& itemName, Entity& target);
 
     void attack(Entity& target) override;
     void takeDamage(float physicalDamage, float magicalDamage) override;
@@ -47,6 +45,6 @@ public:
     void update() override;
     std::shared_ptr<Entity> clone() const override;
 
-    const Inventory& getInventory() const;
+    Inventory& getInventory();
     const std::shared_ptr<Weapon>& getRevolver() const;
 };

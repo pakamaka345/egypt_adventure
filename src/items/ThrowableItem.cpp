@@ -5,7 +5,7 @@ ThrowableItem::ThrowableItem(int radius, const std::string &name, const std::str
 {
 }
 
-bool ThrowableItem::canBeUsedOnEnemies() const {
+bool ThrowableItem::canBeUsedOnEnemies() const
+{
     return true;
 }
-                             {}

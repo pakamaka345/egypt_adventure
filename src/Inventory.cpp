@@ -1,6 +1,8 @@
 #include "Inventory.hpp"
 #include "items/Item.hpp"
 #include "entities/Entity.hpp"
+#include "entities/Character.hpp"
+#include "states/GameState.hpp"
 #include <stdexcept>
 
 Inventory::Inventory() : items()
@@ -69,5 +71,5 @@ bool Inventory::hasItem(const std::string &itemName) {
 }
 
 Entity &Inventory::getCharacter() {
-    //TODO GameInstance::getPlayer();
+    return GameState::getInstance().getPlayer();
 }

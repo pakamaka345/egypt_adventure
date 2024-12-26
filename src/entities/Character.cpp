@@ -17,7 +17,7 @@ void Character::reloadRevolver() {
         }
 
         while (revolver->getAmmo() < revolver->getMagazineSize() && inventory.hasItem("bullet")) {
-            inventory.useItemWithRemoving("bullet", *this);
+            inventory.useItem("bullet");
         }
 
         for (auto& amulet : activeAmulets) {
@@ -36,22 +36,16 @@ void Character::removeFromInventory(const std::string &itemName) {
     inventory.removeItem(itemName);
 }
 
-void Character::useItemWithRemoving(const std::string &itemName, Entity &target) {
-    inventory.useItemWithRemoving(itemName, target);
-}
-
-void Character::useItem(const std::string &itemName, Entity &target) {
-    inventory.useItem(itemName, target);
-}
-
 void Character::attack(Entity &target) {
     if (isReady()) {
         if (revolver->getAmmo() > 0) {
             this->attackRange = 5.0f;
             if (canAttack(target)) {
                 revolver->shoot(target);
+            } else
+            {
+                revolver->shootWithMiss();
             }
-            revolver->shootWithMiss();
             resetCooldown(this->priority);
         } else {
             this->attackRange = 1.0f;
@@ -61,7 +55,7 @@ void Character::attack(Entity &target) {
                 std::uniform_int_distribution<> dis(1, 8);
 
                 int diceRoll = dis(gen);
-                float physicalDamage = (attackDamage * float(diceRoll) / 8.0f) * (1 - target.getDefense());
+                float physicalDamage = (attackDamage * float(diceRoll) / 4.0f) * (1 - target.getDefense());
 
                 target.takeDamage(physicalDamage, 0);
             }
@@ -95,7 +89,7 @@ std::shared_ptr<Entity> Character::clone() const {
     return std::make_shared<Character>(*this);
 }
 
-const Inventory &Character::getInventory() const {
+Inventory &Character::getInventory() {
     return inventory;
 }
 

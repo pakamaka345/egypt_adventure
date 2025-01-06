@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <map>
 #include "states/LevelState.hpp"
 
 class Character;
@@ -9,8 +10,9 @@ class Map;
 class GameState {
 private:
     std::shared_ptr<Character> player;
-    std::unique_ptr<LevelState> currentLevel;
-    int levelNumber;
+    std::shared_ptr<LevelState> currentLevel;
+    std::map<int, std::shared_ptr<LevelState>> levels;
+    int levelIndex;
 
     GameState();
 
@@ -21,15 +23,16 @@ public:
     static GameState& getInstance();
 
     void initializePlayer(std::shared_ptr<Character> newPlayer);
-    void setLevel(std::unique_ptr<LevelState> level);
+    void setLevel(std::shared_ptr<LevelState> level);
 
     LevelState& getCurrentLevel();
     Character& getPlayer();
 
-    void nextLevel(const Map& newMap, const LevelState::Position& startPos);
+    void nextLevel(const Position& startPos);
+    void previousLevel(const Position& startPos);
 
-    void setLevelNumber(int newLevelNumber);
-    int getLevelNumber() const;
+    void setLevelIndex(int newLevelIndex);
+    int getLevelIndex() const;
 
     void update();
 };

@@ -1,8 +1,12 @@
 #include "states/LevelState.hpp"
 #include "entities/Entity.hpp"
-#include "Map.hpp"
+#include "map/Map.hpp"
 
-LevelState::LevelState(const Map& map, const LevelState::Position &startPosition)
+LevelState::LevelState(const Map& map) : map(std::make_unique<Map>(map))
+{
+}
+
+LevelState::LevelState(const Map& map, const Position &startPosition)
     : map(std::make_unique<Map>(map)), startPosition(startPosition)
 {}
 
@@ -16,9 +20,15 @@ void LevelState::update() {
     }
 }
 
-const LevelState::Position &LevelState::getStartPosition() {
+const Position &LevelState::getStartPosition() {
     return startPosition;
 }
+
+void LevelState::setStartPosition(const Position& position)
+{
+    startPosition = position;
+}
+
 
 void LevelState::addEntity(const std::shared_ptr<Entity>& entity) {
     entities.push_back(entity);

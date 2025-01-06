@@ -1,11 +1,12 @@
 #include "states/GameState.hpp"
 #include <utility>
-#include "Map.hpp"
+#include "map/Map.hpp"
 #include "entities/Character.hpp"
+#include "states/LevelState.hpp"
 
 
 
-GameState::GameState() : player(nullptr), levelNumber(1)
+GameState::GameState() : player(nullptr), levelIndex(1)
 {}
 
 GameState &GameState::getInstance() {
@@ -17,8 +18,9 @@ void GameState::initializePlayer(std::shared_ptr<Character> newPlayer) {
     player = std::move(newPlayer);
 }
 
-void GameState::setLevel(std::unique_ptr<LevelState> level) {
+void GameState::setLevel(std::shared_ptr<LevelState> level) {
     currentLevel = std::move(level);
+    levels[levelIndex] = currentLevel;
 }
 
 LevelState &GameState::getCurrentLevel() {
@@ -37,9 +39,25 @@ Character &GameState::getPlayer() {
     return *player;
 }
 
-void GameState::nextLevel(const Map& newMap, const LevelState::Position &startPos) {
-    currentLevel = std::make_unique<LevelState>(newMap, startPos);
+void GameState::nextLevel(const Position &startPos) {
+    levelIndex++;
+    if (levels[levelIndex] == nullptr) {
+        // Create new level with Map Generator
+    }
+    levels[levelIndex]->setStartPosition(startPos);
+    currentLevel = levels[levelIndex];
 }
+
+void GameState::previousLevel(const Position& startPos)
+{
+    levelIndex--;
+    if (levels[levelIndex] == nullptr) {
+        throw std::runtime_error("level does not exist");
+    }
+    levels[levelIndex]->setStartPosition(startPos);
+    currentLevel = levels[levelIndex];
+}
+
 
 void GameState::update() {
     if (currentLevel) {
@@ -51,10 +69,10 @@ void GameState::update() {
     }
 }
 
-void GameState::setLevelNumber(int newLevelNumber) {
-    levelNumber = newLevelNumber;
+void GameState::setLevelIndex(int newLevelIndex) {
+    levelIndex = newLevelIndex;
 }
 
-int GameState::getLevelNumber() const {
-    return levelNumber;
+int GameState::getLevelIndex() const {
+    return levelIndex;
 }

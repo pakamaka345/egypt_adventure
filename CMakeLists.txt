@@ -18,6 +18,11 @@ add_executable(battle_test "test/battleTest.cpp"
         src/BattleSystem.hpp)
 target_link_libraries(battle_test PRIVATE EgyptAdventureLib)
 
+add_executable(map_test "test/mapTest.cpp"
+    src/map/MapGenerator.hpp)
+target_link_libraries(map_test PRIVATE EgyptAdventureLib)
+
+add_test(NAME MapTest COMMAND map_test)
 add_test(NAME BattleTest COMMAND battle_test)
 
 if (WIN32)

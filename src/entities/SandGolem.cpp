@@ -3,7 +3,7 @@
 #include "effects/EffectManager.hpp"
 #include "effects/Effect.hpp"
 #include "effects/SandShield.hpp"
-#include "Map.hpp"
+#include "map/Map.hpp"
 #include "tiles/Tile.hpp"
 #include "tiles/SandTile.hpp"
 #include "states/GameState.hpp"

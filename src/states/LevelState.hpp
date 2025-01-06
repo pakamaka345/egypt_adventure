@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <list>
+#include "GameObject.hpp"
 
 class Map;
 class Entity;
@@ -8,17 +9,6 @@ class Item;
 
 
 class LevelState {
-public:
-    struct Position {
-        int x;
-        int y;
-
-        Position() : x(0), y(0) {}
-        Position(int x, int y) : x(x), y(y) {}
-        Position(Position const& pos) = default;
-
-        Position& operator=(Position const& pos) = default;
-    };
 
 private:
     std::unique_ptr<Map> map;
@@ -27,6 +17,7 @@ private:
     Position startPosition;
 
 public:
+    LevelState(const Map& map);
     LevelState(const Map& map, const Position& startPosition);
     ~LevelState() = default;
 
@@ -34,6 +25,7 @@ public:
 
     Map& getMap();
     const Position& getStartPosition();
+    void setStartPosition(const Position& position);
 
     void addEntity(const std::shared_ptr<Entity>& entity);
     void addItem(const std::shared_ptr<Item>& item);

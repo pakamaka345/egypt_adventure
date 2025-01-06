@@ -1,6 +1,6 @@
 #include "entities/Mummy.hpp"
 #include "dice/DiceRoll.hpp"
-#include "Map.hpp"
+#include "map/Map.hpp"
 
 Mummy::Mummy(const std::string &name, int attackRange, float attackDamage, float health, float defense, float priority,
              float dodgeChance, int x, int y, char symbol)
@@ -54,8 +54,8 @@ void Mummy::summonMinions(Map &map) {
     }
 
     for (auto& p : pos) {
-        std::shared_ptr<Entity> minion = std::make_shared<Mummy>("Mummy Minion", 1, 5.0f, 10.0f, 0.1f, 0.5f, 0.1f, p.first, p.second, 'm');
-        map.placeEntity(p.first, p.second, minion);
+        std::shared_ptr<Entity> minion = std::make_shared<Mummy>("Mummy Minion", 1, 5.0f, 10.0f, 0.1f, 0.5f, 0.1f, p.x, p.y, 'm');
+        map.placeEntity(p.x, p.y, minion);
     }
 }
 

@@ -2,12 +2,11 @@ namespace TileType
 {
     enum Type {
         EMPTY,
+        BEDROCK,
         WALL,
         FLOOR,
-        CLOSED_DOOR,
-        OPEN_DOOR,
-        STAIRS_UP,
-        STAIRS_DOWN,
+        TORCH,
+        STAIRS,
         SAND,
     };
 }

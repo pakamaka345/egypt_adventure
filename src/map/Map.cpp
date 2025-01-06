@@ -1,12 +1,15 @@
-#include "Map.hpp"
+#include "map/Map.hpp"
 #include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <dice/DiceRoll.hpp>
+
 #include "entities/Character.hpp"
 #include "items/Bullet.hpp"
 #include "tiles/WallTile.hpp"
 #include "tiles/FloorTile.hpp"
+#include "tiles/BedrockTile.hpp"
 
 Map::Map(int width, int height)
     : width(width), height(height)
@@ -17,7 +20,13 @@ Map::Map(int width, int height)
         map[y].resize(width);
         for (int x = 0; x < width; x++)
         {
-            map[y][x] = std::make_shared<Tile>(TileType::Type::EMPTY, x, y, '.');
+            if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
+            {
+                map[y][x] = std::make_shared<BedrockTile>(x, y);
+            } else
+            {
+                map[y][x] = std::make_shared<WallTile>(x, y);
+            }
         }
     }
 }
@@ -36,14 +45,14 @@ Map::Map(std::string& pathToInitFile) : width(0), height(0)
 
 bool Map::canPlaceItem(int x, int y)
 {
-    if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
+    if (x > 0 && x < width - 2 && y > 0 && y < height - 2)
         return true;
     return false;
 }
 
 bool Map::canPlaceEntity(int x, int y)
 {
-    if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
+    if (x > 0 && x < width - 2 && y > 0 && y < height - 2)
         return (!map[y][x]->hasEntity() && map[y][x]->isWalkable());
     return false;
 }
@@ -88,12 +97,12 @@ void Map::removeEntity(int x, int y)
     }
 }
 
-std::vector<std::pair<int, int>> Map::getFreePositionsAround(int x, int y, int radius, int count) {
-    std::vector<std::pair<int, int>> freePositions;
+std::vector<Position> Map::getFreePositionsAround(int x, int y, int radius, int count) {
+    std::vector<Position> freePositions;
     for (int dx = -radius; dx <= radius; dx++) {
         for (int dy = -radius; dy <= radius; dy++) {
-            std::pair<int, int> candidate(x + dx, y + dy);
-            if (canPlaceEntity(candidate.first, candidate.second) && (dx != 0 || dy != 0)) {
+            Position candidate(x + dx, y + dy);
+            if (canPlaceEntity(candidate.x, candidate.y) && (dx != 0 || dy != 0)) {
                 freePositions.emplace_back(candidate);
                 if (freePositions.size() == count) {
                     return freePositions;
@@ -103,6 +112,28 @@ std::vector<std::pair<int, int>> Map::getFreePositionsAround(int x, int y, int r
     }
     return freePositions;
 }
+
+Position Map::getRandomFreePosition(int x, int y, int radius)
+{
+    DiceRoll gen;
+    std::vector<Position> freePositions;
+
+    for (int dx = -radius; dx <= radius; dx++) {
+        for (int dy = -radius; dy <= radius; dy++) {
+            Position candidate(x + dx, y + dy);
+            if (canPlaceEntity(candidate.x, candidate.y)) {
+                freePositions.push_back(candidate);
+            }
+        }
+    }
+
+    if (freePositions.empty()) {
+        return {-1, -1};
+    }
+
+    return freePositions[gen.randomNumber(0, static_cast<int>(freePositions.size()) - 1)];
+}
+
 
 void Map::listEntitiesAndItems(std::string& pathToWrite)
 {
@@ -124,7 +155,7 @@ bool Map::isInsideMap(int x, int y) {
     return false;
 }
 
-void Map::setTile(std::shared_ptr<Tile>& tile)
+void Map::setTile(std::shared_ptr<Tile> tile)
 {
     int x = tile->getX();
     int y = tile->getY();

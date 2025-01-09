@@ -50,8 +50,8 @@ void SandGolem::move(int dx, int dy) {
 void SandGolem::update() {
     Entity::update();
 
-    Map& map = GameState::getInstance().getCurrentLevel().getMap();
-    healOnSand(map);
+    auto map = GameState::getInstance().getCurrentLevel().getMap();
+    healOnSand(*map);
 }
 
 std::shared_ptr<Entity> SandGolem::clone() const {

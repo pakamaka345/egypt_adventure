@@ -11,25 +11,25 @@ class Item;
 class LevelState {
 
 private:
-    std::unique_ptr<Map> map;
+    std::shared_ptr<Map> map;
     std::list<std::shared_ptr<Entity>> entities;
     std::list<std::shared_ptr<Item>> items;
     Position startPosition;
 
 public:
-    LevelState(const Map& map);
-    LevelState(const Map& map, const Position& startPosition);
+    LevelState(const std::shared_ptr<Map>& map);
+    LevelState(const std::shared_ptr<Map>& map, const Position& startPosition);
     ~LevelState() = default;
 
     void update();
 
-    Map& getMap();
-    const Position& getStartPosition();
-    void setStartPosition(const Position& position);
+    std::shared_ptr<Map> getMap() { return map; }
+    const Position& getStartPosition() { return startPosition; }
+    void setStartPosition(const Position& position) { startPosition = position; }
 
-    void addEntity(const std::shared_ptr<Entity>& entity);
-    void addItem(const std::shared_ptr<Item>& item);
+    void addEntity(const std::shared_ptr<Entity>& entity) { entities.push_back(entity); }
+    void addItem(const std::shared_ptr<Item>& item) { items.push_back(item); }
 
-    std::list<std::shared_ptr<Entity>>& getEntities();
-    std::list<std::shared_ptr<Item>>& getItems();
+    std::list<std::shared_ptr<Entity>>& getEntities() { return entities; }
+    std::list<std::shared_ptr<Item>>& getItems() { return items; }
 };

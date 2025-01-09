@@ -36,6 +36,8 @@ Map::Map(const Map &generatedMap)
     this->map = generatedMap.map;
     this->width = generatedMap.width;
     this->height = generatedMap.height;
+    this->leaves = generatedMap.leaves;
+    this->rooms = generatedMap.rooms;
 }
 
 Map::Map(std::string& pathToInitFile) : width(0), height(0)

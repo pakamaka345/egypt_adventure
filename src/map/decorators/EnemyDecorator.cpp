@@ -38,7 +38,7 @@ void EnemyDecorator::decorate(Map& map)
 
 	switch (mapSection) {
 	case 0:
-		startRoomIndex = 0;
+		startRoomIndex = 1;
 		endRoomIndex = roomsPerSection;
 		break;
 	case 1:

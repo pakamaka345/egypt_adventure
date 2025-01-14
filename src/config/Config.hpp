@@ -16,7 +16,8 @@ public:
         return std::make_shared<T>(
                 entityConfig.at("name").get<std::string>(),
                 entityConfig.at("attackRange").get<int>(),
-                entityConfig.at("attackDamage").get<float>(),
+                entityConfig.at("physicalDamage").get<float>(),
+                entityConfig.at("magicalDamage").get<float>(),
                 entityConfig.at("health").get<float>(),
                 entityConfig.at("defense").get<float>(),
                 entityConfig.at("priority").get<float>(),

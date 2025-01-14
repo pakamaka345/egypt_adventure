@@ -12,6 +12,7 @@
 #include <random>
 #include <iostream>
 #include <map>
+#include <states/GameState.hpp>
 
 BattleSystem::BattleSystem(const std::string &pathToInitFile)
 {
@@ -62,7 +63,7 @@ void BattleSystem::startBattle(int rounds) {
             if (target == nullptr) {
                 break;
             }
-            double attackMod = attacker->getAttackDamage() / 100.0f;
+            double attackMod = attacker->getPhysicalDamage() / 100.0f + attacker->getMagicalDamage() / 100.0f;
             double defenseMod = target->getDodgeChance() + target->getDefense();
             double attackRoll = double(dice.roll()) / 20.0f + attackMod;
 
@@ -128,7 +129,8 @@ void BattleSystem::updateEntities() {
     std::vector<std::shared_ptr<Entity>> entities;
     while (!queue.isEmpty()) {
         auto entity = queue.popEntity();
-        entity->update();
+        auto map = GameState::getInstance().getCurrentLevel().getMap();
+        entity->update(*map);
         if (entity->isAlive())
             entities.push_back(entity);
     }

@@ -9,7 +9,17 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-add_library(EgyptAdventureLib ${SOURCES})
+add_library(EgyptAdventureLib ${SOURCES}
+        src/map/decorators/ItemDecorator.cpp
+        src/map/decorators/ItemDecorator.hpp
+        src/modifiers/Modifier.hpp
+        src/modifiers/PhysicalDamageModifier.hpp
+        src/modifiers/MagicalDamageModifier.hpp
+        src/modifiers/HealthModifier.hpp
+        src/modifiers/PriorityModifier.hpp
+        src/modifiers/DodgeChanceModifier.hpp
+        src/modifiers/DefenseModifier.hpp
+        src/items/Torch.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)
@@ -18,6 +28,11 @@ add_executable(battle_test "test/battleTest.cpp"
         src/BattleSystem.hpp)
 target_link_libraries(battle_test PRIVATE EgyptAdventureLib)
 
+add_executable(map_test "test/mapTest.cpp"
+    src/map/MapGenerator.hpp)
+target_link_libraries(map_test PRIVATE EgyptAdventureLib)
+
+add_test(NAME MapTest COMMAND map_test)
 add_test(NAME BattleTest COMMAND battle_test)
 
 if (WIN32)

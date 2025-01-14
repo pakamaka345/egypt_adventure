@@ -12,7 +12,7 @@ private:
     int resurrection;
 
 public:
-    Skeleton(const std::string& name, int attackRange, float attackDamage,
+    Skeleton(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
              float health, float defense, float priority, float dodgeChance,
              int x, int y, char symbol);
     ~Skeleton() override = default;
@@ -21,6 +21,6 @@ public:
     void takeDamage(float physicalDamage, float magicalDamage) override;
     void heal(float amount) override;
     void move(int dx, int dy) override;
-    void update() override;
+    void update(Map& map) override;
     std::shared_ptr<Entity> clone() const override;
 };

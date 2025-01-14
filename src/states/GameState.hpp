@@ -1,16 +1,20 @@
 #pragma once
 #include <memory>
+#include <map>
+#include <vector>
 #include "states/LevelState.hpp"
 
 class Character;
 class LevelState;
+class Tile;
 class Map;
 
 class GameState {
 private:
     std::shared_ptr<Character> player;
-    std::unique_ptr<LevelState> currentLevel;
-    int levelNumber;
+    std::shared_ptr<LevelState> currentLevel;
+    std::map<int, std::shared_ptr<LevelState>> levels;
+    int levelIndex;
 
     GameState();
 
@@ -21,15 +25,22 @@ public:
     static GameState& getInstance();
 
     void initializePlayer(std::shared_ptr<Character> newPlayer);
-    void setLevel(std::unique_ptr<LevelState> level);
+    void setLevel(std::shared_ptr<LevelState> level);
 
     LevelState& getCurrentLevel();
     Character& getPlayer();
 
-    void nextLevel(const Map& newMap, const LevelState::Position& startPos);
+    void nextLevel(int newLevelIndex);
+    void previousLevel(int newLevelIndex);
 
-    void setLevelNumber(int newLevelNumber);
-    int getLevelNumber() const;
+    void setLevelIndex(int newLevelIndex);
+    int getLevelIndex() const;
 
-    void update();
+    void update() const;
+
+private:
+    std::shared_ptr<LevelState> createLevel(int levelIndex);
+
+    void onCollisionWithTile(const std::vector<std::shared_ptr<Tile>>& adjacent) const;
+    void onCollisionWithItem(const std::vector<std::shared_ptr<Tile>>& adjacent) const;
 };

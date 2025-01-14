@@ -1,40 +1,23 @@
 #include "states/LevelState.hpp"
 #include "entities/Entity.hpp"
-#include "Map.hpp"
+#include "map/Map.hpp"
 
-LevelState::LevelState(const Map& map, const LevelState::Position &startPosition)
-    : map(std::make_unique<Map>(map)), startPosition(startPosition)
-{}
-
-Map &LevelState::getMap() {
-    return *map;
+LevelState::LevelState(const std::shared_ptr<Map>& map) : map(map)
+{
 }
+
+LevelState::LevelState(const std::shared_ptr<Map>& map, const Position &startPosition)
+    : map(map), startPosition(startPosition)
+{}
 
 void LevelState::update() {
     for (auto& entity : entities) {
-        entity->update();
+        entity->update(*this->map);
     }
 }
 
-const LevelState::Position &LevelState::getStartPosition() {
-    return startPosition;
-}
 
-void LevelState::addEntity(const std::shared_ptr<Entity>& entity) {
-    entities.push_back(entity);
-}
 
-void LevelState::addItem(const std::shared_ptr<Item>& item) {
-    items.push_back(item);
-}
-
-std::list<std::shared_ptr<Entity>> &LevelState::getEntities() {
-    return entities;
-}
-
-std::list<std::shared_ptr<Item>> &LevelState::getItems() {
-    return items;
-}
 
 
 

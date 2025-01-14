@@ -1,5 +1,6 @@
 #include "effects/FearEffect.hpp"
 #include "entities/Entity.hpp"
+#include "modifiers/PriorityModifier.hpp"
 
 FearEffect::FearEffect(int duration, float fearPriority)
     : fearPriority(fearPriority), Effect("fear effect", duration)
@@ -7,14 +8,14 @@ FearEffect::FearEffect(int duration, float fearPriority)
 }
 
 void FearEffect::apply(Entity &target) {
-    float currentPriority = target.getPriority();
-    target.setPriority(currentPriority + fearPriority);
+    auto modifier = std::make_shared<PriorityModifier>(fearPriority);
+    target.addModifier(modifier);
     target.resetCooldown(target.getPriority());
+    appliedModifier = modifier;
 }
 
 void FearEffect::onTick(Entity &target) {}
 
 void FearEffect::remove(Entity &target) {
-    float currentPriority = target.getPriority();
-    target.setPriority(currentPriority - fearPriority);
+    target.removeModifier(appliedModifier);
 }

@@ -1,23 +1,35 @@
-#include "Map.hpp"
+#include "map/Map.hpp"
 #include <fstream>
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <dice/DiceRoll.hpp>
 #include "entities/Character.hpp"
 #include "items/Bullet.hpp"
 #include "tiles/WallTile.hpp"
 #include "tiles/FloorTile.hpp"
+#include "tiles/BedrockTile.hpp"
 
 Map::Map(int width, int height)
     : width(width), height(height)
 {
     map.resize(height);
+    lightMap.resize(height);
     for (int y = 0; y < height; y++)
     {
         map[y].resize(width);
+        lightMap[y].resize(width);
         for (int x = 0; x < width; x++)
         {
-            map[y][x] = std::make_shared<Tile>(TileType::Type::EMPTY, x, y, '.');
+            if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
+            {
+                map[y][x] = std::make_shared<BedrockTile>(x, y);
+            } else
+            {
+                map[y][x] = std::make_shared<WallTile>(x, y);
+            }
+
+            lightMap[y][x] = LightType::NONE;
         }
     }
 }
@@ -27,6 +39,9 @@ Map::Map(const Map &generatedMap)
     this->map = generatedMap.map;
     this->width = generatedMap.width;
     this->height = generatedMap.height;
+    this->leaves = generatedMap.leaves;
+    this->rooms = generatedMap.rooms;
+    this->lightMap = generatedMap.lightMap;
 }
 
 Map::Map(std::string& pathToInitFile) : width(0), height(0)
@@ -34,7 +49,7 @@ Map::Map(std::string& pathToInitFile) : width(0), height(0)
     initMap(pathToInitFile);
 }
 
-bool Map::canPlaceItem(int x, int y)
+bool Map::canPlaceItem(int x, int y) const
 {
     if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
         return true;
@@ -88,12 +103,28 @@ void Map::removeEntity(int x, int y)
     }
 }
 
-std::vector<std::pair<int, int>> Map::getFreePositionsAround(int x, int y, int radius, int count) {
-    std::vector<std::pair<int, int>> freePositions;
+std::shared_ptr<Entity> Map::getEntityAt(const int x, const int y) const
+{
+    if (map[y][x]->hasEntity()) {
+        return map[y][x]->getEntity();
+    }
+    return nullptr;
+}
+
+std::shared_ptr<Item> Map::getItemAt(const int x, const int y) const
+{
+    if (map[y][x]->hasItems()) {
+        return map[y][x]->getItem();
+    }
+    return nullptr;
+}
+
+std::vector<Position> Map::getFreePositionsAround(int x, int y, int radius, int count) {
+    std::vector<Position> freePositions;
     for (int dx = -radius; dx <= radius; dx++) {
         for (int dy = -radius; dy <= radius; dy++) {
-            std::pair<int, int> candidate(x + dx, y + dy);
-            if (canPlaceEntity(candidate.first, candidate.second) && (dx != 0 || dy != 0)) {
+            Position candidate(x + dx, y + dy);
+            if (canPlaceEntity(candidate.x, candidate.y) && (dx != 0 || dy != 0)) {
                 freePositions.emplace_back(candidate);
                 if (freePositions.size() == count) {
                     return freePositions;
@@ -103,6 +134,49 @@ std::vector<std::pair<int, int>> Map::getFreePositionsAround(int x, int y, int r
     }
     return freePositions;
 }
+
+Position Map::getRandomFreePosition(int x, int y, int radius)
+{
+    DiceRoll gen;
+    std::vector<Position> freePositions;
+
+    for (int dx = -radius; dx <= radius; dx++) {
+        for (int dy = -radius; dy <= radius; dy++) {
+            Position candidate(x + dx, y + dy);
+            if (canPlaceEntity(candidate.x, candidate.y)) {
+                freePositions.push_back(candidate);
+            }
+        }
+    }
+
+    if (freePositions.empty()) {
+        return {-1, -1};
+    }
+
+    return freePositions[gen.randomNumber(0, static_cast<int>(freePositions.size()) - 1)];
+}
+
+std::vector<std::shared_ptr<Tile>> Map::getAdjacentTiles(int x, int y) const
+{
+    std::vector<std::shared_ptr<Tile>> adjacentTiles;
+
+    const std::vector<Position> offsets = {
+        {0, -1}, {0, 1}, {-1, 0}, {1, 0}
+    };
+
+    for (const auto& position : offsets) {
+        int nx = x + position.x;
+        int ny = y + position.y;
+
+        if (isInsideMap(nx, ny)) {
+            adjacentTiles.push_back(getTile(nx, ny));
+        }
+    }
+
+    return adjacentTiles;
+}
+
+
 
 void Map::listEntitiesAndItems(std::string& pathToWrite)
 {
@@ -118,13 +192,11 @@ void Map::listEntitiesAndItems(std::string& pathToWrite)
     }
 }
 
-bool Map::isInsideMap(int x, int y) {
-    if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
-        return true;
-    return false;
+bool Map::isInsideMap(int x, int y) const {
+    return x > 0 && x < width - 1 && y > 0 && y < height - 1;
 }
 
-void Map::setTile(std::shared_ptr<Tile>& tile)
+void Map::setTile(const std::shared_ptr<Tile>& tile)
 {
     int x = tile->getX();
     int y = tile->getY();
@@ -134,9 +206,51 @@ void Map::setTile(std::shared_ptr<Tile>& tile)
         throw std::runtime_error("Could not set tile at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
 }
 
-std::shared_ptr<Tile>& Map::getTile(int x, int y) {
+std::shared_ptr<Tile> Map::getTile(int x, int y) const {
     return map[y][x];
 }
+
+LightType Map::getLightType(int x, int y)
+{
+    return lightMap[y][x];
+}
+
+void Map::setLightMap(int x, int y, LightType lightType)
+{
+    lightMap[y][x] = lightType;
+}
+
+const Position& Map::getPositionNearStair()
+{
+    auto startRoom = rooms[0];
+    Position stairPos(-1, -1);
+    for (int dx = startRoom->x; dx <=startRoom->x + startRoom->width; dx++) {
+        for (int dy = startRoom->y; dy <=startRoom->y + startRoom->height; dy++) {
+            if (getTile(dx, dy)->getTileType() == TileType::STAIRS) {
+                stairPos = {dx, dy};
+            }
+        }
+    }
+
+    if (stairPos == Position(-1, -1)) {
+        auto freePos = getRandomFreePosition(startRoom->getCenter().x, startRoom->getCenter().y, 5);
+        if (freePos == Position(-1, -1)) {
+            throw std::runtime_error("Could not find a free position near the stairs\n");
+        }
+        return Position(stairPos.x, stairPos.y);
+    }
+
+    for (int dx = stairPos.x - 1; dx <= stairPos.x + 1; dx++) {
+        for (int dy = stairPos.y - 1; dy <= stairPos.y + 1; dy++) {
+            if (canPlaceEntity(dx, dy) && dx != stairPos.x && dy != stairPos.y) {
+                return Position{dx, dy};
+            }
+        }
+    }
+
+
+}
+
 
 void Map::initMap(std::string& pathToInitFile)
 {

@@ -1,11 +1,14 @@
 #pragma once
+#include <memory>
 #include "effects/Effect.hpp"
 
 class Entity;
+class PriorityModifier;
 
 class FearEffect : public Effect {
 private:
     float fearPriority;
+    std::shared_ptr<PriorityModifier> appliedModifier;
 
 public:
     FearEffect(int duration, float fearPriority);

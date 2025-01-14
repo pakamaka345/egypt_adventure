@@ -1,10 +1,10 @@
 #include "entities/Skeleton.hpp"
 #include "dice/DiceRoll.hpp"
 
-Skeleton::Skeleton(const std::string &name, int attackRange, float attackDamage, float health, float defense, float priority,
+Skeleton::Skeleton(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense, float priority,
                    float dodgeChance, int x, int y, char symbol)
         : resurrection(1),
-        Entity(name, attackRange, attackDamage, health, defense, priority, dodgeChance, x, y, symbol)
+        Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, symbol)
 {
 }
 
@@ -22,12 +22,12 @@ void Skeleton::attack(Entity &target) {
             float physicalDamage = 0.0f;
             if (distance != -1) {
                 if (distance > 2) {
-                    physicalDamage = (attackDamage * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
+                    physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
                 } else {
-                    physicalDamage = (attackDamage * float(diceRoll) / 4.0f) * (1.0f - target.getDefense()) * 0.5f;
+                    physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense()) * 0.5f;
                 }
 
-                target.takeDamage(physicalDamage, 0);
+                target.takeDamage(physicalDamage, getMagicalDamage());
                 this->takeDamage(0.1f * getHealth(), 0);
             }
         }
@@ -52,12 +52,11 @@ void Skeleton::heal(float amount) {
 }
 
 void Skeleton::move(int dx, int dy) {
-    this->setX(this->getX() + dx);
-    this->setY(this->getY() + dy);
+    Entity::move(dx, dy);
 }
 
-void Skeleton::update() {
-    Entity::update();
+void Skeleton::update(Map& map) {
+    Entity::update(map);
 }
 
 std::shared_ptr<Entity> Skeleton::clone() const {

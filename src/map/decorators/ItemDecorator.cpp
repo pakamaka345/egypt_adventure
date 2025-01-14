@@ -24,10 +24,13 @@ void ItemDecorator::decorate(Map& map)
 		placeItem(map, room);
 	} else {
 		for (int i = 1; i < rooms.size(); i++) {
-			auto& room = rooms[i];
-			int itemPerRoom = gen.randomNumber(1, maxItemPerRoom);
-			for (int j = 0; j < itemPerRoom; j++) {
-				placeItem(map, room);
+			int chanceSpawnItemInRoom = gen.randomNumber(1, 100);
+			if (chanceSpawnItemInRoom > 50) {
+				auto& room = rooms[i];
+				int itemPerRoom = gen.randomNumber(1, maxItemPerRoom);
+				for (int j = 0; j < itemPerRoom; j++) {
+					placeItem(map, room);
+				}
 			}
 		}
 	}

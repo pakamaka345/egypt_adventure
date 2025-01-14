@@ -1,7 +1,10 @@
 #include "states/GameState.hpp"
 #include <utility>
+#include <tiles/InteractTile.hpp>
+
 #include "map/Map.hpp"
 #include "entities/Character.hpp"
+#include "map/MapGenerator.hpp"
 #include "states/LevelState.hpp"
 
 
@@ -39,33 +42,39 @@ Character &GameState::getPlayer() {
     return *player;
 }
 
-void GameState::nextLevel(const Position &startPos) {
-    levelIndex++;
-    if (levels[levelIndex] == nullptr) {
-        // Create new level with Map Generator
+void GameState::nextLevel(const int newLevelIndex) {
+    if (levels[newLevelIndex] == nullptr) {
+        levels[newLevelIndex] = createLevel(newLevelIndex);
     }
-    levels[levelIndex]->setStartPosition(startPos);
-    currentLevel = levels[levelIndex];
+
+    currentLevel = levels[newLevelIndex];
+    levelIndex = newLevelIndex;
+    player->setPos(currentLevel->getStartPosition());
+
 }
 
-void GameState::previousLevel(const Position& startPos)
+void GameState::previousLevel(const int newLevelIndex)
 {
-    levelIndex--;
-    if (levels[levelIndex] == nullptr) {
-        throw std::runtime_error("level does not exist");
+    if (levels[newLevelIndex] == nullptr) {
+        throw std::runtime_error("Invalid level index for previous level");
     }
-    levels[levelIndex]->setStartPosition(startPos);
-    currentLevel = levels[levelIndex];
+    currentLevel = levels[newLevelIndex];
+    levelIndex = newLevelIndex;
+    player->setPos(currentLevel->getStartPosition());
 }
 
 
-void GameState::update() {
+void GameState::update() const {
     if (currentLevel) {
         currentLevel->update();
     }
 
     if (player) {
-        player->update();
+        player->update(*currentLevel->getMap());
+
+        const auto adjacent = currentLevel->getMap()->getAdjacentTiles(player->getX(), player->getY());
+        onCollisionWithTile(adjacent);
+        onCollisionWithItem(adjacent);
     }
 }
 
@@ -76,3 +85,41 @@ void GameState::setLevelIndex(int newLevelIndex) {
 int GameState::getLevelIndex() const {
     return levelIndex;
 }
+
+std::shared_ptr<LevelState> GameState::createLevel(const int levelIndex)
+{
+    std::shared_ptr<LevelState> level;
+    if (levelIndex == 1) {
+        level = MapGenerator::GenerateMap(levelIndex, 200, 200, 30, 40, 30);
+    } else if (levelIndex == 2) {
+        level = MapGenerator::GenerateMap(levelIndex, 150, 150, 25, 35, 20);
+    } else if (levelIndex == 3) {
+        level = MapGenerator::GenerateMap(levelIndex, 100, 100, 20, 30, 15);
+    } else {
+        throw std::runtime_error("Invalid level index");
+    }
+
+    auto& startPos = level->getMap()->getPositionNearStair();
+    level->setStartPosition(startPos);
+    return level;
+}
+
+void GameState::onCollisionWithTile(const std::vector<std::shared_ptr<Tile>>& adjacent) const
+{
+    for (auto& tile : adjacent) {
+        if (auto interactTile = std::dynamic_pointer_cast<InteractTile>(tile)) {
+            //TODO add EventManager.
+        }
+    }
+}
+
+void GameState::onCollisionWithItem(const std::vector<std::shared_ptr<Tile>>& adjacent) const
+{
+    for (auto& tile : adjacent) {
+        if (tile->hasItems()) {
+            //TODO add EventManager.
+        }
+    }
+}
+
+

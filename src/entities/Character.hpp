@@ -1,11 +1,13 @@
 #pragma once
 #include "entities/Entity.hpp"
 #include "Inventory.hpp"
+#include "items/Torch.hpp"
 
 class Weapon;
 class Bullet;
 class Item;
 class Amulet;
+class Torch;
 
 /**
  *  \brief Character class that will be used to create the main character.
@@ -22,15 +24,16 @@ private:
      * Will be implemented later.
      *
      */
-    // Torch activeTorch;
+    std::unique_ptr<Torch> activeTorch;
     /**
      * \brief A visibility range that will be used to understand how far the character can see.
      * will be changed if player has a active torch.
      */
-    // int visibilityRange;
+    int visibilityRange;
 
 public:
     Character(const std::string& name, int x, int y, char symbol);
+    Character(const Character& other);
     ~Character() override = default;
 
     void reloadRevolver();
@@ -42,9 +45,18 @@ public:
     void takeDamage(float physicalDamage, float magicalDamage) override;
     void heal(float amount) override;
     void move(int dx, int dy) override;
-    void update() override;
+    void update(Map& map) override;
     std::shared_ptr<Entity> clone() const override;
 
     Inventory& getInventory();
     const std::shared_ptr<Weapon>& getRevolver() const;
+
+    float getPhysicalDamage() const override;
+    float getMagicalDamage() const override;
+
+    void setActiveTorch(std::unique_ptr<Torch> torch);
+    int getVisibilityRange() const;
+
+private:
+    void updateLight();
 };

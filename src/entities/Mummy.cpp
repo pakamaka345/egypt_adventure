@@ -1,10 +1,12 @@
 #include "entities/Mummy.hpp"
 #include "dice/DiceRoll.hpp"
 #include "map/Map.hpp"
+#include "modifiers/DefenseModifier.hpp"
+#include "modifiers/PhysicalDamageModifier.hpp"
 
-Mummy::Mummy(const std::string &name, int attackRange, float attackDamage, float health, float defense, float priority,
+Mummy::Mummy(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense, float priority,
              float dodgeChance, int x, int y, char symbol)
-             : Entity(name, attackRange, attackDamage, health, defense, priority, dodgeChance, x, y, symbol)
+             : Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, symbol)
 {
 }
 
@@ -14,8 +16,8 @@ void Mummy::attack(Entity &target) {
             DiceRoll dice(8);
             int diceRoll = dice.roll();
 
-            float physicalDamage = (attackDamage * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
-            float magicalDamage = ((attackDamage * 0.3f) * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
+            float physicalDamage = (getPhysicalDamage() * static_cast<float>(diceRoll) / 4.0f) * (1.0f - target.getDefense());
+            float magicalDamage = (getMagicalDamage() * static_cast<float>(diceRoll) / 4.0f) * (1.0f - target.getDefense());
             target.takeDamage(physicalDamage, magicalDamage);
         }
         resetCooldown(this->getPriority());
@@ -28,22 +30,21 @@ void Mummy::takeDamage(float physicalDamage, float magicalDamage) {
     health = std::max(0.0f, (health - (physicalDamage * 0.7f) - magicalDamage));
 
     if (health/maxHealth < 0.3) {
-        setAttackDamage(getAttackDamage() * 1.2f);
-        setDefense(getDefense() * 1.1f);
+        addModifier(std::make_shared<PhysicalDamageModifier>(physicalDamage * 1.2f));
+        addModifier(std::make_shared<DefenseModifier>(defense * 1.3f));
     }
 }
 
 void Mummy::heal(float amount) {
-    health = std::min(maxHealth, (health + amount));
+    health = std::min(getMaxHealth(), (health + amount));
 }
 
 void Mummy::move(int dx, int dy) {
-    this->setX(this->getX() + dx);
-    this->setY(this->getY() + dy);
+    Entity::move(dx, dy);
 }
 
-void Mummy::update() {
-    Entity::update();
+void Mummy::update(Map& map) {
+    Entity::update(map);
     regenerate();
 }
 
@@ -54,7 +55,7 @@ void Mummy::summonMinions(Map &map) {
     }
 
     for (auto& p : pos) {
-        std::shared_ptr<Entity> minion = std::make_shared<Mummy>("Mummy Minion", 1, 5.0f, 10.0f, 0.1f, 0.5f, 0.1f, p.x, p.y, 'm');
+        std::shared_ptr<Entity> minion = std::make_shared<Mummy>("Mummy Minion", 1, 5.0f, 0.0f, 10.0f, 0.1f, 0.5f, 0.1f, p.x, p.y, 'm');
         map.placeEntity(p.x, p.y, minion);
     }
 }

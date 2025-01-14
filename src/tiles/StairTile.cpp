@@ -3,6 +3,10 @@
 //
 
 #include "StairTile.hpp"
+
+#include <entities/Character.hpp>
+#include <states/GameState.hpp>
+
 #include "GameObject.hpp"
 
 StairTile::StairTile(StairType stairType, int x, int y)
@@ -18,7 +22,14 @@ StairType StairTile::getStairType() const
 
 void StairTile::onInteract()
 {
-	// TODO: Implement after with Command Pattern
+	auto& gameState = GameState::getInstance();
+	gameState.getCurrentLevel().setStartPosition(gameState.getPlayer().getPos());
+	int levelIndex = gameState.getLevelIndex();
+	if (stairType == StairType::UP) {
+		gameState.nextLevel(levelIndex + 1);
+	} else {
+		gameState.nextLevel(levelIndex - 1);
+	}
 }
 
 bool StairTile::isWalkable() const

@@ -57,16 +57,25 @@ void EnemyDecorator::decorate(Map& map)
 	int monstersPerRoom = enemyCount / totalRoomsInSection;
 	int remainderMonsters = enemyCount % totalRoomsInSection;
 
-	for (int i = startRoomIndex; i < endRoomIndex; ++i) {
-		auto& room = rooms[i];
+	std::vector<int> roomIndices(totalRoomsInSection);
+	std::iota(roomIndices.begin(), roomIndices.end(), startRoomIndex);
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::shuffle(roomIndices.begin(), roomIndices.end(), gen);
+
+	int placedMonsters = 0;
+
+	for (int i = 0; i < totalRoomsInSection && placedMonsters < enemyCount; ++i) {
+		auto& room = rooms[roomIndices[i]];
 
 		int monstersInRoom = monstersPerRoom;
 		if (i - startRoomIndex < remainderMonsters) {
 			monstersInRoom++;
 		}
 
-		for (int j = 0; j < monstersInRoom; ++j) {
+		for (int j = 0; j < monstersInRoom && placedMonsters < enemyCount; ++j) {
 			placeEnemy(map, room);
+			placedMonsters++;
 		}
 	}
 }

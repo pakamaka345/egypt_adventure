@@ -10,7 +10,7 @@
  */
 class Phantom : public Entity {
 public:
-    Phantom(const std::string& name, int attackRange, float attackDamage,
+    Phantom(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
           float health, float defense, float priority, float dodgeChance,
           int x, int y, char symbol);
     ~Phantom() override = default;
@@ -19,6 +19,6 @@ public:
     void takeDamage(float physicalDamage, float magicalDamage) override;
     void heal(float amount) override;
     void move(int dx, int dy) override;
-    void update() override;
+    void update(Map& map) override;
     std::shared_ptr<Entity> clone() const override;
 };

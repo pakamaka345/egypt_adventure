@@ -31,6 +31,7 @@ public:
 
     [[nodiscard]] int getX() const { return posX; }
     [[nodiscard]] int getY() const { return posY; }
+    [[nodiscard]] Position getPos() const { return {posX, posY}; }
     [[nodiscard]] char getSymbol() const { return symbol; }
 
     void setPos(int x, int y) { posX = x; posY = y; }

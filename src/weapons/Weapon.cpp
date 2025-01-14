@@ -4,40 +4,23 @@
 #include <stdexcept>
 #include <utility>
 #include <random>
+#include <dice/DiceRoll.hpp>
 
 Weapon::Weapon(std::string name, int magazineSize)
-    : name(std::move(name)), magazine(), magazineSize(magazineSize)
+    : name(std::move(name)), magazineSize(magazineSize)
 {
 }
 
 void Weapon::addBullet(Bullet &bullet) {
     if (magazine.size() < magazineSize) {
-        magazine.push_back(bullet);
+        magazine.push_back(std::make_shared<Bullet>(bullet));
     } else {
         throw std::runtime_error("Magazine is full");
     }
 }
 
-void Weapon::shoot(Entity &target) {
-    if (magazine.empty()) {
-        throw std::runtime_error("No bullets in the magazine!");
-    }
-
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 8);
-
-    Bullet bullet = magazine.back();
-    magazine.pop_back();
-
-    int diceRoll = dis(gen);
-
-    float physicalDamage = (bullet.getPhysicalDamage() * float(diceRoll) / 8.0f) * (1 - target.getDefense());
-    float magicalDamage = (bullet.getMagicalDamage() * float(diceRoll) / 8.0f) * (1 - target.getDefense());
-    target.takeDamage(physicalDamage, magicalDamage);
-}
-
-void Weapon::shootWithMiss() {
+// Damage will be calculated in Character class (bad design)
+void Weapon::shoot() {
     if (magazine.empty()) {
         throw std::runtime_error("No bullets in the magazine!");
     }
@@ -46,14 +29,14 @@ void Weapon::shootWithMiss() {
 }
 
 int Weapon::getAmmo() {
-    return int(magazine.size());
+    return static_cast<int>(magazine.size());
 }
 
-int Weapon::getMagazineSize() {
+int Weapon::getMagazineSize() const {
     return magazineSize;
 }
 
-std::vector<Bullet>& Weapon::getMagazine() {
+std::vector<std::shared_ptr<Bullet>>& Weapon::getMagazine() {
     return magazine;
 }
 

@@ -12,6 +12,8 @@
 class Item;
 class Amulet;
 class Effect;
+class Modifier;
+class Map;
 
 /**
  * \brief The Entity class represents a game object that can be attacked and can attack other entities.
@@ -23,26 +25,36 @@ class Entity : public GameObject
      */
     typedef std::vector<std::shared_ptr<Amulet>> AmuletList;
 
+    /**
+     * \brief A list of modifiers that affect the entity.
+     */
+    typedef std::vector<std::shared_ptr<Modifier>> ModifierList;
+
 protected:
     std::string name;
     float health;
-    float maxHealth;
+    float maxHealth; // with modifiers
     int attackRange;
-    float attackDamage;
-    float defense;
-    float priority;
+    float physicalDamage; // with modifiers
+    float magicalDamage; // with modifiers
+    float defense; // with modifiers
+    float priority; // with modifiers
     float cooldown;
-    float dodgeChance;
+    float dodgeChance; // with modifiers
     AmuletList activeAmulets;
+    ModifierList activeModifiers;
     EffectManager effectManager;
 
 public:
-    Entity(const std::string& name, int attackRange, float attackDamage, float health, float defense,
+    Entity(std::string  name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
            float priority, float dodgeChance, int x, int y, char symbol);
     ~Entity() override = default;
 
     void addAmulet(const std::shared_ptr<Amulet>& amulet);
     void removeAmulet(const std::shared_ptr<Amulet>& amulet);
+
+    void addModifier(const std::shared_ptr<Modifier>& modifier);
+    void removeModifier(const std::shared_ptr<Modifier>& modifier);
 
     bool isAlive() const;
     bool canAttack(Entity& target) const;
@@ -61,18 +73,21 @@ public:
     float getHealth() const;
     float getMaxHealth() const;
     int getAttackRange() const;
-    float getAttackDamage() const;
+    virtual float getPhysicalDamage() const;
+    virtual float getMagicalDamage() const;
     float getDefense() const;
     float getPriority() const;
     float getCooldown() const;
     float getDodgeChance() const;
     AmuletList& getActiveAmulets();
     EffectManager& getEffectManager();
+    ModifierList& getActiveModifiers();
 
     void setHealth(float health);
     void setMaxHealth(float maxHealth);
     void setAttackRange(int attackRange);
-    void setAttackDamage(float attackDamage);
+    void setPhysicalDamage(float physicalDamage);
+    void setMagicalDamage(float magicalDamage);
     void setDefense(float defense);
     void setPriority(float priority);
     void setCooldown(float cooldown);
@@ -97,12 +112,12 @@ public:
      */
     virtual void heal(float amount) = 0;
 
-    virtual void move(int dx, int dy) = 0;
+    virtual void move(int dx, int dy);
 
     /**
      * \brief Virtual method for updating the entity.
      */
-    virtual void update();
+    virtual void update(Map& map);
 
     virtual std::shared_ptr<Entity> clone() const = 0;
 };

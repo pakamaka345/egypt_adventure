@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
 
 class Bullet;
 class Entity;
@@ -13,19 +14,17 @@ class Weapon
 {
 protected:
     std::string name;
-    std::vector<Bullet> magazine;
+    std::vector<std::shared_ptr<Bullet>> magazine;
     int magazineSize;
 
 public:
     Weapon(std::string name, int magazineSize);
 
     void addBullet(Bullet& bullet);
-    void shoot(Entity& target);
-    void shootWithMiss();
-
+    void shoot();
 
     int getAmmo();
-    int getMagazineSize();
-    std::vector<Bullet>& getMagazine();
+    int getMagazineSize() const;
+    std::vector<std::shared_ptr<Bullet>>& getMagazine();
     std::string& getName();
 };

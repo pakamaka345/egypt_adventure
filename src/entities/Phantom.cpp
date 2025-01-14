@@ -2,9 +2,9 @@
 #include "effects/FearEffect.hpp"
 #include "dice/DiceRoll.hpp"
 
-Phantom::Phantom(const std::string &name, int attackRange, float attackDamage, float health, float defense,
+Phantom::Phantom(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
                  float priority, float dodgeChance, int x, int y, char symbol)
-                 : Entity(name, attackRange, attackDamage, health, defense, priority, dodgeChance, x, y, symbol)
+                 : Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, symbol)
 {
 }
 
@@ -14,8 +14,8 @@ void Phantom::attack(Entity &target) {
             DiceRoll dice(8);
             int diceRoll = dice.roll();
 
-            float physicalDamage = (attackDamage * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
-            float magicalDamage = (attackDamage * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
+            float physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
+            float magicalDamage = (getMagicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
             target.takeDamage(physicalDamage, magicalDamage);
 
             diceRoll = dice.roll();
@@ -35,16 +35,15 @@ void Phantom::takeDamage(float physicalDamage, float magicalDamage) {
 }
 
 void Phantom::heal(float amount) {
-    health = std::min(maxHealth, health + amount);
+    health = std::min(getMaxHealth(), health + amount);
 }
 
 void Phantom::move(int dx, int dy) {
-    this->setX(this->getX() + dx);
-    this->setY(this->getY() + dy);
+    Entity::move(dx, dy);
 }
 
-void Phantom::update() {
-    Entity::update();
+void Phantom::update(Map& map) {
+    Entity::update(map);
 }
 
 std::shared_ptr<Entity> Phantom::clone() const {

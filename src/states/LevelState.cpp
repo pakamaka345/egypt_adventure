@@ -12,7 +12,7 @@ LevelState::LevelState(const std::shared_ptr<Map>& map, const Position &startPos
 
 void LevelState::update() {
     for (auto& entity : entities) {
-        entity->update();
+        entity->update(*this->map);
     }
 }
 

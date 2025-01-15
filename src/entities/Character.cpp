@@ -3,7 +3,6 @@
 #include <utility>
 #include "items/Bullet.hpp"
 #include "weapons/Weapon.hpp"
-#include "items/amulets/Amulet.hpp"
 #include "modifiers/Modifier.hpp"
 
 Character::Character(const std::string &name, int x, int y, char symbol)

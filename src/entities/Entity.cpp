@@ -43,6 +43,8 @@ void Entity::removeModifier(const std::shared_ptr<Modifier>& modifier)
 }
 
 void Entity::applyEffects(const std::shared_ptr<Effect> &effect) {
+
+
     effectManager.addEffect(effect, *this);
 }
 

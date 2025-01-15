@@ -10,16 +10,11 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_library(EgyptAdventureLib ${SOURCES}
-        src/map/decorators/ItemDecorator.cpp
-        src/map/decorators/ItemDecorator.hpp
-        src/modifiers/Modifier.hpp
-        src/modifiers/PhysicalDamageModifier.hpp
-        src/modifiers/MagicalDamageModifier.hpp
-        src/modifiers/HealthModifier.hpp
-        src/modifiers/PriorityModifier.hpp
-        src/modifiers/DodgeChanceModifier.hpp
-        src/modifiers/DefenseModifier.hpp
-        src/items/Torch.hpp)
+        src/items/amulets/HealthAmulet.cpp
+        src/items/amulets/HealthAmulet.cpp
+        src/items/amulets/HealthAmulet.hpp
+        src/items/amulets/ArmorAmulets.cpp
+        src/items/amulets/ArmorAmulets.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

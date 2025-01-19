@@ -3,8 +3,8 @@
 #include "dice/DiceRoll.hpp"
 
 Phantom::Phantom(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
-                 float priority, float dodgeChance, int x, int y, char symbol)
-                 : Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, symbol)
+                 float priority, float dodgeChance, int x, int y, int z, char symbol)
+                 : Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, z, symbol)
 {
 }
 
@@ -42,8 +42,8 @@ void Phantom::move(int dx, int dy) {
     Entity::move(dx, dy);
 }
 
-void Phantom::update(Map& map) {
-    Entity::update(map);
+void Phantom::update(GameState& gameState) {
+    Entity::update(gameState);
 }
 
 std::shared_ptr<Entity> Phantom::clone() const {

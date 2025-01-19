@@ -20,17 +20,17 @@ private:
     std::unordered_map<std::string, InventoryItem> items;
 
 public:
-    Inventory();
+    Inventory() = default;
     ~Inventory() = default;
 
-    void addItem(const std::shared_ptr<Item>& item);
+    void addItem(std::shared_ptr<Item> item);
     void removeItem(const std::string& itemName);
-    void useItem(const std::string& itemName, Entity& target = getCharacter());
+    void useItem(const std::string& itemName, const std::shared_ptr<Entity>& target = getCharacter());
 
     std::optional<std::shared_ptr<Item>> getItem(const std::string& itemName);
     int getItemCount(const std::string& itemName);
     std::unordered_map<std::string, InventoryItem> getItems() const { return items; }
     bool hasItem(const std::string& itemName);
 
-    static Entity& getCharacter();
+    static std::shared_ptr<Entity> getCharacter();
 };

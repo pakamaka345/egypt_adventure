@@ -6,9 +6,8 @@
 #include "MapDecorator.hpp"
 
 class StairsDecorator : public MapDecorator {
-	int levelIndex;
 public:
-	StairsDecorator(int levelIndex);
+	explicit StairsDecorator(int levelIndex);
 	void decorate(Map& map) override;
 };
 

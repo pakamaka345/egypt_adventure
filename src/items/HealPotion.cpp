@@ -2,10 +2,9 @@
 #include "entities/Entity.hpp"
 #include "effects/HealEffect.hpp"
 
-HealPotion::HealPotion(float healAmount, int duration,
-                       const std::string &name, const std::string &description, int x, int y, char symbol)
+HealPotion::HealPotion(float healAmount, int duration, int levelIndex)
                        : healAmount(healAmount), duration(duration)
-                       , Item(name, description, x, y, symbol)
+                       , Item("heal potion", "An ancient decoction that can improve the well-being of the hero, and magically heal wounds.", 0, 0, levelIndex, 'p')
 {
 }
 

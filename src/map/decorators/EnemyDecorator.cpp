@@ -14,8 +14,8 @@
 #include <states/LevelState.hpp>
 
 
-EnemyDecorator::EnemyDecorator(int enemyCount, int mapSection, std::string enemyName, std::shared_ptr<LevelState> levelState)
-		: enemyCount(enemyCount), mapSection(mapSection), enemyName(std::move(enemyName)), levelState(std::move(levelState))
+EnemyDecorator::EnemyDecorator(int enemyCount, int mapSection, std::string enemyName, std::shared_ptr<LevelState> levelState, int levelIndex)
+		: MapDecorator(levelIndex), enemyCount(enemyCount), mapSection(mapSection), enemyName(std::move(enemyName)), levelState(std::move(levelState))
 {
 	config = Config::getInstance("../assets/configs/config.json");
 
@@ -86,6 +86,7 @@ void EnemyDecorator::placeEnemy(Map& map, const std::shared_ptr<RoomGenerator::R
 	auto pos = map.getRandomFreePosition(room->getCenter().x, room->getCenter().y, 5);
 
 	if (pos != Position(-1, -1)) {
+		pos.z = levelIndex;
 		auto enemy = createEnemy(enemyName, pos);
 		map.placeEntity(pos.x, pos.y, enemy);
 		levelState->addEntity(enemy);

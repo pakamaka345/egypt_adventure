@@ -34,12 +34,12 @@ LevelState &GameState::getCurrentLevel() {
     return *currentLevel;
 }
 
-Character &GameState::getPlayer() {
+std::shared_ptr<Character> GameState::getPlayer() {
     if (!player) {
         throw std::runtime_error("Player is not set");
     }
 
-    return *player;
+    return player;
 }
 
 void GameState::nextLevel(const int newLevelIndex) {
@@ -66,11 +66,11 @@ void GameState::previousLevel(const int newLevelIndex)
 
 void GameState::update() const {
     if (currentLevel) {
-        currentLevel->update();
+        currentLevel->update(getInstance());
     }
 
     if (player) {
-        player->update(*currentLevel->getMap());
+        player->update(getInstance());
 
         const auto adjacent = currentLevel->getMap()->getAdjacentTiles(player->getX(), player->getY());
         onCollisionWithTile(adjacent);
@@ -99,8 +99,11 @@ std::shared_ptr<LevelState> GameState::createLevel(const int levelIndex)
         throw std::runtime_error("Invalid level index");
     }
 
-    auto& startPos = level->getMap()->getPositionNearStair();
-    level->setStartPosition(startPos);
+    auto startPos = level->getMap()->getPositionNearStair();
+    if (startPos != Position{-1, -1}) {
+        startPos.z = levelIndex;
+        level->setStartPosition(startPos);
+    }
     return level;
 }
 

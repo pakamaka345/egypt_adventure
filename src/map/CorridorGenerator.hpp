@@ -7,7 +7,7 @@
 
 class CorridorGenerator {
 public:
-	void connectRooms(RoomGenerator::Room& room1, RoomGenerator::Room& room2, Map& map);
+	void connectRooms(RoomGenerator::Room& room1, RoomGenerator::Room& room2, Map& map, int levelIndex);
 
 };
 

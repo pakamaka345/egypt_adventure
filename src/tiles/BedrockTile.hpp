@@ -4,7 +4,7 @@
 
 class BedrockTile : public Tile {
 public:
-    BedrockTile(int x, int y);
+    BedrockTile(int x, int y, int z);
     bool isWalkable() const override;
 };
 

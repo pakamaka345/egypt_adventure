@@ -11,6 +11,8 @@ class CompositeMapDecorator : public MapDecorator {
 	std::vector<std::unique_ptr<MapDecorator>> decorators;
 
 public:
+	explicit CompositeMapDecorator(int levelIndex) : MapDecorator(levelIndex) {}
+
 	void addDecorator(std::unique_ptr<MapDecorator> decorator) {
 		decorators.push_back(std::move(decorator));
 	}

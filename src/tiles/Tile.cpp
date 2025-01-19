@@ -6,25 +6,25 @@
 
 Tile::Tile()
     : entity(nullptr), items(), tileType(TileType::Type::EMPTY)
-    , GameObject(0, 0, ' ')
+    , GameObject(0, 0, 0, ' ')
 {
 }
 
-Tile::Tile(int x, int y, char symbol)
+Tile::Tile(int x, int y, int z, char symbol)
     : entity(nullptr), items(), tileType(TileType::Type::EMPTY)
-    , GameObject(x, y, symbol)
+    , GameObject(x, y, z, symbol)
 {
 }
 
-Tile::Tile(int x, int y)
+Tile::Tile(int x, int y, int z)
     : entity(nullptr), items(), tileType(TileType::Type::EMPTY)
-    , GameObject(x, y, '.')
+    , GameObject(x, y, z, '.')
 {
 }
 
-Tile::Tile(TileType::Type tileType, int x, int y, char symbol)
+Tile::Tile(TileType::Type tileType, int x, int y, int z, char symbol)
     : entity(nullptr), items(), tileType(tileType)
-    , GameObject(x, y, symbol)
+    , GameObject(x, y, z, symbol)
 {
 }
 
@@ -36,7 +36,7 @@ void Tile::setEntity(std::shared_ptr<Entity> entity) {
     }
 }
 
-std::shared_ptr<Entity>& Tile::getEntity() {
+std::shared_ptr<Entity> Tile::getEntity() {
     return entity;
 }
 
@@ -50,8 +50,8 @@ bool Tile::hasEntity() {
     return entity != nullptr;
 }
 
-void Tile::addItem(const std::shared_ptr<Item>& item) {
-    items.push_back(item);
+void Tile::addItem(std::shared_ptr<Item> item) {
+    items.push_back(std::move(item));
 }
 
 void Tile::addItems(std::list<std::shared_ptr<Item>> items) {
@@ -62,7 +62,7 @@ std::list<std::shared_ptr<Item>>& Tile::getItems() {
     return items;
 }
 
-std::shared_ptr<Item>& Tile::getItem() {
+std::shared_ptr<Item> Tile::getItem() {
     return items.front();
 }
 

@@ -8,8 +8,8 @@
 
 #include "modifiers/HealthModifier.hpp"
 
-HealthAmulet::HealthAmulet(float maxHealth)
-	: Amulet("Amulet of Health", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, 'h'), m_maxHeath(maxHealth)
+HealthAmulet::HealthAmulet(float maxHealth, int levelIndex)
+	: Amulet("Amulet of Health", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, levelIndex, 'h'), m_maxHeath(maxHealth)
 {
 }
 

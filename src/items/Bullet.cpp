@@ -2,9 +2,8 @@
 #include "entities/Character.hpp"
 #include "weapons/Weapon.hpp"
 
-Bullet::Bullet(float physicalDamage, float magicalDamage,
-               const std::string &name, const std::string &description, int x, int y, char symbol)
-        : physicalDamage(physicalDamage), magicalDamage(magicalDamage), Item(name, description, x, y, symbol)
+Bullet::Bullet(float physicalDamage, float magicalDamage, int levelIndex)
+        : physicalDamage(physicalDamage), magicalDamage(magicalDamage), Item("bullet", "Simple bullets for Piter`s revolver.", 0, 0, levelIndex, 'b')
 {
 }
 

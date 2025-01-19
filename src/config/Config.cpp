@@ -37,6 +37,7 @@ std::shared_ptr<Character> Config::createCharacter() {
                 characterConfig.at("name").get<std::string>(),
                 characterConfig.at("x").get<int>(),
                 characterConfig.at("y").get<int>(),
+                characterConfig.at("z").get<int>(),
                 characterConfig.at("symbol").get<std::string>()[0]
             );
 }

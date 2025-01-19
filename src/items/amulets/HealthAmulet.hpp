@@ -14,7 +14,7 @@ private:
 	std::shared_ptr<HealthModifier> m_healthModifier;
 
 public:
-	HealthAmulet(float maxHealth);
+	HealthAmulet(float maxHealth, int levelIndex);
 
 	void applyAmuletEffect(Entity& target) override;
 	void removeAmuletEffect(Entity& target) override;

@@ -5,7 +5,6 @@
 #pragma once
 #include "MapDecorator.hpp"
 #include "config/Config.hpp"
-#include "GameObject.hpp"
 #include <map/RoomGenerator.hpp>
 #include <string>
 #include <memory>
@@ -34,7 +33,7 @@ class EnemyDecorator : public MapDecorator {
 	}
 
 public:
-	EnemyDecorator(int enemyCount, int mapSection, std::string enemyName, std::shared_ptr<LevelState> levelState);
+	EnemyDecorator(int enemyCount, int mapSection, std::string enemyName, std::shared_ptr<LevelState> levelState, int levelIndex);
 
 	void decorate(Map& map) override;
 };

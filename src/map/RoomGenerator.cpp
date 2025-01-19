@@ -8,7 +8,7 @@
 #include "tiles/FloorTile.hpp"
 #include "dice/DiceRoll.hpp"
 
-void RoomGenerator::generateRooms(const std::vector<std::shared_ptr<BSPNode>>& nodes, Map& map, const int MinRoomSize)
+void RoomGenerator::generateRooms(const std::vector<std::shared_ptr<BSPNode>>& nodes, Map& map, const int MinRoomSize, int levelIndex)
 {
 	DiceRoll gen;
 	for (auto& node : nodes) {
@@ -23,7 +23,7 @@ void RoomGenerator::generateRooms(const std::vector<std::shared_ptr<BSPNode>>& n
 		for (int y = roomY; y < roomY + roomHeight; ++y) {
 			for (int x = roomX; x < roomX + roomWidth; ++x) {
 				if (map.getTile(x, y)->getTileType() != TileType::BEDROCK) {
-					map.setTile(std::make_shared<FloorTile>(x, y));
+					map.setTile(std::make_shared<FloorTile>(x, y, levelIndex));
 				}
 			}
 		}

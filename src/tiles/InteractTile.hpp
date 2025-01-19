@@ -5,11 +5,13 @@
 #pragma once
 #include "tiles/Tile.hpp"
 
+class GameState;
+
 class InteractTile : public Tile {
 public:
 	using Tile::Tile;
 
-	virtual void onInteract() = 0;
+	virtual void onInteract(GameState& gameState) = 0;
 };
 
 

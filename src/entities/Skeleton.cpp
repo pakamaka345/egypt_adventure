@@ -2,9 +2,9 @@
 #include "dice/DiceRoll.hpp"
 
 Skeleton::Skeleton(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense, float priority,
-                   float dodgeChance, int x, int y, char symbol)
+                   float dodgeChance, int x, int y, int z, char symbol)
         : resurrection(1),
-        Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, symbol)
+        Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, z, symbol)
 {
 }
 
@@ -55,8 +55,8 @@ void Skeleton::move(int dx, int dy) {
     Entity::move(dx, dy);
 }
 
-void Skeleton::update(Map& map) {
-    Entity::update(map);
+void Skeleton::update(GameState& gameState) {
+    Entity::update(gameState);
 }
 
 std::shared_ptr<Entity> Skeleton::clone() const {

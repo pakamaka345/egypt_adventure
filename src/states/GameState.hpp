@@ -28,7 +28,7 @@ public:
     void setLevel(std::shared_ptr<LevelState> level);
 
     LevelState& getCurrentLevel();
-    Character& getPlayer();
+    std::shared_ptr<Character> getPlayer();
 
     void nextLevel(int newLevelIndex);
     void previousLevel(int newLevelIndex);

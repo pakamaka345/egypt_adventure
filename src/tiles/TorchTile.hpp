@@ -11,7 +11,7 @@ class TorchTile : public InteractTile {
 	bool isLit;
 
 public:
-	TorchTile(int radius, int x, int y);
+	TorchTile(int radius, int x, int y, int z);
 
-	void onInteract() override;
+	void onInteract(GameState& gameState) override;
 };

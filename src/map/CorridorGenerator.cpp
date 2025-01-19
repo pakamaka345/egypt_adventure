@@ -7,7 +7,7 @@
 #include "dice/DiceRoll.hpp"
 #include "tiles/FloorTile.hpp"
 
-void CorridorGenerator::connectRooms(RoomGenerator::Room& room1, RoomGenerator::Room& room2, Map& map)
+void CorridorGenerator::connectRooms(RoomGenerator::Room& room1, RoomGenerator::Room& room2, Map& map, int levelIndex)
 {
 	DiceRoll gen;
 	std::vector<RoomGenerator::Room> halls;
@@ -70,7 +70,7 @@ void CorridorGenerator::connectRooms(RoomGenerator::Room& room1, RoomGenerator::
 		for (int y = hall.y; y < hall.y + hall.height; y++) {
 			for (int x = hall.x; x <= hall.x + hall.width; x++) {
 				if (map.getTile(x, y)->getTileType() != TileType::BEDROCK) {
-					map.setTile(std::make_shared<FloorTile>(x, y));
+					map.setTile(std::make_shared<FloorTile>(x, y, levelIndex));
 				}
 			}
 		}

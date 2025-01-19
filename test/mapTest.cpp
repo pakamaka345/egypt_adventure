@@ -10,7 +10,7 @@
 
 int main() {
     srand(time(NULL));
-    auto level = MapGenerator::GenerateMap(1, 200, 200, 20, 25, 10);
+    auto level = MapGenerator::GenerateMap(2, 200, 200, 20, 25, 10);
 
     auto map = level->getMap();
 

@@ -2,17 +2,17 @@
 #include "entities/Entity.hpp"
 #include "map/Map.hpp"
 
-LevelState::LevelState(const std::shared_ptr<Map>& map) : map(map)
+LevelState::LevelState(std::shared_ptr<Map> map) : map(std::move(map))
 {
 }
 
-LevelState::LevelState(const std::shared_ptr<Map>& map, const Position &startPosition)
-    : map(map), startPosition(startPosition)
+LevelState::LevelState(std::shared_ptr<Map> map, const Position &startPosition)
+    : map(std::move(map)), startPosition(startPosition)
 {}
 
-void LevelState::update() {
-    for (auto& entity : entities) {
-        entity->update(*this->map);
+void LevelState::update(GameState& gameState) {
+    for (const auto& entity : entities) {
+        entity->update(gameState);
     }
 }
 

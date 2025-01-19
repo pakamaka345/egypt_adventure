@@ -5,7 +5,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "GameObject.hpp"
+#include "utils/GameObject.hpp"
 
 class Map;
 class BSPNode;
@@ -26,7 +26,7 @@ public:
 	};
 
 public:
-	void generateRooms(const std::vector<std::shared_ptr<BSPNode>>& nodes, Map& map, int MinRoomSize);
+	void generateRooms(const std::vector<std::shared_ptr<BSPNode>>& nodes, Map& map, int MinRoomSize, int levelIndex);
 
 	std::vector<std::shared_ptr<Room>>& getRooms() { return rooms; }
 

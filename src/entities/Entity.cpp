@@ -5,9 +5,9 @@
 #include "modifiers/Modifier.hpp"
 
 Entity::Entity(std::string  name, int attackRange,  float physicalDamage, float magicalDamage, float health, float defense, float priority,
-               float dodgeChance, int x, int y, char symbol)
+               float dodgeChance, int x, int y, int z, char symbol)
                : name(std::move(name)), attackRange(attackRange), physicalDamage(physicalDamage), magicalDamage(magicalDamage), health(health), maxHealth(health), defense(defense), priority(priority), cooldown(0),
-               dodgeChance(dodgeChance), GameObject(x, y, symbol)
+               dodgeChance(dodgeChance), GameObject(x, y, z, symbol)
 {
 }
 
@@ -73,6 +73,12 @@ bool Entity::canAttack(Entity &target) const {
     return radius <= attackRange;
 }
 
+bool Entity::isOnSameLevel(const std::shared_ptr<Entity>& other) const
+{
+    if (getZ() == other->getZ()) return true;
+    return false;
+}
+
 int Entity::distanceTo(Entity &target) const {
     if (target.getX() == this->getX()) {
         return std::abs(target.getY() - this->getY());
@@ -89,7 +95,7 @@ void Entity::move(int dx, int dy)
 }
 
 
-void Entity::update(Map& map) {
+void Entity::update(GameState& gameState) {
     updateEffects();
     reduceCooldown();
 }

@@ -1,7 +1,7 @@
 #include "BedrockTile.hpp"
 
-BedrockTile::BedrockTile(int x, int y)
-    : Tile(TileType::BEDROCK, x, y, 'X')
+BedrockTile::BedrockTile(int x, int y, int z)
+    : Tile(TileType::BEDROCK, x, y, z, 'X')
 {
 }
 

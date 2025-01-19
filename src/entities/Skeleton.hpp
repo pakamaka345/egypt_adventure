@@ -14,13 +14,13 @@ private:
 public:
     Skeleton(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
              float health, float defense, float priority, float dodgeChance,
-             int x, int y, char symbol);
+             int x, int y, int z, char symbol);
     ~Skeleton() override = default;
 
     void attack(Entity& target) override;
     void takeDamage(float physicalDamage, float magicalDamage) override;
     void heal(float amount) override;
     void move(int dx, int dy) override;
-    void update(Map& map) override;
+    void update(GameState& gameSTate) override;
     std::shared_ptr<Entity> clone() const override;
 };

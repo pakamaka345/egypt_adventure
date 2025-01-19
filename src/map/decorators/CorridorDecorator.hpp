@@ -8,6 +8,7 @@
 
 class CorridorDecorator : public MapDecorator {
 public:
+	explicit CorridorDecorator(int levelIndex);
 	void decorate(Map& map) override;
 };
 

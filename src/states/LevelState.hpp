@@ -1,8 +1,9 @@
 #pragma once
 #include <memory>
 #include <list>
-#include "GameObject.hpp"
+#include "utils/GameObject.hpp"
 
+class GameState;
 class Map;
 class Entity;
 class Item;
@@ -17,14 +18,14 @@ private:
     Position startPosition;
 
 public:
-    LevelState(const std::shared_ptr<Map>& map);
-    LevelState(const std::shared_ptr<Map>& map, const Position& startPosition);
+    explicit LevelState(std::shared_ptr<Map> map);
+    LevelState(std::shared_ptr<Map> map, const Position& startPosition);
     ~LevelState() = default;
 
-    void update();
+    void update(GameState& gameState);
 
     std::shared_ptr<Map> getMap() { return map; }
-    const Position& getStartPosition() { return startPosition; }
+    [[nodiscard]] const Position& getStartPosition() const { return startPosition; }
     void setStartPosition(const Position& position) { startPosition = position; }
 
     void addEntity(const std::shared_ptr<Entity>& entity) { entities.push_back(entity); }

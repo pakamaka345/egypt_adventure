@@ -1,15 +1,18 @@
 #include "entities/Character.hpp"
 #include <dice/DiceRoll.hpp>
 #include <utility>
+#include <map/Map.hpp>
+#include <states/GameState.hpp>
+
 #include "items/Bullet.hpp"
 #include "weapons/Weapon.hpp"
 #include "modifiers/Modifier.hpp"
 
-Character::Character(const std::string &name, int x, int y, char symbol)
+Character::Character(const std::string &name, int x, int y, int z, char symbol)
     : revolver(std::make_shared<Weapon>("Revolver", 6))
     , activeTorch(nullptr)
     , visibilityRange(4)
-    , Entity(name, 5, 10.0f, 0.0f, 50.0f, 0.3f, 2.0f, 0.2f, x, y, symbol)
+    , Entity(name, 5, 10.0f, 0.0f, 50.0f, 0.3f, 2.0f, 0.2f, x, y, z, symbol)
 {
 }
 
@@ -74,17 +77,26 @@ void Character::heal(float amount) {
 }
 
 void Character::move(int dx, int dy) {
-    Entity::move(dx, dy);
+    auto& gameState = GameState::getInstance();
+
+    deleteLight(getX(), getY(), gameState);
+
+    setX(getX() + dx);
+    setY(getY() + dy);
+
+    createLight(getX(), getY(), gameState);
 }
 
-void Character::update(Map& map) {
-    Entity::update(map);
+void Character::update(GameState& gameState) {
+    Entity::update(gameState);
 
-    updateLight();
+    updateLight(gameState);
 }
 
-void Character::updateLight()
+void Character::updateLight(GameState& gameState)
 {
+    deleteLight(getX(), getY(), gameState);
+
     if (activeTorch == nullptr) visibilityRange = 4;
     else {
         visibilityRange = activeTorch->getRadius();
@@ -92,7 +104,40 @@ void Character::updateLight()
             activeTorch = nullptr;
         }
     }
+
+    createLight(getX(), getY(), gameState);
 }
+
+void Character::deleteLight(const int x, const int y, GameState& gameState) const
+{
+    const auto map = gameState.getCurrentLevel().getMap();
+
+    for (int nx = x - visibilityRange; nx <= x + visibilityRange; nx++) {
+        for (int ny = y - visibilityRange; ny <= y + visibilityRange; ny++) {
+            if (map->isInsideMap(nx, ny)) {
+                if (map->getLightType(nx, ny) == LightType::DYNAMIC) {
+                    map->setLightMap(nx, ny, LightType::NONE);
+                }
+            }
+        }
+    }
+}
+
+void Character::createLight(const int x, const int y, GameState& gameState) const
+{
+    const auto map = gameState.getCurrentLevel().getMap();
+
+    for (int nx = x - visibilityRange; nx <= x + visibilityRange; nx++) {
+        for (int ny = y - visibilityRange; ny <= y + visibilityRange; ny++) {
+            if (map->isInsideMap(nx, ny)) {
+                if (map->getLightType(nx, ny) == LightType::NONE) {
+                    map->setLightMap(nx, ny, LightType::DYNAMIC);
+                }
+            }
+        }
+    }
+}
+
 
 std::shared_ptr<Entity> Character::clone() const {
     return std::make_shared<Character>(*this);

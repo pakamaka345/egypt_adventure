@@ -7,8 +7,8 @@
 #include <modifiers/DefenseModifier.hpp>
 #include <modifiers/DodgeChanceModifier.hpp>
 
-ArmorAmulets::ArmorAmulets(float defense, float dodgeChance)
-	: Amulet("Amulet of Strength", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, 's'), m_defense(defense), m_dodgeChance(dodgeChance)
+ArmorAmulets::ArmorAmulets(float defense, float dodgeChance, int levelIndex)
+	: Amulet("Amulet of Defense", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, levelIndex, 'd'), m_defense(defense), m_dodgeChance(dodgeChance)
 {
 }
 

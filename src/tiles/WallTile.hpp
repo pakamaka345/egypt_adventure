@@ -3,7 +3,7 @@
 
 class WallTile : public Tile {
 public:
-    WallTile(int x, int y);
+    WallTile(int x, int y, int z);
     ~WallTile() override = default;
     bool isWalkable() const override;
 };

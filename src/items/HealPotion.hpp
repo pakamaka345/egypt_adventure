@@ -16,8 +16,7 @@ private:
     int duration;
 
 public:
-    HealPotion(float healAmount, int duration,
-               const std::string& name, const std::string& description, int x, int y, char symbol);
+    HealPotion(float healAmount, int duration, int levelIndex);
     ~HealPotion() override = default;
 
     void use(Entity& target) override;

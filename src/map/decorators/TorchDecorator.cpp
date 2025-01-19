@@ -8,6 +8,12 @@
 #include "tiles/TorchTile.hpp"
 #include <set>
 
+TorchDecorator::TorchDecorator(int levelIndex)
+	: MapDecorator(levelIndex)
+{
+}
+
+
 void TorchDecorator::decorate(Map& map) {
 	auto rooms = map.getRooms();
 	std::set<Position> torchPositions;
@@ -25,7 +31,7 @@ void TorchDecorator::placeTorchInRoom(Map& map, const std::shared_ptr<RoomGenera
 		auto pos = generateTorchPosition(room);
 
 		if (isValidTorchPosition(map, pos, torchPositions)) {
-			map.setTile(std::make_shared<TorchTile>(6, pos.x, pos.y));
+			map.setTile(std::make_shared<TorchTile>(6, pos.x, pos.y, levelIndex));
 			torchPositions.insert(pos);
 			placed = true;
 		}
@@ -51,7 +57,7 @@ Position TorchDecorator::generateTorchPosition(const std::shared_ptr<RoomGenerat
 	return pos;
 }
 
-bool TorchDecorator::isValidTorchPosition(Map& map, Position pos, const std::set<Position>& torchPositions)
+bool TorchDecorator::isValidTorchPosition(Map& map, Position pos, const std::set<Position>& torchPositions) const
 {
 	return map.isInsideMap(pos.x, pos.y) &&
 	   map.getTile(pos.x, pos.y)->getTileType() == TileType::WALL &&

@@ -9,7 +9,7 @@ class RoomDecorator : public MapDecorator {
 	int minRoomSize;
 
 public:
-	RoomDecorator(int minRoomSize);
+	RoomDecorator(int minRoomSize, int levelIndex);
 
 	void decorate(Map& map) override;
 };

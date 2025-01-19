@@ -7,10 +7,11 @@
 #include <items/Item.hpp>
 #include <map/Map.hpp>
 #include <states/LevelState.hpp>
+#include <utility>
 
 
-ItemDecorator::ItemDecorator(int maxItemPerRoom, bool isUnique, std::shared_ptr<Item> item, std::shared_ptr<LevelState> levelState)
-	: maxItemPerRoom(maxItemPerRoom), isUnique(isUnique), item(item), levelState(levelState)
+ItemDecorator::ItemDecorator(int maxItemPerRoom, bool isUnique, std::shared_ptr<Item> item, std::shared_ptr<LevelState> levelState, int levelIndex)
+	: MapDecorator(levelIndex), maxItemPerRoom(maxItemPerRoom), isUnique(isUnique), item(std::move(item)), levelState(std::move(levelState))
 {
 }
 
@@ -41,6 +42,7 @@ void ItemDecorator::placeItem(Map& map, const std::shared_ptr<RoomGenerator::Roo
 	auto pos = map.getRandomFreePosition(room->getCenter().x, room->getCenter().y, 7);
 
 	if (pos != Position(-1, -1)) {
+		pos.z = levelIndex;
 		item->setPos(pos);
 		map.placeItem(pos.x, pos.y, item);
 		levelState->addItem(item);

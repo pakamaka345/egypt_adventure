@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.hpp"
+#include "utils/GameObject.hpp"
 #include <memory>
 #include <list>
 
@@ -15,9 +15,9 @@ private:
 
 public:
     Tile();
-    Tile(int x, int y, char symbol);
-    Tile(int x, int y);
-    Tile(TileType::Type tileType, int x, int y, char symbol);
+    Tile(int x, int y, int z, char symbol);
+    Tile(int x, int y, int z);
+    Tile(TileType::Type tileType, int x, int y, int z, char symbol);
     ~Tile() override = default;
 
     Tile(const Tile&) = delete;
@@ -27,14 +27,14 @@ public:
     Tile& operator=(Tile&&) noexcept = default;
 
     void setEntity(std::shared_ptr<Entity> entity);
-    std::shared_ptr<Entity>& getEntity();
+    std::shared_ptr<Entity> getEntity();
     void removeEntity();
     bool hasEntity();
 
-    void addItem(const std::shared_ptr<Item>& item);
+    void addItem(std::shared_ptr<Item> item);
     void addItems(std::list<std::shared_ptr<Item>> items);
     std::list<std::shared_ptr<Item>>& getItems();
-    std::shared_ptr<Item>& getItem();
+    std::shared_ptr<Item> getItem();
     void removeItem();
     bool hasItems();
 

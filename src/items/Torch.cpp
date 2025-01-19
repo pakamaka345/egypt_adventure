@@ -2,10 +2,9 @@
 
 #include <entities/Character.hpp>
 
-Torch::Torch(int radius, int duration,
-             const std::string& name, const std::string& description, int x, int y, char symbol)
+Torch::Torch(int radius, int duration, int levelIndex)
 		: radius(radius), duration(duration)
-		, Item(name, description, x, y, symbol)
+		, Item("torch", "Ancient torches were made by egyption a thousand years ago.", 0, 0, levelIndex, 't')
 {
 }
 

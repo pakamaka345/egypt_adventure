@@ -7,8 +7,8 @@
 #include "modifiers/MagicalDamageModifier.hpp"
 #include <entities/Entity.hpp>
 
-DamageAmulet::DamageAmulet(float physicalDamage, float magicalDamage)
-	: Amulet("Amulet of Strength", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, 's'), m_physicalDamage(physicalDamage), m_magicalDamage(magicalDamage)
+DamageAmulet::DamageAmulet(float physicalDamage, float magicalDamage, int levelIndex)
+	: Amulet("Amulet of Strength", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, levelIndex, 's'), m_physicalDamage(physicalDamage), m_magicalDamage(magicalDamage)
 {
 }
 

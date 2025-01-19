@@ -129,8 +129,7 @@ void BattleSystem::updateEntities() {
     std::vector<std::shared_ptr<Entity>> entities;
     while (!queue.isEmpty()) {
         auto entity = queue.popEntity();
-        auto map = GameState::getInstance().getCurrentLevel().getMap();
-        entity->update(*map);
+        entity->update(GameState::getInstance());
         if (entity->isAlive())
             entities.push_back(entity);
     }

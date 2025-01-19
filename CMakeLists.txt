@@ -10,17 +10,14 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_library(EgyptAdventureLib ${SOURCES}
-        src/items/amulets/HealthAmulet.cpp
-        src/items/amulets/HealthAmulet.cpp
-        src/items/amulets/HealthAmulet.hpp
-        src/items/amulets/ArmorAmulets.cpp
-        src/items/amulets/ArmorAmulets.hpp)
+        src/game/InputHandler.cpp
+        src/game/InputHandler.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)
 
 add_executable(battle_test "test/battleTest.cpp"
-        src/BattleSystem.hpp)
+        src/utils/BattleSystem.hpp)
 target_link_libraries(battle_test PRIVATE EgyptAdventureLib)
 
 add_executable(map_test "test/mapTest.cpp"

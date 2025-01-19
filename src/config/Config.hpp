@@ -24,6 +24,7 @@ public:
                 entityConfig.at("dodgeChance").get<float>(),
                 entityConfig.at("x").get<int>(),
                 entityConfig.at("y").get<int>(),
+                entityConfig.at("z").get<int>(),
                 entityConfig.at("symbol").get<std::string>()[0]
         );
     }

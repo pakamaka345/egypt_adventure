@@ -4,13 +4,14 @@
 #include <iomanip>
 #include <limits>
 #include <dice/DiceRoll.hpp>
+#include <utility>
 #include "entities/Character.hpp"
 #include "items/Bullet.hpp"
 #include "tiles/WallTile.hpp"
 #include "tiles/FloorTile.hpp"
 #include "tiles/BedrockTile.hpp"
 
-Map::Map(int width, int height)
+Map::Map(int width, int height, int levelIndex)
     : width(width), height(height)
 {
     map.resize(height);
@@ -23,13 +24,13 @@ Map::Map(int width, int height)
         {
             if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
             {
-                map[y][x] = std::make_shared<BedrockTile>(x, y);
+                map[y][x] = std::make_shared<BedrockTile>(x, y, levelIndex);
+                lightMap[y][x] = LightType::STATIC;
             } else
             {
-                map[y][x] = std::make_shared<WallTile>(x, y);
+                map[y][x] = std::make_shared<WallTile>(x, y, levelIndex);
+                lightMap[y][x] = LightType::NONE;
             }
-
-            lightMap[y][x] = LightType::NONE;
         }
     }
 }
@@ -49,35 +50,35 @@ Map::Map(std::string& pathToInitFile) : width(0), height(0)
     initMap(pathToInitFile);
 }
 
-bool Map::canPlaceItem(int x, int y) const
+bool Map::canPlaceItem(const int x, const int y) const
 {
-    if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
+    if (isInsideMap(x, y))
         return true;
     return false;
 }
 
-bool Map::canPlaceEntity(int x, int y)
+bool Map::canPlaceEntity(const int x, const int y) const
 {
-    if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
+    if (isInsideMap(x, y))
         return (!map[y][x]->hasEntity() && map[y][x]->isWalkable());
     return false;
 }
 
-void Map::placeItem(int x, int y, std::shared_ptr<Item>& item)
+void Map::placeItem(const int x, const int y, std::shared_ptr<Item> item) const
 {
     if (canPlaceItem(x, y))
     {
-        map[y][x]->addItem(item);
+        map[y][x]->addItem(std::move(item));
     } else {
         throw std::runtime_error("Could not place item at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
 }
 
-void Map::placeEntity(int x, int y, std::shared_ptr<Entity>& entity)
+void Map::placeEntity(const int x, const int y, std::shared_ptr<Entity> entity) const
 {
     if (canPlaceEntity(x, y))
     {
-        map[y][x]->setEntity(entity);
+        map[y][x]->setEntity(std::move(entity));
     } else {
         throw std::runtime_error("Could not place entity at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
     }
@@ -119,12 +120,14 @@ std::shared_ptr<Item> Map::getItemAt(const int x, const int y) const
     return nullptr;
 }
 
-std::vector<Position> Map::getFreePositionsAround(int x, int y, int radius, int count) {
+std::vector<Position> Map::getFreePositionsAround(const int x, const int y, const int radius, const int count) const {
     std::vector<Position> freePositions;
     for (int dx = -radius; dx <= radius; dx++) {
         for (int dy = -radius; dy <= radius; dy++) {
-            Position candidate(x + dx, y + dy);
-            if (canPlaceEntity(candidate.x, candidate.y) && (dx != 0 || dy != 0)) {
+            if (
+                    Position candidate(x + dx, y + dy);
+                    canPlaceEntity(candidate.x, candidate.y) && (dx != 0 || dy != 0)
+                ) {
                 freePositions.emplace_back(candidate);
                 if (freePositions.size() == count) {
                     return freePositions;
@@ -135,15 +138,17 @@ std::vector<Position> Map::getFreePositionsAround(int x, int y, int radius, int 
     return freePositions;
 }
 
-Position Map::getRandomFreePosition(int x, int y, int radius)
+Position Map::getRandomFreePosition(const int x, const int y, const int radius) const
 {
     DiceRoll gen;
     std::vector<Position> freePositions;
 
     for (int dx = -radius; dx <= radius; dx++) {
         for (int dy = -radius; dy <= radius; dy++) {
-            Position candidate(x + dx, y + dy);
-            if (canPlaceEntity(candidate.x, candidate.y)) {
+            if (
+                    Position candidate(x + dx, y + dy);
+                    canPlaceEntity(candidate.x, candidate.y)
+                ) {
                 freePositions.push_back(candidate);
             }
         }
@@ -178,7 +183,7 @@ std::vector<std::shared_ptr<Tile>> Map::getAdjacentTiles(int x, int y) const
 
 
 
-void Map::listEntitiesAndItems(std::string& pathToWrite)
+void Map::listEntitiesAndItems(const std::string& pathToWrite)
 {
     std::ofstream file(pathToWrite, std::ios::out);
     if (file.is_open())
@@ -206,23 +211,29 @@ void Map::setTile(const std::shared_ptr<Tile>& tile)
         throw std::runtime_error("Could not set tile at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
 }
 
-std::shared_ptr<Tile> Map::getTile(int x, int y) const {
+std::shared_ptr<Tile> Map::getTile(const int x, const int y) const {
     return map[y][x];
 }
 
-LightType Map::getLightType(int x, int y)
+LightType Map::getLightType(const int x, const int y) const
 {
-    return lightMap[y][x];
+    if (isInsideMap(x, y))
+        return lightMap[y][x];
+    else
+        throw std::runtime_error("Could not get light type at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
 }
 
 void Map::setLightMap(int x, int y, LightType lightType)
 {
-    lightMap[y][x] = lightType;
+    if (isInsideMap(x, y))
+        lightMap[y][x] = lightType;
+    else
+        throw std::runtime_error("Could not set light type at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
 }
 
-const Position& Map::getPositionNearStair()
+Position Map::getPositionNearStair()
 {
-    auto startRoom = rooms[0];
+    const auto startRoom = rooms[0];
     Position stairPos(-1, -1);
     for (int dx = startRoom->x; dx <=startRoom->x + startRoom->width; dx++) {
         for (int dy = startRoom->y; dy <=startRoom->y + startRoom->height; dy++) {
@@ -235,20 +246,20 @@ const Position& Map::getPositionNearStair()
     if (stairPos == Position(-1, -1)) {
         auto freePos = getRandomFreePosition(startRoom->getCenter().x, startRoom->getCenter().y, 5);
         if (freePos == Position(-1, -1)) {
-            throw std::runtime_error("Could not find a free position near the stairs\n");
+            throw std::runtime_error("Could not find a free position for start room\n");
         }
-        return Position(stairPos.x, stairPos.y);
+        return freePos;
     }
 
     for (int dx = stairPos.x - 1; dx <= stairPos.x + 1; dx++) {
         for (int dy = stairPos.y - 1; dy <= stairPos.y + 1; dy++) {
             if (canPlaceEntity(dx, dy) && dx != stairPos.x && dy != stairPos.y) {
-                return Position{dx, dy};
+                return {dx, dy};
             }
         }
     }
 
-
+    return {-1, -1};
 }
 
 
@@ -275,27 +286,26 @@ void Map::initMap(std::string& pathToInitFile)
                 switch (line[x])
                 {
                     case '#': {
-                        std::shared_ptr<Tile> wall = std::make_shared<WallTile>(x, y);
+                        std::shared_ptr<Tile> wall = std::make_shared<WallTile>(x, y, 0);
                         map[y][x] = wall;
                         break;
                     }
                     case ' ': {
-                        std::shared_ptr<Tile> floor = std::make_shared<FloorTile>(x, y);
+                        std::shared_ptr<Tile> floor = std::make_shared<FloorTile>(x, y, 0);
                         map[x][y] = floor;
                         break;
                     }
                     case '@': {
-                        std::shared_ptr<Tile> floor = std::make_shared<FloorTile>(x, y);
+                        std::shared_ptr<Tile> floor = std::make_shared<FloorTile>(x, y, 0);
                         map[x][y] = floor;
-                        std::shared_ptr<Entity> player = std::make_shared<Character>("Piter Miller", x, y, '@');
+                        std::shared_ptr<Entity> player = std::make_shared<Character>("Piter Miller", x, y, 0, '@');
                         placeEntity(x, y, player);
                         break;
                     }
                     case 'B': {
-                        std::shared_ptr<Tile> floor = std::make_shared<FloorTile>(x, y);
+                        std::shared_ptr<Tile> floor = std::make_shared<FloorTile>(x, y, 0);
                         map[x][y] = floor;
-                        std::shared_ptr<Item> bullet = std::make_shared<Bullet>(25.0f, 0.0f, "bullet",
-                                                                                "simple round bullet", x, y, 'B');
+                        std::shared_ptr<Item> bullet = std::make_shared<Bullet>(25.0f, 0.0f, 0);
                         placeItem(x, y, bullet);
                         break;
                     }

@@ -17,7 +17,7 @@ private:
 	std::shared_ptr<MagicalDamageModifier> m_magicalDamageModifier;
 
 public:
-	DamageAmulet(float physicalDamage, float magicalDamage);
+	DamageAmulet(float physicalDamage, float magicalDamage, int levelIndex);
 
 	void applyAmuletEffect(Entity& target) override;
 	void removeAmuletEffect(Entity& target) override;

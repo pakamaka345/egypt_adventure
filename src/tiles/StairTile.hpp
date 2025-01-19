@@ -18,11 +18,11 @@ private:
 	StairType stairType;
 
 public:
-	StairTile(StairType stairType, int x, int y);
+	StairTile(StairType stairType, int x, int y, int z);
 
 	StairType getStairType() const;
 
-	void onInteract() override;
+	void onInteract(GameState& gameState) override;
 
 	bool isWalkable() const override;
 };

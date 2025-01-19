@@ -1,7 +1,7 @@
 #include "items/Item.hpp"
 
-Item::Item(const std::string& name, const std::string& description, int x, int y, char symbol)
-    : name(name), description(description), GameObject(x, y, symbol)
+Item::Item(const std::string& name, const std::string& description, int x, int y, int z, char symbol)
+    : name(name), description(description), GameObject(x, y, z, symbol)
 {
 }
 

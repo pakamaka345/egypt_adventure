@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "GameObject.hpp"
+#include "utils/GameObject.hpp"
 
 class Entity;
 
@@ -14,12 +14,12 @@ protected:
     std::string description;
 
 public:
-    Item(const std::string& name, const std::string& description, int x, int y, char symbol);
+    Item(const std::string& name, const std::string& description, int x, int y, int z, char symbol);
     ~Item() override = default;
 
     virtual void use(Entity& target) = 0;
-    virtual bool canBeUsedOnEnemies() const;
-    virtual bool isConsumable() const;
+    [[nodiscard]] virtual bool canBeUsedOnEnemies() const;
+    [[nodiscard]] virtual bool isConsumable() const;
 
     std::string& getName();
     std::string& getDescription();

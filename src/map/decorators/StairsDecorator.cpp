@@ -7,7 +7,7 @@
 #include <map/Map.hpp>
 
 StairsDecorator::StairsDecorator(int levelIndex)
-	: levelIndex(levelIndex)
+	: MapDecorator(levelIndex)
 {
 }
 
@@ -19,14 +19,16 @@ void StairsDecorator::decorate(Map& map)
 		Position stair1 = firstRoom->getCenter();
 		Position start = map.getRandomFreePosition(stair1.x, stair1.y, 3);
 		if (start.x != -1 && start.y != -1) {
-			map.setTile(std::make_shared<StairTile>(StairType::UP, start.x, start.y));
+			map.setTile(std::make_shared<StairTile>(StairType::UP, start.x, start.y, levelIndex));
 		}
 	}
 
-	auto& lastRoom = map.getRooms().back();
-	Position stair2 = lastRoom->getCenter();
-	Position end = map.getRandomFreePosition(stair2.x, stair2.y, 3);
-	if (end.x != -1 && end.y != -1) {
-		map.setTile(std::make_shared<StairTile>(StairType::DOWN, end.x, end.y));
+	if (levelIndex != 2) {
+		auto& lastRoom = map.getRooms().back();
+		Position stair2 = lastRoom->getCenter();
+		Position end = map.getRandomFreePosition(stair2.x, stair2.y, 3);
+		if (end.x != -1 && end.y != -1) {
+			map.setTile(std::make_shared<StairTile>(StairType::DOWN, end.x, end.y, levelIndex));
+		}
 	}
 }

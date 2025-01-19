@@ -16,8 +16,7 @@ private:
     float magicalDamage;
 
 public:
-    explicit Bullet(float physicalDamage, float magicalDamage,
-                    const std::string& name, const std::string& description, int x, int y, char symbol);
+    explicit Bullet(float physicalDamage, float magicalDamage, int levelIndex);
     ~Bullet() override = default;
 
     void use(Entity& target) override;

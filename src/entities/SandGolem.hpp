@@ -1,7 +1,6 @@
 #pragma once
 #include "entities/Entity.hpp"
 
-class Map;
 
 /**
  * \brief Now sand golem will represent a big man who is just has a low of health and other stats
@@ -17,14 +16,14 @@ private:
 public:
     SandGolem(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
           float health, float defense, float priority, float dodgeChance,
-          int x, int y, char symbol);
+          int x, int y, int z, char symbol);
     ~SandGolem() override = default;
 
     void attack(Entity& target) override;
     void takeDamage(float physicalDamage, float magicalDamage) override;
     void heal(float amount) override;
     void move(int dx, int dy) override;
-    void update(Map& map) override;
+    void update(GameState& gameState) override;
     std::shared_ptr<Entity> clone() const override;
 
     void activateSandShield();

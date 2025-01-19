@@ -1,6 +1,6 @@
 #pragma once
 #include "entities/Entity.hpp"
-#include "Inventory.hpp"
+#include "utils/Inventory.hpp"
 #include "items/Torch.hpp"
 
 class Weapon;
@@ -32,7 +32,7 @@ private:
     int visibilityRange;
 
 public:
-    Character(const std::string& name, int x, int y, char symbol);
+    Character(const std::string& name, int x, int y, int z, char symbol);
     Character(const Character& other);
     ~Character() override = default;
 
@@ -45,7 +45,7 @@ public:
     void takeDamage(float physicalDamage, float magicalDamage) override;
     void heal(float amount) override;
     void move(int dx, int dy) override;
-    void update(Map& map) override;
+    void update(GameState& gameState) override;
     std::shared_ptr<Entity> clone() const override;
 
     Inventory& getInventory();
@@ -58,5 +58,7 @@ public:
     int getVisibilityRange() const;
 
 private:
-    void updateLight();
+    void updateLight(GameState& gameState);
+    void deleteLight(int x, int y, GameState& gameState) const;
+    void createLight(int x, int y, GameState& gameState) const;
 };

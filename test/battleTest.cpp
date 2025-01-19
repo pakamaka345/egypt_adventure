@@ -1,4 +1,4 @@
-#include "BattleSystem.hpp"
+#include "../src/utils/BattleSystem.hpp"
 #include "entities/Entity.hpp"
 #include <iostream>
 

@@ -1,7 +1,7 @@
 #include "tiles/FloorTile.hpp"
 
-FloorTile::FloorTile(int x, int y)
-    : Tile(TileType::Type::FLOOR, x, y, ' ')
+FloorTile::FloorTile(int x, int y, int z)
+    : Tile(TileType::Type::FLOOR, x, y, z, '.')
 {
 }
 

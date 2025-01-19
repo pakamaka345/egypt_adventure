@@ -12,10 +12,11 @@ class Position;
 
 class TorchDecorator : public MapDecorator {
 public:
+	explicit TorchDecorator(int levelIndex);
 	void decorate(Map& map) override;
 
 private:
 	void placeTorchInRoom(Map& map, const std::shared_ptr<RoomGenerator::Room>& room, std::set<Position>& torchPositions);
 	Position generateTorchPosition(const std::shared_ptr<RoomGenerator::Room>& room);
-	bool isValidTorchPosition(Map& map, Position pos, const std::set<Position>& torchPositions);
+	bool isValidTorchPosition(Map& map, Position pos, const std::set<Position>& torchPositions) const;
 };

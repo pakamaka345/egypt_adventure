@@ -12,7 +12,7 @@ private:
 	int duration;
 
 public:
-	Torch(int radius, int duration, const std::string &name, const std::string &description, int x, int y, char symbol);
+	Torch(int radius, int duration, int levelIndex);
 
 	void use(Entity& target) override;
 

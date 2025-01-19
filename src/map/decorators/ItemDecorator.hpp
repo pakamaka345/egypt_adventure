@@ -20,7 +20,7 @@ private:
 
 
 public:
-	ItemDecorator(int maxItemPerRoom, bool isUnique, std::shared_ptr<Item> item, std::shared_ptr<LevelState> levelState);
+	ItemDecorator(int maxItemPerRoom, bool isUnique, std::shared_ptr<Item> item, std::shared_ptr<LevelState> levelState, int levelIndex);
 
 	void decorate(Map& map) override;
 };

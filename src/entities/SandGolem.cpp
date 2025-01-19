@@ -9,9 +9,9 @@
 #include "states/GameState.hpp"
 
 SandGolem::SandGolem(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense, float priority,
-             float dodgeChance, int x, int y, char symbol)
+             float dodgeChance, int x, int y, int z, char symbol)
         : maxShieldHealth(0), shieldHealth(0),
-        Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, symbol)
+        Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, z, symbol)
 {
 }
 
@@ -47,11 +47,11 @@ void SandGolem::move(int dx, int dy) {
     Entity::move(dx, dy);
 }
 
-void SandGolem::update(Map& map) {
-    Entity::update(map);
+void SandGolem::update(GameState& gameState) {
+    Entity::update(gameState);
 
     //auto map = GameState::getInstance().getCurrentLevel().getMap();
-    healOnSand(map);
+    healOnSand(*gameState.getCurrentLevel().getMap());
 }
 
 std::shared_ptr<Entity> SandGolem::clone() const {
@@ -78,7 +78,7 @@ void SandGolem::coverWithSand(Map &map, int radius) {
                 int diceRoll = dice.roll();
                 if (diceRoll < 70) {
                     if (map.getTile(newX, newY)->getTileType() == TileType::FLOOR) {
-                        std::shared_ptr<Tile> sandTile = std::make_shared<SandTile>(newX, newY);
+                        std::shared_ptr<Tile> sandTile = std::make_shared<SandTile>(newX, newY, getZ());
                         map.setTile(sandTile);
                     }
                 }

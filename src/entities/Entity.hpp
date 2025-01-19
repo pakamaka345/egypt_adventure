@@ -6,13 +6,14 @@
 #include <cmath>
 #include <random>
 #include <stdexcept>
-#include "GameObject.hpp"
+#include "utils/GameObject.hpp"
 #include "effects/EffectManager.hpp"
 
 class Item;
 class Amulet;
 class Effect;
 class Modifier;
+class GameState;
 class Map;
 
 /**
@@ -47,7 +48,7 @@ protected:
 
 public:
     Entity(std::string  name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
-           float priority, float dodgeChance, int x, int y, char symbol);
+           float priority, float dodgeChance, int x, int y, int z, char symbol);
     ~Entity() override = default;
 
     void addAmulet(const std::shared_ptr<Amulet>& amulet);
@@ -63,10 +64,17 @@ public:
     void updateEffects();
     void removeEffects();
 
-    bool isReady() { return cooldown <= 0; }
-    void reduceCooldown() { cooldown = std::max(0.0f, cooldown - 1); }
-    void resetCooldown(float turn) { cooldown = turn; }
+    bool isOnSameLevel(const std::shared_ptr<Entity>& other) const;
 
+    bool isReady() const { return cooldown <= 0; }
+    void reduceCooldown() { cooldown = std::max(0.0f, cooldown - 1); }
+    void resetCooldown(const float turn) { cooldown = turn; }
+
+    /**
+     * \brief Returns the distance to another entity.
+     * \param target The entity to which the distance is calculated.
+     * \return The distance to the target entity. (-1 if the entity is on diagonal)
+     */
     int distanceTo(Entity& target) const;
 
     std::string& getName();
@@ -117,7 +125,7 @@ public:
     /**
      * \brief Virtual method for updating the entity.
      */
-    virtual void update(Map& map);
+    virtual void update(GameState& gameState);
 
     virtual std::shared_ptr<Entity> clone() const = 0;
 };

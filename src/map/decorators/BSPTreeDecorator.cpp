@@ -7,8 +7,8 @@
 #include <map/Map.hpp>
 #include <map/BSPTree.hpp>
 
-BSPTreeDecorator::BSPTreeDecorator(int minLeafSize, int maxLeafSize)
-	: minLeafSize(minLeafSize), maxLeafSize(maxLeafSize)
+BSPTreeDecorator::BSPTreeDecorator(int minLeafSize, int maxLeafSize, int levelIndex)
+	: MapDecorator(levelIndex), minLeafSize(minLeafSize), maxLeafSize(maxLeafSize)
 {
 }
 

@@ -9,7 +9,7 @@ class BSPTreeDecorator : public MapDecorator {
 	int minLeafSize, maxLeafSize;
 
 public:
-	BSPTreeDecorator(int minLeafSize, int maxLeafSize);
+	BSPTreeDecorator(int minLeafSize, int maxLeafSize, int levelIndex);
 
 	void decorate(Map& map) override;
 };

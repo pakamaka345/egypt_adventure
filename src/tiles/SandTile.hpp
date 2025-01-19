@@ -3,7 +3,7 @@
 
 class SandTile : public Tile {
 public:
-    SandTile(int x, int y);
+    SandTile(int x, int y, int z);
     ~SandTile() override = default;
 
     bool isWalkable() const override;

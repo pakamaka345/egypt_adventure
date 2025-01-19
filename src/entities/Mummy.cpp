@@ -5,8 +5,8 @@
 #include "modifiers/PhysicalDamageModifier.hpp"
 
 Mummy::Mummy(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense, float priority,
-             float dodgeChance, int x, int y, char symbol)
-             : Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, symbol)
+             float dodgeChance, int x, int y, int z, char symbol)
+             : Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, z, symbol)
 {
 }
 
@@ -43,19 +43,19 @@ void Mummy::move(int dx, int dy) {
     Entity::move(dx, dy);
 }
 
-void Mummy::update(Map& map) {
-    Entity::update(map);
+void Mummy::update(GameState& gameState) {
+    Entity::update(gameState);
     regenerate();
 }
 
-void Mummy::summonMinions(Map &map) {
+void Mummy::summonMinions(Map &map) const {
     auto pos = map.getFreePositionsAround(this->getX(), this->getY(), 1, 2);
     if (pos.empty()) {
         return;
     }
 
     for (auto& p : pos) {
-        std::shared_ptr<Entity> minion = std::make_shared<Mummy>("Mummy Minion", 1, 5.0f, 0.0f, 10.0f, 0.1f, 0.5f, 0.1f, p.x, p.y, 'm');
+        std::shared_ptr<Entity> minion = std::make_shared<Mummy>("Mummy Minion", 1, 5.0f, 0.0f, 10.0f, 0.1f, 0.5f, 0.1f, p.x, p.y, getZ(), 'm');
         map.placeEntity(p.x, p.y, minion);
     }
 }

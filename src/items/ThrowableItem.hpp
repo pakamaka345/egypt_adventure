@@ -6,7 +6,7 @@ private:
     int radius;
 
 public:
-    ThrowableItem(int radius, const std::string& name, const std::string& description, int x, int y, char symbol);
+    ThrowableItem(int radius, const std::string& name, const std::string& description, int x, int y, int z, char symbol);
     ~ThrowableItem() override = default;
 
     bool canBeUsedOnEnemies() const override;

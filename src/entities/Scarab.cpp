@@ -1,14 +1,13 @@
 #include "entities/Scarab.hpp"
-
 #include <effects/GroupAttackBonus.hpp>
+#include <states/GameState.hpp>
 #include <map/Map.hpp>
-
 #include "dice/DiceRoll.hpp"
 
 Scarab::Scarab(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
-               float priority, float dodgeChance, int x, int y, char symbol)
+               float priority, float dodgeChance, int x, int y, int z, char symbol)
                : groupAttackBonus(1.0f),
-               Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, symbol)
+               Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, z, symbol)
 {
 }
 
@@ -38,10 +37,10 @@ void Scarab::move(int dx, int dy) {
     Entity::move(dx, dy);
 }
 
-void Scarab::update(Map& map) {
-    Entity::update(map);
+void Scarab::update(GameState& gameState) {
+    Entity::update(gameState);
 
-    findNearestScarabs(map);
+    findNearestScarabs(*gameState.getCurrentLevel().getMap());
 }
 
 void Scarab::findNearestScarabs(Map& map)

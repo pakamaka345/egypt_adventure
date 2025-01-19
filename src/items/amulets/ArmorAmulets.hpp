@@ -17,7 +17,7 @@ private:
 	std::shared_ptr<DodgeChanceModifier> m_dodgeChanceModifier;
 
 public:
-	ArmorAmulets(float defense, float dodgeChance);
+	ArmorAmulets(float defense, float dodgeChance, int levelIndex);
 
 	void applyAmuletEffect(Entity& target) override;
 	void removeAmuletEffect(Entity& target) override;

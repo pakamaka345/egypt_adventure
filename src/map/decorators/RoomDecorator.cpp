@@ -8,15 +8,15 @@
 
 #include "map/RoomGenerator.hpp"
 
-RoomDecorator::RoomDecorator(int minRoomSize)
-	: minRoomSize(minRoomSize)
+RoomDecorator::RoomDecorator(int minRoomSize, int levelIndex)
+	: MapDecorator(levelIndex), minRoomSize(minRoomSize)
 {
 }
 
 void RoomDecorator::decorate(Map& map)
 {
 	RoomGenerator roomGen;
-	roomGen.generateRooms(map.getLeaves(), map, minRoomSize);
+	roomGen.generateRooms(map.getLeaves(), map, minRoomSize, levelIndex);
 
 	auto& rooms = roomGen.getRooms();
 	map.setRooms(rooms);

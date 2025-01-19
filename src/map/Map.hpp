@@ -8,7 +8,6 @@
 class Tile;
 class Entity;
 class Item;
-class Position;
 class RoomGenerator;
 class BSPNode;
 
@@ -32,14 +31,14 @@ protected:
 public:
     explicit Map(std::string& pathToInitFile);
     Map(const Map& generatedMap);
-    Map(int width, int height);
+    Map(int width, int height, int levelIndex);
     ~Map() = default;
 
-    bool canPlaceItem(int x, int y) const;
-    bool canPlaceEntity(int x, int y);
+    [[nodiscard]] bool canPlaceItem(int x, int y) const;
+    [[nodiscard]] bool canPlaceEntity(int x, int y) const;
 
-    void placeItem(int x, int y, std::shared_ptr<Item>& item);
-    void placeEntity(int x, int y, std::shared_ptr<Entity>& entity);
+    void placeItem(int x, int y, std::shared_ptr<Item> item) const;
+    void placeEntity(int x, int y, std::shared_ptr<Entity> entity) const;
 
     void removeItem(int x, int y);
     void removeEntity(int x, int y);
@@ -47,15 +46,15 @@ public:
     [[nodiscard]] std::shared_ptr<Entity> getEntityAt(int x, int y) const;
     [[nodiscard]] std::shared_ptr<Item> getItemAt(int x, int y) const;
 
-    std::vector<Position> getFreePositionsAround(int x, int y, int radius, int count);
-    Position getRandomFreePosition(int x, int y, int radius);
-    std::vector<std::shared_ptr<Tile>> getAdjacentTiles(int x, int y) const;
+    [[nodiscard]] std::vector<Position> getFreePositionsAround(int x, int y, int radius, int count) const;
+    [[nodiscard]] Position getRandomFreePosition(int x, int y, int radius) const;
+    [[nodiscard]] std::vector<std::shared_ptr<Tile>> getAdjacentTiles(int x, int y) const;
 
-    void listEntitiesAndItems(std::string& pathToWrite);
+    void listEntitiesAndItems(const std::string& pathToWrite);
 
-    bool isInsideMap(int x, int y) const;
+    [[nodiscard]] bool isInsideMap(int x, int y) const;
     void setTile(const std::shared_ptr<Tile>& tile);
-    std::shared_ptr<Tile> getTile(int x, int y) const;
+    [[nodiscard]] std::shared_ptr<Tile> getTile(int x, int y) const;
 
     void setRooms(const std::vector<std::shared_ptr<RoomGenerator::Room>>& rooms) { this->rooms = rooms; }
     std::vector<std::shared_ptr<RoomGenerator::Room>>& getRooms() { return rooms; }
@@ -64,13 +63,13 @@ public:
     std::vector<std::shared_ptr<BSPNode>>& getLeaves() { return leaves; }
 
     void setLightMap(int x, int y, LightType lightType);
-    LightType getLightType(int x, int y);
+    [[nodiscard]] LightType getLightType(int x, int y) const;
     std::vector<std::vector<LightType>>& getLightMap() { return lightMap; }
 
-    const Position& getPositionNearStair();
+    Position getPositionNearStair();
 
-    int getWidth() const { return width; }
-    int getHeight() const { return height; }
+    [[nodiscard]] int getWidth() const { return width; }
+    [[nodiscard]] int getHeight() const { return height; }
 
 private:
     void initMap(std::string& pathToInitFile);

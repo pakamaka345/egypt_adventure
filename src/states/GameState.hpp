@@ -9,12 +9,15 @@ class LevelState;
 class Tile;
 class Map;
 
+constexpr int MAX_LEVELS = 3;
+
 class GameState {
 private:
     std::shared_ptr<Character> player;
     std::shared_ptr<LevelState> currentLevel;
     std::map<int, std::shared_ptr<LevelState>> levels;
     int levelIndex;
+    bool isGameOver;
 
     GameState();
 
@@ -34,7 +37,10 @@ public:
     void previousLevel(int newLevelIndex);
 
     void setLevelIndex(int newLevelIndex);
-    int getLevelIndex() const;
+    [[nodiscard]] int getLevelIndex() const;
+
+    void setIsGameOver(const bool newIsGameOver) { isGameOver = newIsGameOver; }
+    [[nodiscard]] bool getIsGameOver() const { return isGameOver; }
 
     void update() const;
 

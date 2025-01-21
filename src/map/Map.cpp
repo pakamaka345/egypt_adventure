@@ -86,7 +86,7 @@ void Map::placeEntity(const int x, const int y, std::shared_ptr<Entity> entity) 
 
 void Map::removeItem(int x, int y)
 {
-    if (x >= 0 && x < width && y >= 0 && y < height && map[x][y]->hasItems())
+    if (isInsideMap(x, y) && map[y][x]->hasItems())
     {
         map[y][x]->removeItem();
     } else {
@@ -96,7 +96,7 @@ void Map::removeItem(int x, int y)
 
 void Map::removeEntity(int x, int y)
 {
-    if (x >= 0 && x < width && y >= 0 && y < height && map[x][y]->hasEntity())
+    if (isInsideMap(x, y) && map[y][x]->hasEntity())
     {
         map[y][x]->removeEntity();
     } else {

@@ -3,7 +3,7 @@
 //
 
 #include "StairTile.hpp"
-
+#include "map/Map.hpp"
 #include <entities/Character.hpp>
 #include <states/GameState.hpp>
 
@@ -21,6 +21,8 @@ StairType StairTile::getStairType() const
 void StairTile::onInteract(GameState& gameState)
 {
 	gameState.getCurrentLevel().setStartPosition(gameState.getPlayer()->getPos());
+	gameState.getCurrentLevel().removeEntity(gameState.getPlayer());
+	gameState.getCurrentLevel().getMap()->removeEntity(gameState.getPlayer()->getX(), gameState.getPlayer()->getY());
 	int levelIndex = gameState.getLevelIndex();
 	if (stairType == StairType::UP) {
 		gameState.nextLevel(levelIndex + 1);

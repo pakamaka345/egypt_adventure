@@ -22,7 +22,7 @@ public:
     LevelState(std::shared_ptr<Map> map, const Position& startPosition);
     ~LevelState() = default;
 
-    void update(GameState& gameState);
+    void update(GameState& gameState) const;
 
     std::shared_ptr<Map> getMap() { return map; }
     [[nodiscard]] const Position& getStartPosition() const { return startPosition; }
@@ -33,4 +33,7 @@ public:
 
     std::list<std::shared_ptr<Entity>>& getEntities() { return entities; }
     std::list<std::shared_ptr<Item>>& getItems() { return items; }
+
+    void removeEntity(const std::shared_ptr<Entity>& entity);
+    void removeItem(const std::shared_ptr<Item>& item);
 };

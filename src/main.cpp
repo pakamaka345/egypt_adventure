@@ -1,14 +1,11 @@
-#include <iostream>
-#include <memory>
-#include <string>
-#include "GameView.hpp"
 
 
-
+#include "game/Game.hpp"
 
 int main() {
-    //std::locale::global(std::locale("en_US.UTF-8"));
 
+    Game game;
+    game.run();
 
     return 0;
 }

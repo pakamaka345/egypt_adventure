@@ -43,15 +43,14 @@ void Scarab::update(GameState& gameState) {
     findNearestScarabs(*gameState.getCurrentLevel().getMap());
 }
 
-void Scarab::findNearestScarabs(Map& map)
+void Scarab::findNearestScarabs(const Map& map)
 {
     std::vector<std::shared_ptr<Scarab>> scarabs;
     for (int dx = getX() - 1; dx <= getX() + 1; dx++) {
         for (int dy = getY() - 1; dy <= getY() + 1; dy++) {
             if (dx == getX() && dy == getY()) continue;
             if (map.isInsideMap(dx, dy)) {
-                auto scarab = std::dynamic_pointer_cast<Scarab>(map.getEntityAt(dx, dy));
-                if (scarab) {
+                if (auto scarab = std::dynamic_pointer_cast<Scarab>(map.getEntityAt(dx, dy))) {
                     scarabs.push_back(scarab);
                 }
             }

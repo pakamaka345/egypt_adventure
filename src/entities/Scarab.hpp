@@ -27,5 +27,5 @@ public:
     float getGroupAttackBonus() const;
 
 private:
-	void findNearestScarabs(Map& map);
+	void findNearestScarabs(const Map& map);
 };

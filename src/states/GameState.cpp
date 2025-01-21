@@ -9,8 +9,12 @@
 
 
 
-GameState::GameState() : player(nullptr), levelIndex(1)
-{}
+GameState::GameState() : player(nullptr), levelIndex(1), isGameOver(false)
+{
+    for (int i = 1; i <= MAX_LEVELS; ++i) {
+        levels[i] = nullptr;
+    }
+}
 
 GameState &GameState::getInstance() {
     static GameState instance;
@@ -49,8 +53,11 @@ void GameState::nextLevel(const int newLevelIndex) {
 
     currentLevel = levels[newLevelIndex];
     levelIndex = newLevelIndex;
-    player->setPos(currentLevel->getStartPosition());
-
+    if (player) {
+        player->setPos(currentLevel->getStartPosition());
+        currentLevel->addEntity(player);
+        currentLevel->getMap()->placeEntity(player->getX(), player->getY(), player);
+    }
 }
 
 void GameState::previousLevel(const int newLevelIndex)
@@ -90,7 +97,7 @@ std::shared_ptr<LevelState> GameState::createLevel(const int levelIndex)
 {
     std::shared_ptr<LevelState> level;
     if (levelIndex == 1) {
-        level = MapGenerator::GenerateMap(levelIndex, 200, 200, 30, 40, 30);
+        level = MapGenerator::GenerateMap(levelIndex, 200, 200, 20, 25, 10);
     } else if (levelIndex == 2) {
         level = MapGenerator::GenerateMap(levelIndex, 150, 150, 25, 35, 20);
     } else if (levelIndex == 3) {

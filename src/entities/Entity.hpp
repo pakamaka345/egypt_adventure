@@ -15,6 +15,7 @@ class Effect;
 class Modifier;
 class GameState;
 class Map;
+class AIComponent;
 
 /**
  * \brief The Entity class represents a game object that can be attacked and can attack other entities.
@@ -45,10 +46,12 @@ protected:
     AmuletList activeAmulets;
     ModifierList activeModifiers;
     EffectManager effectManager;
+    std::shared_ptr<AIComponent> aiComponent;
 
 public:
     Entity(std::string  name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
            float priority, float dodgeChance, int x, int y, int z, char symbol);
+
     ~Entity() override = default;
 
     void addAmulet(const std::shared_ptr<Amulet>& amulet);
@@ -90,6 +93,7 @@ public:
     AmuletList& getActiveAmulets();
     EffectManager& getEffectManager();
     ModifierList& getActiveModifiers();
+    std::shared_ptr<AIComponent> getAIComponent() const;
 
     void setHealth(float health);
     void setMaxHealth(float maxHealth);
@@ -100,6 +104,7 @@ public:
     void setPriority(float priority);
     void setCooldown(float cooldown);
     void setDodgeChance(float dodgeChance);
+    void setAIComponent(const std::shared_ptr<AIComponent>& aiComponent);
 
 public:
     /**

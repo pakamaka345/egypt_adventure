@@ -2,6 +2,8 @@
 #include <effects/GroupAttackBonus.hpp>
 #include <states/GameState.hpp>
 #include <map/Map.hpp>
+
+#include "ai/AIComponent.hpp"
 #include "dice/DiceRoll.hpp"
 
 Scarab::Scarab(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
@@ -9,6 +11,7 @@ Scarab::Scarab(const std::string &name, int attackRange, float physicalDamage, f
                : groupAttackBonus(1.0f),
                Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, z, symbol)
 {
+    aiComponent = std::make_shared<AIComponent>();
 }
 
 void Scarab::attack(Entity &target) {
@@ -18,8 +21,8 @@ void Scarab::attack(Entity &target) {
             int diceRoll = dice.roll();
             float physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense()) * groupAttackBonus;
             target.takeDamage(physicalDamage, getMagicalDamage());
+            resetCooldown(this->getPriority());
         }
-        resetCooldown(this->getPriority());
     } else {
         throw std::runtime_error("Scarab is on cooldown");
     }

@@ -1,4 +1,7 @@
 #pragma once
+#include <valarray>
+#include <functional>
+
 #include "tiles/TileType.hpp"
 
 struct Position {
@@ -23,7 +26,38 @@ struct Position {
     bool operator!=(const Position& other) const {
         return x != other.x || y != other.y || z != other.z;
     }
+
+    Position operator+(const Position& other) const {
+        if (z != other.z) return { x + other.x, y + other.y, z + other.z };
+        return {x + other.x, y + other.y, z};
+    }
+
+    Position operator-(const Position& other) const {
+        if (z != other.z) return { x - other.x, y - other.y, z - other.z };
+        return {x - other.x, y - other.y, z};
+    }
+
+    static Position abs(const Position& pos) {
+        return { std::abs(pos.x), std::abs(pos.y), std::abs(pos.z) };
+    }
 };
+
+
+namespace std
+{
+    template <>
+    struct hash<Position>
+    {
+        std::size_t operator()(const Position& pos) const
+        {
+            using std::size_t;
+            using std::hash;
+
+            return ((hash<int>()(pos.x) ^ (hash<int>()(pos.y) << 1)) >> 1 ^ (hash<int>()(pos.z) << 1));
+        }
+    };
+}
+
 
 class GameObject
 {

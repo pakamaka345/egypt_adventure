@@ -1,15 +1,20 @@
 #include "entities/Entity.hpp"
 
 #include <utility>
+#include <commands/Command.hpp>
+
+#include "ai/AIComponent.hpp"
 #include "items/amulets/Amulet.hpp"
 #include "modifiers/Modifier.hpp"
 
 Entity::Entity(std::string  name, int attackRange,  float physicalDamage, float magicalDamage, float health, float defense, float priority,
                float dodgeChance, int x, int y, int z, char symbol)
                : name(std::move(name)), attackRange(attackRange), physicalDamage(physicalDamage), magicalDamage(magicalDamage), health(health), maxHealth(health), defense(defense), priority(priority), cooldown(0),
-               dodgeChance(dodgeChance), GameObject(x, y, z, symbol)
+               dodgeChance(dodgeChance), aiComponent(nullptr), GameObject(x, y, z, symbol)
 {
 }
+
+
 
 void Entity::addAmulet(const std::shared_ptr<Amulet>& amulet) {
     if (activeAmulets.size() >= 5) {
@@ -80,12 +85,7 @@ bool Entity::isOnSameLevel(const std::shared_ptr<Entity>& other) const
 }
 
 int Entity::distanceTo(Entity &target) const {
-    if (target.getX() == this->getX()) {
-        return std::abs(target.getY() - this->getY());
-    } else if (target.getY() == this->getY()) {
-        return std::abs(target.getX() - this->getX());
-    }
-    return -1;
+    return static_cast<int>(sqrt(pow(target.getX() - getX(), 2) + pow(target.getY() - getY(), 2)));
 }
 
 void Entity::move(int dx, int dy)
@@ -98,6 +98,13 @@ void Entity::move(int dx, int dy)
 void Entity::update(GameState& gameState) {
     updateEffects();
     reduceCooldown();
+
+    if (aiComponent) {
+        auto command = aiComponent->makeDecision(gameState);
+        if (command) {
+            command->execute(gameState);
+        }
+    }
 }
 
 std::string &Entity::getName() {
@@ -182,6 +189,11 @@ Entity::ModifierList &Entity::getActiveModifiers() {
     return activeModifiers;
 }
 
+std::shared_ptr<AIComponent> Entity::getAIComponent() const
+{
+    return aiComponent;
+}
+
 void Entity::setHealth(float health) {
     Entity::health = health;
 }
@@ -219,5 +231,11 @@ void Entity::setCooldown(float cooldown) {
 void Entity::setDodgeChance(float dodgeChance) {
     Entity::dodgeChance = dodgeChance;
 }
+
+void Entity::setAIComponent(const std::shared_ptr<AIComponent>& aiComponent)
+{
+    Entity::aiComponent = aiComponent;
+}
+
 
 

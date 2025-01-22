@@ -58,11 +58,10 @@ void Character::attack(Entity &target) {
         }
 
         if (canAttack(target)) {
-
             target.takeDamage(physicalDamage, getMagicalDamage());
+            resetCooldown(this->getPriority());
         }
 
-        resetCooldown(this->getPriority());
     } else {
         throw std::runtime_error("Character is on cooldown");
     }

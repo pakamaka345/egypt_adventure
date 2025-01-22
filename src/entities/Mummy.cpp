@@ -19,8 +19,8 @@ void Mummy::attack(Entity &target) {
             float physicalDamage = (getPhysicalDamage() * static_cast<float>(diceRoll) / 4.0f) * (1.0f - target.getDefense());
             float magicalDamage = (getMagicalDamage() * static_cast<float>(diceRoll) / 4.0f) * (1.0f - target.getDefense());
             target.takeDamage(physicalDamage, magicalDamage);
+            resetCooldown(this->getPriority());
         }
-        resetCooldown(this->getPriority());
     } else {
         throw std::runtime_error("Mummy is on cooldown");
     }

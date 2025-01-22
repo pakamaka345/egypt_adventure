@@ -6,6 +6,7 @@
 #include "MapDecorator.hpp"
 #include "config/Config.hpp"
 #include <map/RoomGenerator.hpp>
+#include <ai/AIComponent.hpp>
 #include <string>
 #include <memory>
 
@@ -29,6 +30,13 @@ class EnemyDecorator : public MapDecorator {
 	{
 		auto enemy = config->createEntity<T>(enemyName)->clone();
 		enemy->setPos(pos);
+		auto specificEnemy = std::dynamic_pointer_cast<T>(enemy);
+		if (specificEnemy) {
+			auto ai = specificEnemy->getAIComponent();
+			if (ai) {
+				ai->setOwner(specificEnemy);
+			}
+		}
 		return enemy;
 	}
 

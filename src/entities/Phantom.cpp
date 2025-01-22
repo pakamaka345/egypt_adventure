@@ -1,6 +1,7 @@
 #include "entities/Phantom.hpp"
 #include "effects/FearEffect.hpp"
 #include "dice/DiceRoll.hpp"
+#include "ai/AIComponent.hpp"
 
 Phantom::Phantom(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
                  float priority, float dodgeChance, int x, int y, int z, char symbol)
@@ -23,8 +24,8 @@ void Phantom::attack(Entity &target) {
                 auto fearEffect = std::make_shared<FearEffect>(3, 1.5f);
                 target.applyEffects(fearEffect);
             }
+            resetCooldown(this->getPriority());
         }
-        resetCooldown(this->getPriority());
     } else {
         throw std::runtime_error("Pharaon's phantom is on cooldown");
     }

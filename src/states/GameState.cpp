@@ -77,7 +77,7 @@ void GameState::update() const {
     }
 
     if (player) {
-        player->update(getInstance());
+        //player->update(getInstance());
 
         const auto adjacent = currentLevel->getMap()->getAdjacentTiles(player->getX(), player->getY());
         onCollisionWithTile(adjacent);

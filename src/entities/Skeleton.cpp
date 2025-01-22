@@ -1,11 +1,13 @@
 #include "entities/Skeleton.hpp"
 #include "dice/DiceRoll.hpp"
+#include "ai/AIComponent.hpp"
 
 Skeleton::Skeleton(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense, float priority,
                    float dodgeChance, int x, int y, int z, char symbol)
         : resurrection(1),
         Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, z, symbol)
 {
+    aiComponent = std::make_shared<AIComponent>();
 }
 
 /**
@@ -18,21 +20,18 @@ void Skeleton::attack(Entity &target) {
             DiceRoll dice(8);
             int diceRoll = dice.roll();
 
-            int distance = distanceTo(target);
+            const int distance = distanceTo(target);
             float physicalDamage = 0.0f;
-            if (distance != -1) {
-                if (distance > 2) {
-                    physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
-                } else {
-                    physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense()) * 0.5f;
-                }
-
-                target.takeDamage(physicalDamage, getMagicalDamage());
-                this->takeDamage(0.1f * getHealth(), 0);
+            if (distance > 2) {
+                physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
+            } else {
+                physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense()) * 0.5f;
             }
-        }
 
-        resetCooldown(this->getPriority());
+            target.takeDamage(physicalDamage, getMagicalDamage());
+            this->takeDamage(0.1f * getHealth(), 0);
+            resetCooldown(this->getPriority());
+        }
     }  else {
         throw std::runtime_error("Skeleton is on cooldown");
     }

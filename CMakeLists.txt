@@ -9,7 +9,9 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-add_library(EgyptAdventureLib ${SOURCES})
+add_library(EgyptAdventureLib ${SOURCES}
+        src/ai/AIComponent.cpp
+        src/ai/AIComponent.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

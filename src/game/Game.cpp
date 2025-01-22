@@ -44,6 +44,8 @@ void Game::run()
 			}
 			std::cout << std::endl;
 		}
+		std::cout << "\e[0;32m " << gameState.getPlayer()->getHealth() << " HP\e[0m" << std::endl;
+		std::cout << "\e[0;32m " << gameState.getPlayer()->getCooldown() << " Cooldown\e[0m" << std::endl;
 
 		auto command = inputHandler.handleInput();
 		gameController.executeCommand(command);

@@ -13,6 +13,14 @@ private:
     std::list<std::shared_ptr<Item>> items;
     TileType::Type tileType;
 
+    // for A* algorithm
+    // Total cost of the tile (f = g + h)
+    float f;
+    // Cost from the start tile to this tile
+    float g;
+    // Cost from this tile to the end tile
+    float h;
+
 public:
     Tile();
     Tile(int x, int y, int z, char symbol);
@@ -41,4 +49,12 @@ public:
     TileType::Type getTileType();
     void setTileType(TileType::Type tileType);
     virtual bool isWalkable() const;
+
+    void resetPathfinding() { f = g = h = 0.0f; }
+    void setG(float value) { g = value; }
+    void setH(float value) { h = value; }
+    void setF(float value) { f = value; }
+    float getG() const { return g; }
+    float getH() const { return h; }
+    float getF() const { return f; }
 };

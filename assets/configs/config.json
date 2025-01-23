@@ -21,7 +21,7 @@
   },
   "Skeleton": {
     "name": "Skeleton",
-    "attackRange": 3,
+    "attackRange": 4,
     "physicalDamage": 20.0,
     "magicalDamage": 0.0,
     "health": 30.0,

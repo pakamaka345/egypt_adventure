@@ -1,13 +1,10 @@
 #include "states/GameState.hpp"
 #include <utility>
 #include <tiles/InteractTile.hpp>
-
 #include "map/Map.hpp"
 #include "entities/Character.hpp"
 #include "map/MapGenerator.hpp"
 #include "states/LevelState.hpp"
-
-
 
 GameState::GameState() : player(nullptr), levelIndex(1), isGameOver(false)
 {
@@ -37,6 +34,12 @@ LevelState &GameState::getCurrentLevel() {
 
     return *currentLevel;
 }
+
+std::map<int, std::shared_ptr<LevelState>>& GameState::getLevels()
+{
+    return levels;
+}
+
 
 std::shared_ptr<Character> GameState::getPlayer() {
     if (!player) {
@@ -71,9 +74,33 @@ void GameState::previousLevel(const int newLevelIndex)
 }
 
 
-void GameState::update() const {
+void GameState::update() {
     if (currentLevel) {
-        currentLevel->update(getInstance());
+        auto& entities = currentLevel->getEntities();
+
+        while (!entities.empty()) {
+            auto& entity = entities.front();
+            queue.addEntity(entity);
+            entities.pop_front();
+        }
+
+        while (!queue.isEmpty()) {
+            const auto entity = queue.popEntity();
+            entity->update(getInstance());
+
+            if (!entity->isAlive()) {
+                entity->onDeath(getInstance());
+            } else {
+                entities.push_back(entity);
+            }
+        }
+    }
+
+    for (auto& level : levels) {
+        if (level.first != levelIndex) {
+            if (level.second != nullptr)
+                level.second->update(getInstance());
+        }
     }
 
     if (player) {

@@ -1,0 +1,1951 @@
+//
+// Created by pakamaka345 on 1/21/25.
+//
+
+#pragma once
+#include <memory>
+#include <vector>
+
+class Entity;
+class Position;
+class Command;
+class GameState;
+class Map;
+enum class Direction;
+
+class AIComponent {
+protected:
+	std::weak_ptr<Entity> owner;
+	bool hasSeenPlayer = false;
+
+public:
+	AIComponent() = default;
+	explicit AIComponent(std::shared_ptr<Entity> owner);
+	virtual ~AIComponent() = default;
+
+	void setOwner(std::shared_ptr<Entity> owner);
+	[[nodiscard]] std::shared_ptr<Entity> getOwner() const;
+
+	std::shared_ptr<Command> makeDecision(GameState& gameState);
+
+protected:
+	bool canSeePlayer(const std::shared_ptr<Entity>& monster, const std::shared_ptr<Entity>& player, const std::shared_ptr<Map>& map) const;
+	Direction findPath(const std::shared_ptr<Entity>& monster, const std::shared_ptr<Entity>& player, const std::shared_ptr<Map>& map) const;
+	std::vector<Position> aStarSearch(const Position& start, const Position& goal, const std::shared_ptr<Map>& map) const;
+	Direction convertPosToDirection(const Position& from, const Position& to) const;
+
+	int heuristic(const Position& a, const Position& b) const;
+	bool isDestination(const Position& src, const Position& dest) const;
+};
+
+//
+// Created by pakamaka345 on 1/19/25.
+//
+
+#pragma once
+#include "Command.hpp"
+
+class ExitCommand : public Command {
+public:
+	void execute(GameState& gameState) override;
+};
+
+
+//
+// Created by pakamaka345 on 1/19/25.
+//
+
+#pragma once
+#include <memory>
+#include "Command.hpp"
+
+class Entity;
+struct Position;
+
+enum class Direction
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	NONE
+};
+
+class MoveCommand : public Command {
+private:
+	Direction direction;
+	std::shared_ptr<Entity> entity;
+
+public:
+	MoveCommand(Direction direction, std::shared_ptr<Entity> entity);
+
+	void execute(GameState& gameState) override;
+
+private:
+	[[nodiscard]] static Position getDirectionOffset(Direction direction) ;
+};
+
+
+//
+// Created by pakamaka345 on 1/19/25.
+//
+
+#pragma once
+
+class GameState;
+
+class Command
+{
+public:
+	virtual ~Command() = default;
+
+	virtual void execute(GameState& gameState) = 0;
+};#pragma once
+#include <iostream>
+
+class Interface {
+public:
+    Interface() = default;
+    virtual void draw() const = 0;
+};#pragma once 
+#include <utility>
+#include <vector>
+#include <memory>
+
+#include "RoomGenerator.hpp"
+
+class Tile;
+class Entity;
+class Item;
+class RoomGenerator;
+class BSPNode;
+
+enum class LightType
+{
+    NONE,
+    STATIC,
+    DYNAMIC
+};
+
+class Map
+{
+protected:
+    std::vector<std::vector<std::shared_ptr<Tile>>> map;
+    std::vector<std::vector<LightType>> lightMap;
+    std::vector<std::shared_ptr<RoomGenerator::Room>> rooms;
+    std::vector<std::shared_ptr<BSPNode>> leaves;
+    int width;
+    int height;
+
+public:
+    explicit Map(std::string& pathToInitFile);
+    Map(const Map& generatedMap);
+    Map(int width, int height, int levelIndex);
+    ~Map() = default;
+
+    [[nodiscard]] bool canPlaceItem(int x, int y) const;
+    [[nodiscard]] bool canPlaceEntity(int x, int y) const;
+
+    void placeItem(int x, int y, std::shared_ptr<Item> item) const;
+    void placeEntity(int x, int y, std::shared_ptr<Entity> entity) const;
+
+    void removeItem(int x, int y);
+    void removeEntity(int x, int y);
+
+    [[nodiscard]] std::shared_ptr<Entity> getEntityAt(int x, int y) const;
+    [[nodiscard]] std::shared_ptr<Item> getItemAt(int x, int y) const;
+
+    [[nodiscard]] std::vector<Position> getFreePositionsAround(int x, int y, int radius, int count) const;
+    [[nodiscard]] Position getRandomFreePosition(int x, int y, int radius) const;
+    [[nodiscard]] std::vector<std::shared_ptr<Tile>> getAdjacentTiles(int x, int y) const;
+
+    void listEntitiesAndItems(const std::string& pathToWrite);
+
+    [[nodiscard]] bool isInsideMap(int x, int y) const;
+    void setTile(const std::shared_ptr<Tile>& tile);
+    [[nodiscard]] std::shared_ptr<Tile> getTile(int x, int y) const;
+
+    void setRooms(const std::vector<std::shared_ptr<RoomGenerator::Room>>& rooms) { this->rooms = rooms; }
+    std::vector<std::shared_ptr<RoomGenerator::Room>>& getRooms() { return rooms; }
+
+    void setLeaves(std::vector<std::shared_ptr<BSPNode>> leaves) { this->leaves = std::move(leaves); }
+    std::vector<std::shared_ptr<BSPNode>>& getLeaves() { return leaves; }
+
+    void setLightMap(int x, int y, LightType lightType);
+    [[nodiscard]] LightType getLightType(int x, int y) const;
+    std::vector<std::vector<LightType>>& getLightMap() { return lightMap; }
+
+    Position getPositionNearStair();
+
+    [[nodiscard]] int getWidth() const { return width; }
+    [[nodiscard]] int getHeight() const { return height; }
+
+private:
+    void initMap(std::string& pathToInitFile);
+};//
+// Created by pakamaka345 on 12/26/24.
+//
+
+#pragma once
+#include <vector>
+#include "map/BSPNode.hpp"
+
+class BSPTree {
+private:
+	std::shared_ptr<BSPNode> root;
+
+public:
+	BSPTree(int width, int height);
+	~BSPTree() = default;
+
+	void generate(int minSize, int maxSize);
+
+	std::vector<std::shared_ptr<BSPNode>> getLeaves();
+};
+
+//
+// Created by pakamaka345 on 12/27/24.
+//
+
+#pragma once
+#include "map/RoomGenerator.hpp"
+
+class CorridorGenerator {
+public:
+	void connectRooms(RoomGenerator::Room& room1, RoomGenerator::Room& room2, Map& map, int levelIndex);
+
+};
+
+
+//
+// Created by pakamaka345 on 12/26/24.
+//
+
+#pragma once
+#include <vector>
+#include <memory>
+#include "utils/GameObject.hpp"
+
+class Map;
+class BSPNode;
+
+class RoomGenerator {
+public:
+	struct Room
+	{
+		int x, y, width, height;
+
+		Room(int x, int y, int width, int height)
+			: x(x), y(y), width(width), height(height) {}
+
+		Position getCenter() const
+		{
+			return {x + width / 2, y + height / 2};
+		}
+	};
+
+public:
+	void generateRooms(const std::vector<std::shared_ptr<BSPNode>>& nodes, Map& map, int MinRoomSize, int levelIndex);
+
+	std::vector<std::shared_ptr<Room>>& getRooms() { return rooms; }
+
+private:
+	std::vector<std::shared_ptr<Room>> rooms;
+};
+
+
+//
+// Created by pakamaka345 on 12/26/24.
+//
+
+#pragma once
+#include <memory>
+
+class BSPNode {
+public:
+    int x, y, width, height;
+    std::shared_ptr<BSPNode> left, right;
+
+    BSPNode(int x, int y, int width, int height);
+    ~BSPNode() = default;
+
+    bool isLeaf() const { return !left && !right; }
+
+    bool split(int minSize);
+};
+//
+// Created by pakamaka345 on 1/5/25.
+//
+
+#pragma once
+
+class Map;
+
+class MapDecorator
+{
+protected:
+	int levelIndex;
+
+public:
+	explicit MapDecorator(const int levelIndex) : levelIndex(levelIndex) {}
+
+	virtual void decorate(Map& map) = 0;
+	virtual ~MapDecorator() = default;
+};//
+// Created by pakamaka345 on 1/5/25.
+//
+
+#pragma once
+#include "MapDecorator.hpp"
+
+
+class CorridorDecorator : public MapDecorator {
+public:
+	explicit CorridorDecorator(int levelIndex);
+	void decorate(Map& map) override;
+};
+
+
+//
+// Created by pakamaka345 on 1/6/25.
+//
+
+#pragma once
+#include "MapDecorator.hpp"
+#include "config/Config.hpp"
+#include <map/RoomGenerator.hpp>
+#include <ai/AIComponent.hpp>
+#include <string>
+#include <memory>
+
+class Entity;
+class LevelState;
+
+class EnemyDecorator : public MapDecorator {
+	int enemyCount;
+	int mapSection;
+	std::string enemyName;
+	std::shared_ptr<LevelState> levelState;
+	std::shared_ptr<Config> config;
+	std::map<std::string, std::function<std::shared_ptr<Entity>(Position)>> enemyCreationMap;
+
+	std::shared_ptr<Entity> createEnemy(const std::string& enemyName, Position pos);
+	void placeEnemy(Map& map, const std::shared_ptr<RoomGenerator::Room>& room);
+	Position generateEnemyPosition(const std::shared_ptr<RoomGenerator::Room>& room);
+
+	template<typename T>
+	std::shared_ptr<Entity> createSpecificEnemy(Position pos)
+	{
+		auto enemy = config->createEntity<T>(enemyName)->clone();
+		enemy->setPos(pos);
+		auto specificEnemy = std::dynamic_pointer_cast<T>(enemy);
+		if (specificEnemy) {
+			auto ai = specificEnemy->getAIComponent();
+			if (ai) {
+				ai->setOwner(specificEnemy);
+			}
+		}
+		return enemy;
+	}
+
+public:
+	EnemyDecorator(int enemyCount, int mapSection, std::string enemyName, std::shared_ptr<LevelState> levelState, int levelIndex);
+
+	void decorate(Map& map) override;
+};
+//
+// Created by pakamaka345 on 1/5/25.
+//
+
+#pragma once
+#include "MapDecorator.hpp"
+
+class StairsDecorator : public MapDecorator {
+public:
+	explicit StairsDecorator(int levelIndex);
+	void decorate(Map& map) override;
+};
+
+
+//
+// Created by pakamaka345 on 1/5/25.
+//
+
+#pragma once
+#include "MapDecorator.hpp"
+#include <set>
+#include <memory>
+#include <map/RoomGenerator.hpp>
+
+class Position;
+
+class TorchDecorator : public MapDecorator {
+public:
+	explicit TorchDecorator(int levelIndex);
+	void decorate(Map& map) override;
+
+private:
+	void placeTorchInRoom(Map& map, const std::shared_ptr<RoomGenerator::Room>& room, std::set<Position>& torchPositions);
+	Position generateTorchPosition(const std::shared_ptr<RoomGenerator::Room>& room);
+	bool isValidTorchPosition(Map& map, Position pos, const std::set<Position>& torchPositions) const;
+};
+//
+// Created by pakamaka345 on 1/8/25.
+//
+#pragma once
+#include "MapDecorator.hpp"
+#include <map/RoomGenerator.hpp>
+#include <memory>
+
+class LevelState;
+class Item;
+
+class ItemDecorator : public MapDecorator {
+private:
+	int maxItemPerRoom;
+	bool isUnique;
+	std::shared_ptr<Item> item;
+	std::shared_ptr<LevelState> levelState;
+
+	void placeItem(Map& map, const std::shared_ptr<RoomGenerator::Room>& room);
+
+
+public:
+	ItemDecorator(int maxItemPerRoom, bool isUnique, std::shared_ptr<Item> item, std::shared_ptr<LevelState> levelState, int levelIndex);
+
+	void decorate(Map& map) override;
+};
+
+
+//
+// Created by pakamaka345 on 1/5/25.
+//
+
+#pragma once
+#include <vector>
+#include <memory>
+#include "MapDecorator.hpp"
+
+class CompositeMapDecorator : public MapDecorator {
+	std::vector<std::unique_ptr<MapDecorator>> decorators;
+
+public:
+	explicit CompositeMapDecorator(int levelIndex) : MapDecorator(levelIndex) {}
+
+	void addDecorator(std::unique_ptr<MapDecorator> decorator) {
+		decorators.push_back(std::move(decorator));
+	}
+
+	void decorate(Map& map) override {
+		for (auto& decorator : decorators) {
+			decorator->decorate(map);
+		}
+
+		decorators.clear();
+	}
+
+};
+//
+// Created by pakamaka345 on 1/5/25.
+//
+
+#pragma once
+#include "MapDecorator.hpp"
+
+class RoomDecorator : public MapDecorator {
+	int minRoomSize;
+
+public:
+	RoomDecorator(int minRoomSize, int levelIndex);
+
+	void decorate(Map& map) override;
+};
+
+
+
+//
+// Created by pakamaka345 on 1/5/25.
+//
+
+#pragma once
+#include "MapDecorator.hpp"
+
+class BSPTreeDecorator : public MapDecorator {
+	int minLeafSize, maxLeafSize;
+
+public:
+	BSPTreeDecorator(int minLeafSize, int maxLeafSize, int levelIndex);
+
+	void decorate(Map& map) override;
+};
+
+
+//
+// Created by pakamaka345 on 12/26/24.
+//
+
+#pragma once
+#include <memory>
+
+class LevelState;
+
+class MapGenerator {
+private:
+	MapGenerator() = default;
+
+public:
+	static std::shared_ptr<LevelState> GenerateMap(int levelIndex, int width, int height, int MinLeafSize, int MaxLeafSize, int MinRoomSize);
+};
+
+#pragma once
+#include <string>
+#include <memory>
+#include "nlohmann/json.hpp"
+
+class Character;
+
+class Config
+{
+public:
+    static std::shared_ptr<Config> getInstance(const std::string& path = "");
+
+    template<typename T>
+    std::shared_ptr<T> createEntity(const std::string& entityName) {
+        auto entityConfig = configJson.at(entityName);
+        return std::make_shared<T>(
+                entityConfig.at("name").get<std::string>(),
+                entityConfig.at("attackRange").get<int>(),
+                entityConfig.at("physicalDamage").get<float>(),
+                entityConfig.at("magicalDamage").get<float>(),
+                entityConfig.at("health").get<float>(),
+                entityConfig.at("defense").get<float>(),
+                entityConfig.at("priority").get<float>(),
+                entityConfig.at("dodgeChance").get<float>(),
+                entityConfig.at("x").get<int>(),
+                entityConfig.at("y").get<int>(),
+                entityConfig.at("z").get<int>(),
+                entityConfig.at("symbol").get<std::string>()[0]
+        );
+    }
+
+    std::shared_ptr<Character> createCharacter();
+
+private:
+    explicit Config(const std::string& path);
+
+    Config(const Config&) = delete;
+    Config& operator=(const Config&) = delete;
+
+    static nlohmann::json loadJson(const std::string& path);
+
+    static std::shared_ptr<Config> instance;
+    nlohmann::json configJson;
+};#pragma once
+#include "entities/Entity.hpp"
+#include "utils/Inventory.hpp"
+#include "items/Torch.hpp"
+
+class Weapon;
+class Bullet;
+class Item;
+class Amulet;
+class Torch;
+
+/**
+ *  \brief Character class that will be used to create the main character.
+ *  Could be changed later to a more generic class that will be used to create all entities similar to the player.
+ *  Player will be a child class of this class with additional features.
+ */
+class Character : public Entity
+{
+private:
+    std::shared_ptr<Weapon> revolver;
+    Inventory inventory;
+    /**
+     * \brief A Torch shared pointer that will be used to store the character's torch that he equipped from the inventory.
+     * Will be implemented later.
+     *
+     */
+    std::unique_ptr<Torch> activeTorch;
+    /**
+     * \brief A visibility range that will be used to understand how far the character can see.
+     * will be changed if player has a active torch.
+     */
+    int visibilityRange;
+
+public:
+    Character(const std::string& name, int x, int y, int z, char symbol);
+    Character(const Character& other);
+    ~Character() override = default;
+
+    void reloadRevolver();
+
+    void addToInventory(const std::shared_ptr<Item>& item);
+    void removeFromInventory(const std::string& itemName);
+
+    void attack(Entity& target) override;
+    void takeDamage(float physicalDamage, float magicalDamage) override;
+    void heal(float amount) override;
+    void move(int dx, int dy) override;
+    void update(GameState& gameState) override;
+    std::shared_ptr<Entity> clone() const override;
+
+    Inventory& getInventory();
+    const std::shared_ptr<Weapon>& getRevolver() const;
+
+    float getPhysicalDamage() const override;
+    float getMagicalDamage() const override;
+
+    void setActiveTorch(std::unique_ptr<Torch> torch);
+    int getVisibilityRange() const;
+
+private:
+    void updateLight(GameState& gameState);
+    void deleteLight(int x, int y, GameState& gameState) const;
+    void createLight(int x, int y, GameState& gameState) const;
+};#pragma once
+#include "entities/Entity.hpp"
+
+/**
+ * \brief Scarab a simple enemy that appears in the game
+ * One scarab can not make a lot of damage but they can be dangerous in groups
+ * They have a low health, defense, dodge chance and attack damage but they have a low priority that makes them attack faster
+ */
+class Scarab : public Entity
+{
+private:
+    float groupAttackBonus;
+public:
+    Scarab(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
+           float health, float defense, float priority, float dodgeChance,
+           int x, int y, int z, char symbol);
+    ~Scarab() override = default;
+
+    void attack(Entity& target) override;
+    void takeDamage(float physicalDamage, float magicalDamage) override;
+    void heal(float amount) override;
+    void move(int dx, int dy) override;
+    void update(GameState& gameState) override;
+    std::shared_ptr<Entity> clone() const override;
+
+    void setGroupAttackBonus(float bonus);
+    float getGroupAttackBonus() const;
+
+private:
+	void findNearestScarabs(const Map& map);
+};#pragma once
+#include <string>
+#include <vector>
+#include <memory>
+#include <algorithm>
+#include <cmath>
+#include <random>
+#include <stdexcept>
+#include "utils/GameObject.hpp"
+#include "effects/EffectManager.hpp"
+
+class Item;
+class Amulet;
+class Effect;
+class Modifier;
+class GameState;
+class Map;
+class AIComponent;
+
+/**
+ * \brief The Entity class represents a game object that can be attacked and can attack other entities.
+ */
+class Entity : public GameObject
+{
+    /**
+     * \brief A list of shared pointers to Amulet objects.
+     */
+    typedef std::vector<std::shared_ptr<Amulet>> AmuletList;
+
+    /**
+     * \brief A list of modifiers that affect the entity.
+     */
+    typedef std::vector<std::shared_ptr<Modifier>> ModifierList;
+
+protected:
+    std::string name;
+    float health;
+    float maxHealth; // with modifiers
+    int attackRange;
+    float physicalDamage; // with modifiers
+    float magicalDamage; // with modifiers
+    float defense; // with modifiers
+    float priority; // with modifiers
+    float cooldown;
+    float dodgeChance; // with modifiers
+    AmuletList activeAmulets;
+    ModifierList activeModifiers;
+    EffectManager effectManager;
+    std::shared_ptr<AIComponent> aiComponent;
+
+public:
+    Entity(std::string  name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
+           float priority, float dodgeChance, int x, int y, int z, char symbol);
+
+    ~Entity() override = default;
+
+    void addAmulet(const std::shared_ptr<Amulet>& amulet);
+    void removeAmulet(const std::shared_ptr<Amulet>& amulet);
+
+    void addModifier(const std::shared_ptr<Modifier>& modifier);
+    void removeModifier(const std::shared_ptr<Modifier>& modifier);
+
+    bool isAlive() const;
+    bool canAttack(Entity& target) const;
+
+    void applyEffects(const std::shared_ptr<Effect>& effect);
+    void updateEffects();
+    void removeEffects();
+
+    bool isOnSameLevel(const std::shared_ptr<Entity>& other) const;
+
+    bool isReady() const { return cooldown <= 0; }
+    void reduceCooldown() { cooldown = std::max(0.0f, cooldown - 1); }
+    void resetCooldown(const float turn) { cooldown = turn; }
+
+    /**
+     * \brief Returns the distance to another entity.
+     * \param target The entity to which the distance is calculated.
+     * \return The distance to the target entity. (-1 if the entity is on diagonal)
+     */
+    int distanceTo(Entity& target) const;
+
+    std::string& getName();
+    float getHealth() const;
+    float getMaxHealth() const;
+    int getAttackRange() const;
+    virtual float getPhysicalDamage() const;
+    virtual float getMagicalDamage() const;
+    float getDefense() const;
+    float getPriority() const;
+    float getCooldown() const;
+    float getDodgeChance() const;
+    AmuletList& getActiveAmulets();
+    EffectManager& getEffectManager();
+    ModifierList& getActiveModifiers();
+    std::shared_ptr<AIComponent> getAIComponent() const;
+
+    void setHealth(float health);
+    void setMaxHealth(float maxHealth);
+    void setAttackRange(int attackRange);
+    void setPhysicalDamage(float physicalDamage);
+    void setMagicalDamage(float magicalDamage);
+    void setDefense(float defense);
+    void setPriority(float priority);
+    void setCooldown(float cooldown);
+    void setDodgeChance(float dodgeChance);
+    void setAIComponent(const std::shared_ptr<AIComponent>& aiComponent);
+
+public:
+    /**
+     * \brief Virtual method for attacking another entity.
+     * \param target The Entity which will be attacked.
+     */
+    virtual void attack(Entity& target) = 0;
+
+    /**
+     * \brief Virtual method for taking damage.
+     * \param damage The amount of damage to be taken.
+     */
+    virtual void takeDamage(float physicalDamage, float magicalDamage) = 0;
+
+    /**
+     * \brief Virtual method for healing.
+     * \param amount The amount of health to be restored.
+     */
+    virtual void heal(float amount) = 0;
+
+    virtual void move(int dx, int dy);
+
+    /**
+     * \brief Virtual method for updating the entity.
+     */
+    virtual void update(GameState& gameState);
+
+    virtual std::shared_ptr<Entity> clone() const = 0;
+};
+
+#pragma once
+#include "entities/Entity.hpp"
+
+
+/**
+ * \brief Phantom can be defeated by the player but with a lot of effort.
+ * One of the reasons is that pharaon's phantoms take only 10% of the physical damage and player
+ * in the start only has physical damage. But after the player gets the amulets that give him magical damage
+ * it will be easier to defeat the phantoms. Other reason is that phantoms have chance to give fear effect to the player.
+ */
+class Phantom : public Entity {
+public:
+    Phantom(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
+          float health, float defense, float priority, float dodgeChance,
+          int x, int y, int z, char symbol);
+    ~Phantom() override = default;
+
+    void attack(Entity& target) override;
+    void takeDamage(float physicalDamage, float magicalDamage) override;
+    void heal(float amount) override;
+    void move(int dx, int dy) override;
+    void update(GameState& gameState) override;
+    std::shared_ptr<Entity> clone() const override;
+};#pragma once
+#include "entities/Entity.hpp"
+
+/**
+ * \brief Skeleton is a second type of enemy in the game.
+ * They have a higher attack range but also have same priority as the player.
+ * Can be beaten by the player but also will not die without a fight.
+ */
+class Skeleton : public Entity
+{
+private:
+    int resurrection;
+
+public:
+    Skeleton(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
+             float health, float defense, float priority, float dodgeChance,
+             int x, int y, int z, char symbol);
+    ~Skeleton() override = default;
+
+    void attack(Entity& target) override;
+    void takeDamage(float physicalDamage, float magicalDamage) override;
+    void heal(float amount) override;
+    void move(int dx, int dy) override;
+    void update(GameState& gameSTate) override;
+    std::shared_ptr<Entity> clone() const override;
+};#pragma once
+#include "entities/Entity.hpp"
+
+
+/**
+ * \brief Now sand golem will represent a big man who is just has a low of health and other stats
+ * But i plan change it and make it more interesting
+ * but in any case it will be a strong enemy for the start player.
+ */
+class SandGolem : public Entity
+{
+private:
+    float maxShieldHealth;
+    float shieldHealth;
+
+public:
+    SandGolem(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
+          float health, float defense, float priority, float dodgeChance,
+          int x, int y, int z, char symbol);
+    ~SandGolem() override = default;
+
+    void attack(Entity& target) override;
+    void takeDamage(float physicalDamage, float magicalDamage) override;
+    void heal(float amount) override;
+    void move(int dx, int dy) override;
+    void update(GameState& gameState) override;
+    std::shared_ptr<Entity> clone() const override;
+
+    void activateSandShield();
+    void coverWithSand(Map& map, int radius);
+    void healOnSand(Map& map);
+
+    void setShieldHealth(float shieldHealth);
+    float getShieldHealth() const;
+};#pragma once
+#include "entities/Entity.hpp"
+
+class Map;
+
+/**
+ * \brief Mummy is a the most familiar enemy to the player.
+ * It has a worse priority than the player, but health and attack damage a bit better.
+ * Now it is a real deal to player to fight with mummy.
+ * Expected that player and mummy will have 50% chance to win.
+ */
+class Mummy : public Entity
+{
+public:
+    Mummy(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
+          float health, float defense, float priority, float dodgeChance,
+          int x, int y, int z, char symbol);
+    ~Mummy() override = default;
+
+    void attack(Entity& target) override;
+    void takeDamage(float physicalDamage, float magicalDamage) override;
+    void heal(float amount) override;
+    void move(int dx, int dy) override;
+    void update(GameState& gameState) override;
+    std::shared_ptr<Entity> clone() const override;
+
+    void summonMinions(Map& map) const;
+
+private:
+    void regenerate();
+};#pragma once
+#include "items/Item.hpp"
+
+class Entity;
+class Character;
+class Weapon;
+
+/**
+ * \brief Bullet class represents a bullet item that can be used by a weapon.
+ * Can be parent class for different types of bullets.
+ */
+class Bullet : public Item
+{
+private:
+    float physicalDamage;
+    float magicalDamage;
+
+public:
+    explicit Bullet(float physicalDamage, float magicalDamage, int levelIndex);
+    ~Bullet() override = default;
+
+    void use(Entity& target) override;
+
+    void increasePhysicalDamage(float value);
+    void increaseMagicalDamage(float value);
+
+    void decreasePhysicalDamage(float value);
+    void decreaseMagicalDamage(float value);
+
+    float getPhysicalDamage() const { return physicalDamage; }
+    float getMagicalDamage() const { return magicalDamage; }
+};//
+// Created by pakamaka345 on 1/16/25.
+//
+
+#pragma once
+#include "ThrowableItem.hpp"
+
+class Grenade : public ThrowableItem {
+private:
+	float m_magicalDamage;
+	float m_physicalDamage;
+
+public:
+	Grenade(float magicalDamage, float physicalDamage, int radius, int levelIndex);
+
+	void use(Entity& target) override;
+};
+
+
+//
+// Created by pakamaka345 on 1/14/25.
+//
+
+#pragma once
+#include "Amulet.hpp"
+
+class PhysicalDamageModifier;
+class MagicalDamageModifier;
+
+class DamageAmulet : public Amulet {
+private:
+	float m_physicalDamage;
+	float m_magicalDamage;
+
+	std::shared_ptr<PhysicalDamageModifier> m_physicalDamageModifier;
+	std::shared_ptr<MagicalDamageModifier> m_magicalDamageModifier;
+
+public:
+	DamageAmulet(float physicalDamage, float magicalDamage, int levelIndex);
+
+	void applyAmuletEffect(Entity& target) override;
+	void removeAmuletEffect(Entity& target) override;
+};
+
+#pragma once
+#include <memory>
+#include <utility>
+#include "items/Item.hpp"
+#include "entities/Entity.hpp"
+
+/**
+ * \brief An amulet is a type of item that can be equipped and give permanent effects during amulet is equipped.
+ * Specific amulets will inherit from this class and implement their own effects.
+ */
+class Amulet : public Item, public std::enable_shared_from_this<Amulet> {
+public:
+    Amulet(const std::string& name, const std::string& description, int x, int y, int levelIndex, char symbol) : Item(name, description, x, y, levelIndex, symbol) {}
+    ~Amulet() override = default;
+
+    void use(Entity& target) override {
+        target.addAmulet(shared_from_this());
+    }
+
+    virtual void applyAmuletEffect(Entity& target) = 0;
+    virtual void removeAmuletEffect(Entity& target) = 0;
+};//
+// Created by pakamaka345 on 1/15/25.
+//
+
+#pragma once
+#include "Amulet.hpp"
+
+class HealthModifier;
+
+class HealthAmulet : public Amulet {
+private:
+	float m_maxHeath;
+
+	std::shared_ptr<HealthModifier> m_healthModifier;
+
+public:
+	HealthAmulet(float maxHealth, int levelIndex);
+
+	void applyAmuletEffect(Entity& target) override;
+	void removeAmuletEffect(Entity& target) override;
+};
+
+
+//
+// Created by pakamaka345 on 1/15/25.
+//
+
+#pragma once
+#include "Amulet.hpp"
+
+class DefenseModifier;
+class DodgeChanceModifier;
+
+class ArmorAmulets : public Amulet {
+private:
+	float m_defense;
+	float m_dodgeChance;
+
+	std::shared_ptr<DefenseModifier> m_defenseModifier;
+	std::shared_ptr<DodgeChanceModifier> m_dodgeChanceModifier;
+
+public:
+	ArmorAmulets(float defense, float dodgeChance, int levelIndex);
+
+	void applyAmuletEffect(Entity& target) override;
+	void removeAmuletEffect(Entity& target) override;
+};
+
+
+#pragma once
+#include "items/Item.hpp"
+#include <string>
+
+class Entity;
+
+/**
+ * \brief A class that represents a healing potion.
+ * \param healAmount: The amount of health that the potion will heal per turn.
+ * \param duration: The amount of turns that the potion will last.
+ */
+class HealPotion : public Item
+{
+private:
+    float healAmount;
+    int duration;
+
+public:
+    HealPotion(float healAmount, int duration, int levelIndex);
+    ~HealPotion() override = default;
+
+    void use(Entity& target) override;
+};//
+// Created by pakamaka345 on 1/13/25.
+//
+
+#pragma once
+#include "Item.hpp"
+
+class Torch : public Item
+{
+private:
+	int radius;
+	int duration;
+
+public:
+	Torch(int radius, int duration, int levelIndex);
+
+	void use(Entity& target) override;
+
+	int getRadius() const { return radius; }
+	int decreaseDuration() { return duration--; }
+};#pragma once
+#include "items/Item.hpp"
+
+class ThrowableItem : Item{
+private:
+    int radius;
+
+public:
+    ThrowableItem(int radius, const std::string& name, const std::string& description, int x, int y, int z, char symbol);
+    ~ThrowableItem() override = default;
+
+    bool canBeUsedOnEnemies() const override;
+};#pragma once
+#include <string>
+#include "utils/GameObject.hpp"
+
+class Entity;
+
+/**
+ * \brief Base class for all items in the game.
+ */
+class Item : public GameObject
+{
+protected:
+    std::string name;
+    std::string description;
+
+public:
+    Item(const std::string& name, const std::string& description, int x, int y, int z, char symbol);
+    ~Item() override = default;
+
+    virtual void use(Entity& target) = 0;
+    [[nodiscard]] virtual bool canBeUsedOnEnemies() const;
+    [[nodiscard]] virtual bool isConsumable() const;
+
+    std::string& getName();
+    std::string& getDescription();
+};#pragma once
+#include <random>
+
+class DiceRoll
+{
+public:
+    DiceRoll() : generator(std::random_device{}()) {}
+    explicit DiceRoll(int sides) : sides(sides), generator(std::random_device{}()) {}
+
+    int roll() {
+        std::uniform_int_distribution<int> distribution(1, sides);
+        return distribution(generator);
+    }
+
+    int randomNumber(int min, int max)
+    {
+        std::uniform_int_distribution<int> dis(min, max);
+        return dis(generator);
+    }
+
+private:
+    int sides{};
+    std::mt19937 generator;
+};#pragma once
+#include <queue>
+#include <memory>
+
+class Entity;
+
+class PriorityQueue {
+private:
+    struct QueueItem {
+        float cooldown;
+        std::shared_ptr<Entity> entity;
+
+        bool operator<(const QueueItem& other) const {
+            return cooldown > other.cooldown;
+        }
+    };
+
+    std::priority_queue<QueueItem> queue;
+
+public:
+    PriorityQueue() = default;
+    ~PriorityQueue() = default;
+
+    void addEntity(const std::shared_ptr<Entity>& entity);
+    void removeEntity(const std::shared_ptr<Entity>& entity);
+    std::shared_ptr<Entity> entityAt(int index) const;
+    void clear();
+
+    std::shared_ptr<Entity> popEntity();
+
+    bool isEmpty() const { return queue.empty(); }
+    size_t size() const { return queue.size(); }
+};#pragma once
+#include <valarray>
+#include <functional>
+
+#include "tiles/TileType.hpp"
+
+struct Position {
+    int x;
+    int y;
+    int z; // for indexing levels
+
+    Position() : x(0), y(0), z(0) {}
+    Position(const int x, const int y) : x(x), y(y), z(0) {}
+    Position(const int x, const int y, const int z) : x(x), y(y), z(z) {}
+    Position(Position const& pos) = default;
+
+    Position& operator=(Position const& pos) = default;
+    bool operator<(const Position& other) const {
+        if (x != other.x)
+            return x < other.x;
+        return y < other.y;
+    }
+    bool operator==(const Position& other) const {
+        return x == other.x && y == other.y && z == other.z;
+    }
+    bool operator!=(const Position& other) const {
+        return x != other.x || y != other.y || z != other.z;
+    }
+
+    Position operator+(const Position& other) const {
+        if (z != other.z) return { x + other.x, y + other.y, z + other.z };
+        return {x + other.x, y + other.y, z};
+    }
+
+    Position operator-(const Position& other) const {
+        if (z != other.z) return { x - other.x, y - other.y, z - other.z };
+        return {x - other.x, y - other.y, z};
+    }
+
+    static Position abs(const Position& pos) {
+        return { std::abs(pos.x), std::abs(pos.y), std::abs(pos.z) };
+    }
+};
+
+
+namespace std
+{
+    template <>
+    struct hash<Position>
+    {
+        std::size_t operator()(const Position& pos) const
+        {
+            using std::size_t;
+            using std::hash;
+
+            return ((hash<int>()(pos.x) ^ (hash<int>()(pos.y) << 1)) >> 1 ^ (hash<int>()(pos.z) << 1));
+        }
+    };
+}
+
+
+class GameObject
+{
+public: 
+    GameObject(const int x, const int y, const int z, const char symbol) : posX(x), posY(y), posZ(z), symbol(symbol) {}
+    virtual ~GameObject() = default;
+
+    [[nodiscard]] int getX() const { return posX; }
+    [[nodiscard]] int getY() const { return posY; }
+    [[nodiscard]] int getZ() const { return posZ; }
+    [[nodiscard]] Position getPos() const { return {posX, posY, posZ}; }
+    [[nodiscard]] char getSymbol() const { return symbol; }
+
+    void setPos(const int x, const int y, const int z) { posX = x; posY = y; posZ = z; }
+    void setPos(const int x, const int y) { posX = x; posY = y; }
+    void setPos(Position const& pos) { posX = pos.x; posY = pos.y; posZ = pos.z; }
+    void setX(int x) { posX = x; }
+    void setY(int y) { posY = y; }
+    void setZ(int z) { posZ = z; }
+    void setSymbol(char s) { symbol = s; }
+
+protected:
+    int posX;
+    int posY;
+    int posZ;
+    char symbol;
+};#pragma once
+#include <string>
+#include "PriorityQueue.hpp"
+
+class Entity;
+
+class BattleSystem
+{
+private:
+    PriorityQueue queue;
+    std::vector<std::shared_ptr<Entity>> entitiesList;
+
+public:
+    explicit BattleSystem(const std::string& pathToInitFile);
+    ~BattleSystem() = default;
+
+    void addEntityToList(const std::shared_ptr<Entity>& entity);
+    void removeEntityFromList(const std::shared_ptr<Entity>& entity);
+
+    void addEntityToBattle(const std::shared_ptr<Entity>& entity);
+    void removeEntityFromBattle(const std::shared_ptr<Entity>& entity);
+    void clearBattle();
+
+    void startBattle(int rounds);
+
+    std::vector<std::shared_ptr<Entity>>& getEntitiesList();
+
+private:
+    std::shared_ptr<Entity> findTarget();
+    void updateEntities();
+
+    // Now will just create the entities class but after i wanna replace this method to a Config class
+    void readEntitiesFromFile(const std::string &pathToInitFile);
+};#pragma once
+#include <unordered_map>
+#include <string>
+#include <utility>
+#include <memory>
+#include <optional>
+
+class Item;
+class Entity;
+
+class Inventory
+{
+private:
+    struct InventoryItem {
+        std::shared_ptr<Item> item;
+        int count;
+    };
+
+private:
+    std::unordered_map<std::string, InventoryItem> items;
+
+public:
+    Inventory() = default;
+    ~Inventory() = default;
+
+    void addItem(std::shared_ptr<Item> item);
+    void removeItem(const std::string& itemName);
+    void useItem(const std::string& itemName, const std::shared_ptr<Entity>& target = getCharacter());
+
+    std::optional<std::shared_ptr<Item>> getItem(const std::string& itemName);
+    int getItemCount(const std::string& itemName);
+    std::unordered_map<std::string, InventoryItem> getItems() const { return items; }
+    bool hasItem(const std::string& itemName);
+
+    static std::shared_ptr<Entity> getCharacter();
+};//
+// Created by pakamaka345 on 1/5/25.
+//
+
+#pragma once
+#include "tiles/InteractTile.hpp"
+
+
+class TorchTile : public InteractTile {
+	int radius;
+	bool isLit;
+
+public:
+	TorchTile(int radius, int x, int y, int z);
+
+	void onInteract(GameState& gameState) override;
+};
+//
+// Created by pakamaka345 on 12/27/24.
+//
+
+#pragma once
+#include "tiles/InteractTile.hpp"
+
+class GameState;
+
+enum class StairType
+{
+	UP,
+	DOWN
+};
+
+class StairTile : public InteractTile {
+private:
+	StairType stairType;
+
+public:
+	StairTile(StairType stairType, int x, int y, int z);
+
+	StairType getStairType() const;
+
+	void onInteract(GameState& gameState) override;
+
+	bool isWalkable() const override;
+};
+//
+// Created by pakamaka345 on 1/5/25.
+//
+
+#pragma once
+#include "tiles/Tile.hpp"
+
+class GameState;
+
+class InteractTile : public Tile {
+public:
+	using Tile::Tile;
+
+	virtual void onInteract(GameState& gameState) = 0;
+};
+
+
+
+#pragma once
+#include "tiles/Tile.hpp"
+
+class WallTile : public Tile {
+public:
+    WallTile(int x, int y, int z);
+    ~WallTile() override = default;
+    bool isWalkable() const override;
+};#pragma once
+#include "tiles/Tile.hpp"
+
+class FloorTile : public Tile {
+public:
+    FloorTile(int x, int y, int z);
+    ~FloorTile() override = default;
+
+    bool isWalkable() const override;
+};namespace TileType
+{
+    enum Type {
+        EMPTY,
+        BEDROCK,
+        WALL,
+        FLOOR,
+        TORCH,
+        STAIRS,
+        SAND,
+    };
+}#pragma once
+#include "tiles/Tile.hpp"
+
+class SandTile : public Tile {
+public:
+    SandTile(int x, int y, int z);
+    ~SandTile() override = default;
+
+    bool isWalkable() const override;
+};#pragma once
+#include "utils/GameObject.hpp"
+#include <memory>
+#include <list>
+
+class Entity;
+class Item;
+
+class Tile : public GameObject
+{
+private:
+    std::shared_ptr<Entity> entity;
+    std::list<std::shared_ptr<Item>> items;
+    TileType::Type tileType;
+
+    // for A* algorithm
+    // Total cost of the tile (f = g + h)
+    float f;
+    // Cost from the start tile to this tile
+    float g;
+    // Cost from this tile to the end tile
+    float h;
+
+public:
+    Tile();
+    Tile(int x, int y, int z, char symbol);
+    Tile(int x, int y, int z);
+    Tile(TileType::Type tileType, int x, int y, int z, char symbol);
+    ~Tile() override = default;
+
+    Tile(const Tile&) = delete;
+    Tile& operator=(const Tile&) = delete;
+
+    Tile(Tile&&) noexcept = default;
+    Tile& operator=(Tile&&) noexcept = default;
+
+    void setEntity(std::shared_ptr<Entity> entity);
+    std::shared_ptr<Entity> getEntity();
+    void removeEntity();
+    bool hasEntity();
+
+    void addItem(std::shared_ptr<Item> item);
+    void addItems(std::list<std::shared_ptr<Item>> items);
+    std::list<std::shared_ptr<Item>>& getItems();
+    std::shared_ptr<Item> getItem();
+    void removeItem();
+    bool hasItems();
+
+    TileType::Type getTileType();
+    void setTileType(TileType::Type tileType);
+    virtual bool isWalkable() const;
+
+    void resetPathfinding() { f = g = h = 0.0f; }
+    void setG(float value) { g = value; }
+    void setH(float value) { h = value; }
+    void setF(float value) { f = value; }
+    float getG() const { return g; }
+    float getH() const { return h; }
+    float getF() const { return f; }
+};#pragma once
+#include "Tile.hpp"
+
+
+class BedrockTile : public Tile {
+public:
+    BedrockTile(int x, int y, int z);
+    bool isWalkable() const override;
+};
+
+#pragma once
+#include <string>
+#include <vector>
+#include <memory>
+
+class Bullet;
+class Entity;
+
+/**
+ * \brief Weapon class. In this implementation is a only a one type of weapon.
+ * Can be changed to be a base class for different types of weapons.
+ */
+class Weapon
+{
+protected:
+    std::string name;
+    std::vector<std::shared_ptr<Bullet>> magazine;
+    int magazineSize;
+
+public:
+    Weapon(std::string name, int magazineSize);
+
+    void addBullet(Bullet& bullet);
+    void shoot();
+
+    int getAmmo();
+    int getMagazineSize() const;
+    std::vector<std::shared_ptr<Bullet>>& getMagazine();
+    std::string& getName();
+};#pragma once
+#include <memory>
+#include <map>
+#include <vector>
+#include "states/LevelState.hpp"
+
+class Character;
+class LevelState;
+class Tile;
+class Map;
+
+constexpr int MAX_LEVELS = 3;
+
+class GameState {
+private:
+    std::shared_ptr<Character> player;
+    std::shared_ptr<LevelState> currentLevel;
+    std::map<int, std::shared_ptr<LevelState>> levels;
+    int levelIndex;
+    bool isGameOver;
+
+    GameState();
+
+public:
+    GameState(const GameState&) = delete;
+    GameState& operator=(const GameState&) = delete;
+    ~GameState() = default;
+    static GameState& getInstance();
+
+    void initializePlayer(std::shared_ptr<Character> newPlayer);
+    void setLevel(std::shared_ptr<LevelState> level);
+
+    LevelState& getCurrentLevel();
+    std::shared_ptr<Character> getPlayer();
+
+    void nextLevel(int newLevelIndex);
+    void previousLevel(int newLevelIndex);
+
+    void setLevelIndex(int newLevelIndex);
+    [[nodiscard]] int getLevelIndex() const;
+
+    void setIsGameOver(const bool newIsGameOver) { isGameOver = newIsGameOver; }
+    [[nodiscard]] bool getIsGameOver() const { return isGameOver; }
+
+    void update() const;
+
+private:
+    std::shared_ptr<LevelState> createLevel(int levelIndex);
+
+    void onCollisionWithTile(const std::vector<std::shared_ptr<Tile>>& adjacent) const;
+    void onCollisionWithItem(const std::vector<std::shared_ptr<Tile>>& adjacent) const;
+};#pragma once
+#include <memory>
+#include <list>
+#include "utils/GameObject.hpp"
+
+class GameState;
+class Map;
+class Entity;
+class Item;
+
+
+class LevelState {
+
+private:
+    std::shared_ptr<Map> map;
+    std::list<std::shared_ptr<Entity>> entities;
+    std::list<std::shared_ptr<Item>> items;
+    Position startPosition;
+
+public:
+    explicit LevelState(std::shared_ptr<Map> map);
+    LevelState(std::shared_ptr<Map> map, const Position& startPosition);
+    ~LevelState() = default;
+
+    void update(GameState& gameState) const;
+
+    std::shared_ptr<Map> getMap() { return map; }
+    [[nodiscard]] const Position& getStartPosition() const { return startPosition; }
+    void setStartPosition(const Position& position) { startPosition = position; }
+
+    void addEntity(const std::shared_ptr<Entity>& entity) { entities.push_back(entity); }
+    void addItem(const std::shared_ptr<Item>& item) { items.push_back(item); }
+
+    std::list<std::shared_ptr<Entity>>& getEntities() { return entities; }
+    std::list<std::shared_ptr<Item>>& getItems() { return items; }
+
+    void removeEntity(const std::shared_ptr<Entity>& entity);
+    void removeItem(const std::shared_ptr<Item>& item);
+};//
+// Created by pakamaka345 on 1/19/25.
+//
+
+#pragma once
+#include <memory>
+
+class GameState;
+class Command;
+
+class GameController {
+private:
+	GameState& gameState;
+
+public:
+	explicit GameController(GameState& gameState);
+
+	void executeCommand(const std::shared_ptr<Command>& command) const;
+
+	void update() const;
+};
+
+//
+// Created by pakamaka345 on 1/19/25.
+//
+
+#pragma once
+#include <memory>
+
+class Command;
+class GameState;
+
+
+class InputHandler {
+private:
+	GameState& gameState;
+
+public:
+	explicit InputHandler(GameState& gameState);
+
+	[[nodiscard]] std::shared_ptr<Command> handleInput() const;
+
+private:
+	[[nodiscard]] char getInput() const;
+};
+
+#include "map/Map.hpp"
+#include "interfaces/Interface.hpp"
+#include <memory>
+
+
+class GameView {
+private:
+    //std::shared_ptr<Interface> interface;
+
+
+public:
+//    explicit GameView(std::string pathToInitFile);
+//    GameView(int width, int height);
+//    virtual ~GameView() = default;
+//
+//    void draw() override;
+};
+
+//
+// Created by pakamaka345 on 1/19/25.
+//
+
+#pragma once
+
+class Game {
+public:
+	void run();
+};
+
+#pragma once
+#include <memory>
+#include "effects/Effect.hpp"
+
+class Entity;
+class PriorityModifier;
+
+class FearEffect : public Effect {
+private:
+    float fearPriority;
+    std::shared_ptr<PriorityModifier> appliedModifier;
+
+public:
+    FearEffect(int duration, float fearPriority);
+    ~FearEffect() override = default;
+
+    void apply(Entity& target) override;
+    void onTick(Entity& target) override;
+    void remove(Entity& target) override;
+};#pragma once
+#include <string>
+
+class Entity;
+
+/**
+ * Abstract class representing an effect that can be applied to an entity.
+ * Different from an amulet`s effect, this effect is temporary and has a duration.
+ */
+class Effect
+{
+protected:
+    std::string name;
+    int duration;
+
+public:
+    Effect(const std::string& name, int duration);
+    virtual ~Effect() = default;
+
+    /**
+     * @brief Applies when the effect is created.
+     * @param target
+     */
+    virtual void apply(Entity& target) = 0;
+
+    /**
+     * @brief Updates the effect every tick(turn).
+     * @param target
+     */
+    virtual void onTick(Entity& target) = 0;
+
+    /**
+     * @brief Does something when the effect is removed.
+     * @param target
+     */
+    virtual void remove(Entity& target) = 0;
+
+    int getDuration() const;
+    void setDuration(int duration);
+    void reduceDuration();
+    bool isExpired() const;
+
+    const std::string& getName() const;
+};#pragma once
+#include "effects/Effect.hpp"
+
+class Entity;
+
+/**
+ * \brief An effect that provides a shield only for Sand Golems.
+ */
+class SandShield : public Effect
+{
+private:
+    float shieldAmount;
+
+public:
+    SandShield(int duration, float shieldAmount);
+    ~SandShield() override = default;
+
+    void apply(Entity& target) override;
+    void onTick(Entity& target) override;
+    void remove(Entity& target) override;
+};#pragma once
+#include "effects/Effect.hpp"
+
+class Entity;
+
+class GroupAttackBonus : public Effect {
+private:
+    float bonusDamageMultiplier;
+
+public:
+    GroupAttackBonus(int duration, float multiplier);
+    ~GroupAttackBonus() override = default;
+
+    void apply(Entity& target) override;
+    void onTick(Entity& target) override;
+    void remove(Entity& target) override;
+};#pragma once
+#include <vector>
+#include <memory>
+
+class Entity;
+class Effect;
+
+/**
+ * \brief Manages all effects in the game.
+ */
+class EffectManager
+{
+private:
+    std::vector<std::shared_ptr<Effect>> activeEffects;
+
+public:
+    void addEffect(const std::shared_ptr<Effect>& effect, Entity& target);
+    void updateEffects(Entity& target);
+
+    void clearEffects(Entity& target);
+    std::vector<std::shared_ptr<Effect>>& getActiveEffects();
+};#pragma once
+#include "effects/Effect.hpp"
+
+class Entity;
+
+/**
+ * \brief An effect that heals the target entity by a certain amount every tick.
+ */
+class HealEffect : public Effect
+{
+private:
+    float healAmount;
+
+public:
+    HealEffect(int duration, float healAmount);
+    ~HealEffect() override = default;
+
+    void apply(Entity& target) override;
+    void onTick(Entity& target) override;
+    void remove(Entity& target) override;
+};//
+// Created by pakamaka345 on 1/12/25.
+//
+
+#pragma once
+#include "Modifier.hpp"
+
+class DefenseModifier : public Modifier
+{
+private:
+	float m_increaseDefense;
+
+public:
+	DefenseModifier(float increaseDefense) : m_increaseDefense(increaseDefense) {}
+
+	float applyDefense(float baseDefense) const override
+	{
+		return baseDefense + m_increaseDefense;
+	}
+};//
+// Created by pakamaka345 on 1/12/25.
+//
+
+#pragma once
+
+class Modifier
+{
+public:
+	virtual float applyHealth(float baseHealth) const { return baseHealth; }
+	virtual float applyPhysicalDamage(float basePhys) const { return basePhys; }
+	virtual float applyMagicalDamage(float baseMagic) const { return baseMagic; }
+	virtual float applyPriority(float basePriority) const { return basePriority; }
+	virtual float applyDodgeChance(float baseDodge) const { return baseDodge; }
+	virtual float applyDefense(float baseDefense) const { return baseDefense; }
+	virtual ~Modifier() = default;
+};//
+// Created by pakamaka345 on 1/12/25.
+//
+
+#pragma once
+#include "Modifier.hpp"
+
+class HealthModifier : public Modifier
+{
+private:
+	float m_increaseHealth;
+
+public:
+	HealthModifier(float increaseHealth) : m_increaseHealth(increaseHealth) {}
+
+	float applyHealth(float baseHealth) const override
+	{
+		return baseHealth + m_increaseHealth;
+	}
+};//
+// Created by pakamaka345 on 1/12/25.
+//
+
+#pragma once
+#include "Modifier.hpp"
+
+class MagicalDamageModifier : public Modifier
+{
+private:
+	float m_increaseMagicDamage;
+
+public:
+	MagicalDamageModifier(float increaseMagicDamage) : m_increaseMagicDamage(increaseMagicDamage) {}
+
+	float applyMagicalDamage(float baseMagic) const override
+	{
+		return baseMagic + m_increaseMagicDamage;
+	}
+};
+
+//
+// Created by pakamaka345 on 1/12/25.
+//
+
+#pragma once
+#include "Modifier.hpp"
+
+class PriorityModifier : public Modifier
+{
+private:
+	float m_increasePriority;
+
+public:
+	PriorityModifier(float increasePriority) : m_increasePriority(increasePriority) {}
+
+	float applyPriority(float basePriority) const override
+	{
+		return basePriority + m_increasePriority;
+	}
+};//
+// Created by pakamaka345 on 1/12/25.
+//
+
+#pragma once
+#include "Modifier.hpp"
+
+class DodgeChanceModifier : public Modifier
+{
+private:
+	float m_increaseDodgeChance;
+
+public:
+	DodgeChanceModifier(float increaseDodgeChance) : m_increaseDodgeChance(increaseDodgeChance) {}
+
+	float applyDodgeChance(float baseDodge) const override
+	{
+		return baseDodge + m_increaseDodgeChance;
+	}
+};//
+// Created by pakamaka345 on 1/12/25.
+//
+
+#pragma once
+#include "Modifier.hpp"
+
+class PhysicalDamageModifier : public Modifier
+{
+private:
+	float m_increasePhysDamage;
+
+public:
+	PhysicalDamageModifier(float increasePhysDamage) : m_increasePhysDamage(increasePhysDamage) {}
+
+	float applyPhysicalDamage(float basePhys) const override
+	{
+		return basePhys + m_increasePhysDamage;
+	}
+};

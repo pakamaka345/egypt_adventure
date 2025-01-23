@@ -2,6 +2,8 @@
 
 #include <utility>
 #include <commands/Command.hpp>
+#include <map/Map.hpp>
+#include <states/GameState.hpp>
 
 #include "ai/AIComponent.hpp"
 #include "items/amulets/Amulet.hpp"
@@ -94,6 +96,11 @@ void Entity::move(int dx, int dy)
     this->setY(this->getY() + dy);
 }
 
+void Entity::onDeath(GameState& gameState)
+{
+    const auto& level = gameState.getLevels().at(getZ());
+    level->getMap()->removeEntity(getX(), getY());
+}
 
 void Entity::update(GameState& gameState) {
     updateEffects();

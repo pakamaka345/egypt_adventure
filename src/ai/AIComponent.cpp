@@ -5,15 +5,17 @@
 #include "AIComponent.hpp"
 #include <utils/GameObject.hpp>
 #include <commands/MoveCommand.hpp>
-#include <dice/DiceRoll.hpp>
 #include <entities/Entity.hpp>
 #include <map/Map.hpp>
 #include <tiles/Tile.hpp>
 #include <entities/Character.hpp>
 #include "states/GameState.hpp"
+#include <dice/DiceRoll.hpp>
 #include <set>
 
-AIComponent::AIComponent(std::shared_ptr<Entity> owner) : owner(std::move(owner))
+#include <iostream>
+
+AIComponent::AIComponent(const std::shared_ptr<Entity>& owner) : owner(owner)
 {
 }
 
@@ -23,47 +25,60 @@ std::shared_ptr<Entity> AIComponent::getOwner() const
 	throw std::runtime_error("Owner is expired");
 }
 
-void AIComponent::setOwner(std::shared_ptr<Entity> owner)
+void AIComponent::setOwner(const std::shared_ptr<Entity>& owner)
 {
-	this->owner = std::move(owner);
+	this->owner = owner;
 }
 
 std::shared_ptr<Command> AIComponent::makeDecision(GameState& gameState)
 {
-
-	if (!getOwner()->isOnSameLevel(gameState.getPlayer())) return nullptr;
-
 	DiceRoll gen;
 
+	const auto& monster = getOwner();
 	const auto& player = gameState.getPlayer();
 	const auto& map = gameState.getCurrentLevel().getMap();
 
-	if (canSeePlayer(getOwner(), player, map)) {
+	if (!monster->isOnSameLevel(gameState.getPlayer())) return nullptr;
+
+	if (!monster->canAttack(*player) || !monster->isReady()) {
+		return movement(monster, player->getPos(), map, gen);
+	}
+
+	return nullptr;
+}
+
+std::shared_ptr<Command> AIComponent::movement(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map, DiceRoll gen)
+{
+	if (canSeePlayer(monster, playerPosition, map)) {
 		hasSeenPlayer = true;
-		auto path = findPath(getOwner(), player, map);
+		auto path = findPath(monster, playerPosition, map);
+		lastPlayerPosition = playerPosition;
 		if (path != Direction::NONE) {
-			return std::make_shared<MoveCommand>(path, getOwner());
+			return std::make_shared<MoveCommand>(path, monster);
 		}
 	} else {
 		if (hasSeenPlayer) {
-			auto path = findPath(getOwner(), player, map);
+			auto path = findPath(monster, lastPlayerPosition, map);
 			if (path != Direction::NONE) {
-				return std::make_shared<MoveCommand>(path, getOwner());
+				return std::make_shared<MoveCommand>(path, monster);
 			}
+			hasSeenPlayer = false;
 		} else {
 			std::vector directions = {Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT};
-			return std::make_shared<MoveCommand>(directions[gen.randomNumber(0, 3)], getOwner());
+			return std::make_shared<MoveCommand>(directions[gen.randomNumber(0, 3)], monster);
 		}
 	}
 
 	return nullptr;
 }
 
-bool AIComponent::canSeePlayer(const std::shared_ptr<Entity>& monster, const std::shared_ptr<Entity>& player, const std::shared_ptr<Map>& map) const
+
+
+bool AIComponent::canSeePlayer(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map) const
 {
 
 	auto monsterPos = monster->getPos();
-	auto playerPos = player->getPos();
+	auto playerPos = playerPosition;
 
 	auto delta = Position::abs(playerPos - monsterPos);
 	int sx = (monsterPos.x < playerPos.x) ? 1 : -1;
@@ -87,13 +102,13 @@ bool AIComponent::canSeePlayer(const std::shared_ptr<Entity>& monster, const std
 	}
 }
 
-Direction AIComponent::findPath(const std::shared_ptr<Entity>& monster, const std::shared_ptr<Entity>& player, const std::shared_ptr<Map>& map) const
+Direction AIComponent::findPath(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map) const
 {
 
-	if (canSeePlayer(monster, player, map)) {
-		return convertPosToDirection(monster->getPos(), player->getPos());
+	if (canSeePlayer(monster, playerPosition, map)) {
+		return convertPosToDirection(monster->getPos(), playerPosition);
 	} else {
-		auto path = aStarSearch(monster->getPos(), player->getPos(), map);
+		auto path = aStarSearch(monster->getPos(), playerPosition, map);
 		if (path.empty()) return Direction::NONE;
 		return convertPosToDirection(monster->getPos(), path[0]);
 	}

@@ -22,7 +22,7 @@ void Skeleton::attack(Entity &target) {
 
             const int distance = distanceTo(target);
             float physicalDamage = 0.0f;
-            if (distance > 2) {
+            if (distance > 1) {
                 physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense());
             } else {
                 physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense()) * 0.5f;

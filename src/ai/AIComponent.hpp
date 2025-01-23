@@ -5,32 +5,36 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include "utils/GameObject.hpp"
 
 class Entity;
-class Position;
 class Command;
 class GameState;
 class Map;
 enum class Direction;
+class DiceRoll;
 
 class AIComponent {
 protected:
 	std::weak_ptr<Entity> owner;
 	bool hasSeenPlayer = false;
+	Position lastPlayerPosition;
 
 public:
 	AIComponent() = default;
-	explicit AIComponent(std::shared_ptr<Entity> owner);
+	explicit AIComponent(const std::shared_ptr<Entity>& owner);
 	virtual ~AIComponent() = default;
 
-	void setOwner(std::shared_ptr<Entity> owner);
+	void setOwner(const std::shared_ptr<Entity>& owner);
 	[[nodiscard]] std::shared_ptr<Entity> getOwner() const;
 
-	std::shared_ptr<Command> makeDecision(GameState& gameState);
+	virtual std::shared_ptr<Command> makeDecision(GameState& gameState);
 
 protected:
-	bool canSeePlayer(const std::shared_ptr<Entity>& monster, const std::shared_ptr<Entity>& player, const std::shared_ptr<Map>& map) const;
-	Direction findPath(const std::shared_ptr<Entity>& monster, const std::shared_ptr<Entity>& player, const std::shared_ptr<Map>& map) const;
+	virtual std::shared_ptr<Command> movement(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map, DiceRoll gen);
+
+	bool canSeePlayer(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map) const;
+	Direction findPath(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map) const;
 	std::vector<Position> aStarSearch(const Position& start, const Position& goal, const std::shared_ptr<Map>& map) const;
 	Direction convertPosToDirection(const Position& from, const Position& to) const;
 

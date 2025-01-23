@@ -32,8 +32,8 @@ std::shared_ptr<LevelState> MapGenerator::GenerateMap(int levelIndex, int width,
 	auto levelState = std::make_shared<LevelState>(std::make_shared<Map>(map));
 
 	// Map Section could be only 0, 1, 2
-	mapGenerator.addDecorator(std::make_unique<EnemyDecorator>(40, 2, "Scarab", levelState, levelIndex));
-	mapGenerator.addDecorator(std::make_unique<EnemyDecorator>(15, 0, "Skeleton", levelState, levelIndex));
+	mapGenerator.addDecorator(std::make_unique<EnemyDecorator>(15, 0, "Scarab", levelState, levelIndex));
+	//mapGenerator.addDecorator(std::make_unique<EnemyDecorator>(15, 0, "Skeleton", levelState, levelIndex));
 	mapGenerator.addDecorator(std::make_unique<EnemyDecorator>(7, 1, "Mummy", levelState, levelIndex));
 	mapGenerator.addDecorator(std::make_unique<ItemDecorator>( 3, false, std::make_shared<Bullet>(30, 15, levelIndex), levelState, levelIndex));
 	mapGenerator.addDecorator(std::make_unique<ItemDecorator>(1, false, std::make_shared<Torch>(10, 8, levelIndex), levelState, levelIndex));

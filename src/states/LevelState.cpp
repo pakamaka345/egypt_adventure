@@ -10,9 +10,14 @@ LevelState::LevelState(std::shared_ptr<Map> map, const Position &startPosition)
     : map(std::move(map)), startPosition(startPosition)
 {}
 
-void LevelState::update(GameState& gameState) const {
+void LevelState::update(GameState& gameState) {
     for (const auto& entity : entities) {
         entity->update(gameState);
+
+        if (!entity->isAlive()) {
+            entity->onDeath(gameState);
+            removeEntity(entity);
+        }
     }
 }
 

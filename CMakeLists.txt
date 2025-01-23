@@ -11,7 +11,9 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_library(EgyptAdventureLib ${SOURCES}
         src/ai/AIComponent.cpp
-        src/ai/AIComponent.hpp)
+        src/ai/AIComponent.hpp
+        src/commands/AttackCommand.cpp
+        src/commands/AttackCommand.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

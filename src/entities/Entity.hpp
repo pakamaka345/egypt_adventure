@@ -76,7 +76,7 @@ public:
     /**
      * \brief Returns the distance to another entity.
      * \param target The entity to which the distance is calculated.
-     * \return The distance to the target entity. (-1 if the entity is on diagonal)
+     * \return The distance to the target entity.
      */
     int distanceTo(Entity& target) const;
 
@@ -131,6 +131,11 @@ public:
      * \brief Virtual method for updating the entity.
      */
     virtual void update(GameState& gameState);
+
+    /**
+     * \brief Virtual method which update map after entity death
+     */
+    virtual void onDeath(GameState& gameState);
 
     virtual std::shared_ptr<Entity> clone() const = 0;
 };

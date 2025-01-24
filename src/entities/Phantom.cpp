@@ -7,6 +7,7 @@ Phantom::Phantom(const std::string &name, int attackRange, float physicalDamage,
                  float priority, float dodgeChance, int x, int y, int z, char symbol)
                  : Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, z, symbol)
 {
+    aiComponent = std::make_shared<AIComponent>();
 }
 
 void Phantom::attack(Entity &target) {
@@ -46,6 +47,12 @@ void Phantom::move(int dx, int dy) {
 void Phantom::update(GameState& gameState) {
     Entity::update(gameState);
 }
+
+void Phantom::onDeath(GameState& gameState)
+{
+    Entity::onDeath(gameState);
+}
+
 
 std::shared_ptr<Entity> Phantom::clone() const {
     return std::make_shared<Phantom>(*this);

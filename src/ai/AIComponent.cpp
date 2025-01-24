@@ -4,7 +4,6 @@
 
 #include "AIComponent.hpp"
 #include <utils/GameObject.hpp>
-#include <commands/MoveCommand.hpp>
 #include <entities/Entity.hpp>
 #include <map/Map.hpp>
 #include <tiles/Tile.hpp>
@@ -12,8 +11,9 @@
 #include "states/GameState.hpp"
 #include <dice/DiceRoll.hpp>
 #include <set>
-
-#include <iostream>
+#include <commands/MoveCommand.hpp>
+#include <commands/AttackCommand.hpp>
+#include <commands/HealCommand.hpp>
 
 AIComponent::AIComponent(const std::shared_ptr<Entity>& owner) : owner(owner)
 {
@@ -38,9 +38,20 @@ std::shared_ptr<Command> AIComponent::makeDecision(GameState& gameState)
 	const auto& player = gameState.getPlayer();
 	const auto& map = gameState.getCurrentLevel().getMap();
 
-	if (!monster->isOnSameLevel(gameState.getPlayer())) return nullptr;
+	if (!monster->isOnSameLevel(gameState.getPlayer())) {
+		if (monster->getHealth() < monster->getMaxHealth()) return heal(monster, gen);
+		return movement(monster, player->getPos(), map, gen);
+	}
 
-	if (!monster->canAttack(*player) || !monster->isReady()) {
+	if (monster->isReady() && monster->canAttack(*player)) {
+		return attack(monster, player, map, gen);
+	}
+
+	if (monster->isReady() && monster->getHealth() < monster->getMaxHealth() / 2) {
+		return heal(monster, gen);
+	}
+
+	if (monster->isReady() && !monster->canAttack(*player)) {
 		return movement(monster, player->getPos(), map, gen);
 	}
 
@@ -72,10 +83,36 @@ std::shared_ptr<Command> AIComponent::movement(const std::shared_ptr<Entity>& mo
 	return nullptr;
 }
 
+std::shared_ptr<Command> AIComponent::attack(const std::shared_ptr<Entity>& monster, const std::shared_ptr<Entity>& player, const std::shared_ptr<Map>& map, DiceRoll gen)
+{
+
+	if (static_cast<float>(gen.randomNumber(0, 100)) / 100.0f > player->getDodgeChance()) {
+		if (canSeePlayer(monster, player->getPos(), map))
+			return std::make_shared<AttackCommand>(monster, player);
+
+		return nullptr;
+	}
+
+	monster->resetCooldown(monster->getPriority());
+	return nullptr;
+}
+
+std::shared_ptr<Command> AIComponent::heal(const std::shared_ptr<Entity>& monster, DiceRoll gen)
+{
+	if (static_cast<float>(gen.randomNumber(0, 100)) / 100.0f > 0.9f) {
+		const float healMultiple = static_cast<float>(gen.randomNumber(1, 70)) / 100.0f;
+		monster->resetCooldown(monster->getPriority());
+		const float healAmount = monster->getMaxHealth() * healMultiple;
+		return std::make_shared<HealCommand>(healAmount, monster);
+	}
+	return nullptr;
+}
 
 
 bool AIComponent::canSeePlayer(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map) const
 {
+
+	if (monster->getZ() != playerPosition.z) return false;
 
 	auto monsterPos = monster->getPos();
 	auto playerPos = playerPosition;

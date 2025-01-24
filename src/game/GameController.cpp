@@ -7,12 +7,17 @@
 #include <commands/Command.hpp>
 #include <entities/Character.hpp>
 #include <states/GameState.hpp>
+#include <items/Bullet.hpp>
 
 GameController::GameController(GameState& gameState)
 	: gameState(gameState)
 {
 	const auto character = std::make_shared<Character>("Peter Miller", 0, 0, 1, '@');
+	for (int i = 0; i < 20; i++) {
+		character->addToInventory(std::make_shared<Bullet>(10, 2, 1));
+	}
 	gameState.initializePlayer(character);
+	character->reloadRevolver();
 	gameState.nextLevel(1);
 }
 

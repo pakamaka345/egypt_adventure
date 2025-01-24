@@ -48,22 +48,19 @@ void Character::attack(Entity &target) {
 
         int diceRoll = gen.randomNumber(1, 8);
 
-        float physicalDamage = (getPhysicalDamage() * static_cast<float>(diceRoll) / 4.0f) * (1 - target.getDefense());
-
-        if (revolver->getAmmo() > 0) {
-            this->attackRange = 5.0f;
+        if (revolver->getAmmo() > 0)
             revolver->shoot();
-        } else {
-            this->attackRange = 1.0f;
-        }
+
+        float physicalDamage = (getPhysicalDamage() * static_cast<float>(diceRoll) / 4.0f) * (1 - target.getDefense());
+        float magicalDamage = getMagicalDamage() * static_cast<float>(diceRoll) / 4.0f * (1 - target.getDefense());
 
         if (canAttack(target)) {
-            target.takeDamage(physicalDamage, getMagicalDamage());
+            target.takeDamage(physicalDamage, magicalDamage);
             resetCooldown(this->getPriority());
         }
 
     } else {
-        throw std::runtime_error("Character is on cooldown");
+        //throw std::runtime_error("Character is on cooldown");
     }
 }
 
@@ -90,7 +87,25 @@ void Character::update(GameState& gameState) {
     Entity::update(gameState);
 
     updateLight(gameState);
+
+    updateAttackRange();
 }
+
+void Character::onDeath(GameState& gameState)
+{
+    gameState.setIsGameOver(true);
+}
+
+
+void Character::updateAttackRange()
+{
+    if (revolver->getAmmo() > 0) {
+        this->attackRange = 5.0f;
+    } else {
+        this->attackRange = 1.0f;
+    }
+}
+
 
 void Character::updateLight(GameState& gameState)
 {

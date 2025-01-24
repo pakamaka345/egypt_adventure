@@ -2,9 +2,14 @@
 #include <effects/GroupAttackBonus.hpp>
 #include <states/GameState.hpp>
 #include <map/Map.hpp>
+#include <items/Bullet.hpp>
+#include <ai/AIComponent.hpp>
+#include <dice/DiceRoll.hpp>
+#include <items/amulets/ArmorAmulets.hpp>
+#include <items/amulets/DamageAmulet.hpp>
+#include <items/amulets/HealthAmulet.hpp>
 
-#include "ai/AIComponent.hpp"
-#include "dice/DiceRoll.hpp"
+constexpr float BulletDamageMultiplier = 1.2f;
 
 Scarab::Scarab(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
                float priority, float dodgeChance, int x, int y, int z, char symbol)
@@ -62,6 +67,45 @@ void Scarab::findNearestScarabs(const Map& map)
 
     for (int i = 0; i < scarabs.size(); i++) {
         this->applyEffects(std::make_shared<GroupAttackBonus>(1, 1.1f));
+    }
+}
+
+void Scarab::onDeath(GameState& gameState)
+{
+    Entity::onDeath(gameState);
+
+    DiceRoll gen;
+    int bulletAmount = gen.randomNumber(0, 5);
+    const auto& level = gameState.getLevels()[getZ()];
+    for (int i = 0; i < bulletAmount; i++) {
+        auto physDmg = static_cast<float>(gen.randomNumber(1, static_cast<int>(getMaxHealth()))) * BulletDamageMultiplier;
+        auto item = std::make_shared<Bullet>(physDmg, 0, getZ());
+        item->setPos(getX(), getY(), getZ());
+        level->addItem(item);
+        level->getMap()->placeItem(getX(), getY(), item);
+    }
+
+    int chanceToDropAmulet = gen.randomNumber(1, 10);
+    if (chanceToDropAmulet > 5) {
+        int whichAmulet = gen.randomNumber(1, 10);
+        std::shared_ptr<Amulet> amulet;
+        if (whichAmulet <= 3) {
+            auto defense = static_cast<float>(gen.randomNumber(1, 15)) / 100.0f;
+            auto dodgeChance = static_cast<float>(gen.randomNumber(1, 15)) / 100.0f;
+            amulet = std::make_shared<ArmorAmulets>(defense, dodgeChance, getZ());
+
+        } else if (whichAmulet <= 6) {
+            auto physDmg = static_cast<float>(gen.randomNumber(1, 15));
+            auto magDmg = static_cast<float>(gen.randomNumber(1, 15));
+            amulet = std::make_shared<DamageAmulet>(physDmg, magDmg, getZ());
+        } else if (whichAmulet <= 9) {
+            auto health = static_cast<float>(gen.randomNumber(1, 15));
+            amulet = std::make_shared<HealthAmulet>(health, getZ());
+        }
+
+        amulet->setPos(getX(), getY(), getZ());
+        level->addItem(amulet);
+        level->getMap()->placeItem(getX(), getY(), amulet);
     }
 }
 

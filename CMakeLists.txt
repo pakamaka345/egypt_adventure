@@ -13,7 +13,13 @@ add_library(EgyptAdventureLib ${SOURCES}
         src/ai/AIComponent.cpp
         src/ai/AIComponent.hpp
         src/commands/AttackCommand.cpp
-        src/commands/AttackCommand.hpp)
+        src/commands/AttackCommand.hpp
+        src/commands/HealCommand.cpp
+        src/commands/HealCommand.hpp
+        src/commands/ReloadCommand.cpp
+        src/commands/ReloadCommand.hpp
+        src/ai/MummyAIComponent.cpp
+        src/ai/MummyAIComponent.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

@@ -46,6 +46,7 @@ public:
     void heal(float amount) override;
     void move(int dx, int dy) override;
     void update(GameState& gameState) override;
+    void onDeath(GameState& gameState) override;
     std::shared_ptr<Entity> clone() const override;
 
     Inventory& getInventory();
@@ -61,4 +62,6 @@ private:
     void updateLight(GameState& gameState);
     void deleteLight(int x, int y, GameState& gameState) const;
     void createLight(int x, int y, GameState& gameState) const;
+
+    void updateAttackRange();
 };

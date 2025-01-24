@@ -16,9 +16,10 @@ private:
 public:
 	explicit InputHandler(GameState& gameState);
 
-	[[nodiscard]] std::shared_ptr<Command> handleInput() const;
+	[[nodiscard]] std::shared_ptr<Command> handleInput();
 
 private:
 	[[nodiscard]] char getInput() const;
+	std::shared_ptr<Command> attackCommand();
 };
 

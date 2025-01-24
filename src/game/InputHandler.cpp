@@ -7,7 +7,9 @@
 #include <commands/MoveCommand.hpp>
 #include <states/GameState.hpp>
 
+#include "commands/AttackCommand.hpp"
 #include "commands/ExitCommand.hpp"
+#include "commands/ReloadCommand.hpp"
 #include "entities/Character.hpp"
 
 #ifdef _WIN32
@@ -23,7 +25,7 @@ InputHandler::InputHandler(GameState& gameState) : gameState(gameState)
 }
 
 
-std::shared_ptr<Command> InputHandler::handleInput() const
+std::shared_ptr<Command> InputHandler::handleInput()
 {
 	char input = getInput();
 
@@ -32,10 +34,34 @@ std::shared_ptr<Command> InputHandler::handleInput() const
 		case 's': return std::make_shared<MoveCommand>(Direction::DOWN, gameState.getPlayer());
 		case 'a': return std::make_shared<MoveCommand>(Direction::LEFT, gameState.getPlayer());
 		case 'd': return std::make_shared<MoveCommand>(Direction::RIGHT, gameState.getPlayer());
+		case 'r': return std::make_shared<ReloadCommand>();
+		case 'f': return attackCommand();
 		case 27: return std::make_shared<ExitCommand>();
 		default: return nullptr;
 	}
 }
+
+std::shared_ptr<Command> InputHandler::attackCommand()
+{
+	std::shared_ptr<Entity> bestTarget = nullptr;
+	float minDistance = std::numeric_limits<float>::max();
+	const auto& player = gameState.getPlayer();
+	for (auto& entity : gameState.getCurrentLevel().getEntities()) {
+		float distance = player->distanceTo(*entity);
+		if (entity->isAlive() && player->canAttack(*entity) && entity != player) {
+			if (distance < minDistance) {
+				minDistance = distance;
+				bestTarget = entity;
+			}
+		}
+	}
+
+	if (bestTarget) {
+		return std::make_shared<AttackCommand>(player, bestTarget);
+	}
+	return nullptr;
+}
+
 
 char InputHandler::getInput() const
 {

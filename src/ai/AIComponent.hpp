@@ -32,6 +32,8 @@ public:
 
 protected:
 	virtual std::shared_ptr<Command> movement(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map, DiceRoll gen);
+	virtual std::shared_ptr<Command> attack(const std::shared_ptr<Entity>& monster, const std::shared_ptr<Entity>& player, const std::shared_ptr<Map>& map, DiceRoll gen);
+	virtual std::shared_ptr<Command> heal(const std::shared_ptr<Entity>& monster, DiceRoll gen);
 
 	bool canSeePlayer(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map) const;
 	Direction findPath(const std::shared_ptr<Entity>& monster, const Position& playerPosition, const std::shared_ptr<Map>& map) const;

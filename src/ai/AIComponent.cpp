@@ -8,7 +8,7 @@
 #include <map/Map.hpp>
 #include <tiles/Tile.hpp>
 #include <entities/Character.hpp>
-#include "states/GameState.hpp"
+#include <states/GameState.hpp>
 #include <dice/DiceRoll.hpp>
 #include <set>
 #include <commands/MoveCommand.hpp>
@@ -38,7 +38,7 @@ std::shared_ptr<Command> AIComponent::makeDecision(GameState& gameState)
 	const auto& player = gameState.getPlayer();
 	const auto& map = gameState.getCurrentLevel().getMap();
 
-	if (!monster->isOnSameLevel(gameState.getPlayer())) {
+	if (!monster->isOnSameLevel(player)) {
 		if (monster->getHealth() < monster->getMaxHealth()) return heal(monster, gen);
 		return movement(monster, player->getPos(), map, gen);
 	}
@@ -85,7 +85,6 @@ std::shared_ptr<Command> AIComponent::movement(const std::shared_ptr<Entity>& mo
 
 std::shared_ptr<Command> AIComponent::attack(const std::shared_ptr<Entity>& monster, const std::shared_ptr<Entity>& player, const std::shared_ptr<Map>& map, DiceRoll gen)
 {
-
 	if (static_cast<float>(gen.randomNumber(0, 100)) / 100.0f > player->getDodgeChance()) {
 		if (canSeePlayer(monster, player->getPos(), map))
 			return std::make_shared<AttackCommand>(monster, player);

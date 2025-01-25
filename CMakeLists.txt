@@ -19,7 +19,11 @@ add_library(EgyptAdventureLib ${SOURCES}
         src/commands/ReloadCommand.cpp
         src/commands/ReloadCommand.hpp
         src/ai/MummyAIComponent.cpp
-        src/ai/MummyAIComponent.hpp)
+        src/ai/MummyAIComponent.hpp
+        src/commands/SummonMinionsCommand.cpp
+        src/commands/SummonMinionsCommand.hpp
+        src/ai/SandAIComponent.cpp
+        src/ai/SandAIComponent.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

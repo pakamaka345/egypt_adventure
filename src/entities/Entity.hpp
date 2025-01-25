@@ -16,6 +16,8 @@ class Modifier;
 class GameState;
 class Map;
 class AIComponent;
+class DiceRoll;
+class LevelState;
 
 /**
  * \brief The Entity class represents a game object that can be attacked and can attack other entities.
@@ -138,5 +140,10 @@ public:
     virtual void onDeath(GameState& gameState);
 
     virtual std::shared_ptr<Entity> clone() const = 0;
+
+protected:
+    void chanceToDropAmulets(int chance, DiceRoll gen, const std::shared_ptr<LevelState>& level, int gameLevel);
+    void chanceToDropGrenades(int chance, DiceRoll gen, const std::shared_ptr<LevelState>& level, int gameLevel);
+    void chanceToDropPotions(int chance, DiceRoll gen, const std::shared_ptr<LevelState>& level, int gameLevel);
 };
 

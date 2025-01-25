@@ -36,8 +36,8 @@
   "Mummy": {
     "name": "Mummy",
     "attackRange": 2,
-    "physicalDamage": 30.0,
-    "magicalDamage": 15.0,
+    "physicalDamage": 2.0,
+    "magicalDamage": 0.0,
     "health": 50.0,
     "defense": 0.3,
     "priority": 2.0,

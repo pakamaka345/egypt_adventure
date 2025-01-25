@@ -1,4 +1,7 @@
 #include "entities/Phantom.hpp"
+
+#include <states/GameState.hpp>
+
 #include "effects/FearEffect.hpp"
 #include "dice/DiceRoll.hpp"
 #include "ai/AIComponent.hpp"
@@ -51,6 +54,13 @@ void Phantom::update(GameState& gameState) {
 void Phantom::onDeath(GameState& gameState)
 {
     Entity::onDeath(gameState);
+
+    chanceToDropAmulets(5, DiceRoll(), gameState.getLevels()[getZ()], 2);
+    chanceToDropAmulets(7, DiceRoll(), gameState.getLevels()[getZ()], 3);
+    chanceToDropPotions(2, DiceRoll(), gameState.getLevels()[getZ()], 2);
+    chanceToDropPotions(5, DiceRoll(), gameState.getLevels()[getZ()], 3);
+    chanceToDropGrenades(6, DiceRoll(), gameState.getLevels()[getZ()], 2);
+    chanceToDropGrenades(8, DiceRoll(), gameState.getLevels()[getZ()], 3);
 }
 
 

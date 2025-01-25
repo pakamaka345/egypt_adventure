@@ -1,4 +1,7 @@
 #include "entities/Skeleton.hpp"
+
+#include <states/GameState.hpp>
+
 #include "dice/DiceRoll.hpp"
 #include "ai/AIComponent.hpp"
 
@@ -57,6 +60,17 @@ void Skeleton::move(int dx, int dy) {
 void Skeleton::update(GameState& gameState) {
     Entity::update(gameState);
 }
+
+void Skeleton::onDeath(GameState& gameState)
+{
+    Entity::onDeath(gameState);
+
+    chanceToDropGrenades(6, DiceRoll(), gameState.getLevels()[getZ()], 1);
+    chanceToDropAmulets(5, DiceRoll(), gameState.getLevels()[getZ()], 1);
+    chanceToDropGrenades(8, DiceRoll(), gameState.getLevels()[getZ()], 2);
+    chanceToDropPotions(3, DiceRoll(), gameState.getLevels()[getZ()], 1);
+}
+
 
 std::shared_ptr<Entity> Skeleton::clone() const {
     return std::make_shared<Skeleton>(*this);

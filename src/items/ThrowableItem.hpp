@@ -1,7 +1,7 @@
 #pragma once
 #include "items/Item.hpp"
 
-class ThrowableItem : Item{
+class ThrowableItem : public Item {
 private:
     int radius;
 

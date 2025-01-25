@@ -1,13 +1,21 @@
 #include "entities/Entity.hpp"
-
 #include <utility>
 #include <commands/Command.hpp>
 #include <map/Map.hpp>
 #include <states/GameState.hpp>
-
+#include <items/Bullet.hpp>
+#include <dice/DiceRoll.hpp>
+#include <items/Grenade.hpp>
+#include <items/HealPotion.hpp>
+#include <items/Torch.hpp>
 #include "ai/AIComponent.hpp"
 #include "items/amulets/Amulet.hpp"
+#include <items/amulets/DamageAmulet.hpp>
+#include <items/amulets/HealthAmulet.hpp>
+#include <items/amulets/ArmorAmulets.hpp>
 #include "modifiers/Modifier.hpp"
+
+constexpr float BulletDamageMultiplier = 1.2f;
 
 Entity::Entity(std::string  name, int attackRange,  float physicalDamage, float magicalDamage, float health, float defense, float priority,
                float dodgeChance, int x, int y, int z, char symbol)
@@ -100,6 +108,26 @@ void Entity::onDeath(GameState& gameState)
 {
     const auto& level = gameState.getLevels().at(getZ());
     level->getMap()->removeEntity(getX(), getY());
+
+    DiceRoll gen;
+
+    int bulletAmount = gen.randomNumber(0, 5);
+    for (int i = 0; i < bulletAmount; i++) {
+        auto physDmg = static_cast<float>(gen.randomNumber(1, static_cast<int>(getMaxHealth()))) * BulletDamageMultiplier;
+        auto magDmg = static_cast<float>(gen.randomNumber(1, static_cast<int>(getMaxHealth()))) * BulletDamageMultiplier;
+        auto item = std::make_shared<Bullet>(physDmg, magDmg, getZ());
+        item->setPos(getX(), getY(), getZ());
+        level->addItem(item);
+        level->getMap()->placeItem(getX(), getY(), item);
+    }
+
+    int chanceToDropTorch = gen.randomNumber(1, 10);
+    if (chanceToDropTorch > 3) {
+        auto torch = std::make_shared<Torch>(10, 12, getZ());
+        torch->setPos(getX(), getY(), getZ());
+        level->addItem(torch);
+        level->getMap()->placeItem(getX(), getY(), torch);
+    }
 }
 
 void Entity::update(GameState& gameState) {
@@ -242,6 +270,65 @@ void Entity::setDodgeChance(float dodgeChance) {
 void Entity::setAIComponent(const std::shared_ptr<AIComponent>& aiComponent)
 {
     Entity::aiComponent = aiComponent;
+}
+
+void Entity::chanceToDropAmulets(const int chance, DiceRoll gen, const std::shared_ptr<LevelState>& level, const int gameLevel)
+{
+    int chanceToDropAmulet = gen.randomNumber(1, 10);
+    if (chanceToDropAmulet > chance) {
+        int whichAmulet = gen.randomNumber(1, 9);
+        std::shared_ptr<Amulet> amulet;
+
+        float multiplier = 1.0f + (gameLevel - 1) * 0.5f;
+
+        if (whichAmulet <= 3) {
+            auto defense = static_cast<float>(gen.randomNumber(1, 10)) / 100.0f * multiplier;
+            auto dodgeChance = static_cast<float>(gen.randomNumber(1, 10)) / 100.0f * multiplier;
+            amulet = std::make_shared<ArmorAmulets>(defense, dodgeChance, getZ());
+
+        } else if (whichAmulet <= 6) {
+            auto physDmg = static_cast<float>(gen.randomNumber(5, 20)) * multiplier;
+            auto magDmg = static_cast<float>(gen.randomNumber(5, 20)) * multiplier;
+            amulet = std::make_shared<DamageAmulet>(physDmg, magDmg, getZ());
+        } else if (whichAmulet <= 9) {
+            auto health = static_cast<float>(gen.randomNumber(10, 30)) * multiplier;
+            amulet = std::make_shared<HealthAmulet>(health, getZ());
+        }
+
+        amulet->setPos(getX(), getY(), getZ());
+        level->addItem(amulet);
+        level->getMap()->placeItem(getX(), getY(), amulet);
+    }
+}
+
+void Entity::chanceToDropGrenades(int chance, DiceRoll gen, const std::shared_ptr<LevelState>& level, int gameLevel)
+{
+    int chanceToDropGrenade = gen.randomNumber(1, 10);
+
+    float multiplier = 1.0f + (gameLevel - 1);
+
+    if (chanceToDropGrenade > chance) {
+        float physDmg = static_cast<float>(gen.randomNumber(5, 20)) * multiplier;
+        float magDmg = static_cast<float>(gen.randomNumber(5, 20)) * multiplier;
+        int radius = gen.randomNumber(1, 5);
+        auto grenade = std::make_shared<Grenade>(magDmg, physDmg, radius, getZ());
+        grenade->setPos(getX(), getY(), getZ());
+        level->addItem(grenade);
+        level->getMap()->placeItem(getX(), getY(), grenade);
+    }
+}
+
+void Entity::chanceToDropPotions(int chance, DiceRoll gen, const std::shared_ptr<LevelState>& level, int gameLevel)
+{
+    int chanceToDropPotion = gen.randomNumber(1, 10);
+    float multiplier = 1.0f + (gameLevel - 1) * 0.5f;
+    if (chanceToDropPotion > chance) {
+        float healAmount = static_cast<float>(gen.randomNumber(5, 20)) * multiplier;
+        auto healthPotion = std::make_shared<HealPotion>(healAmount, 3, getZ());
+        healthPotion->setPos(getX(), getY(), getZ());
+        level->addItem(healthPotion);
+        level->getMap()->placeItem(getX(), getY(), healthPotion);
+    }
 }
 
 

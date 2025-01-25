@@ -22,5 +22,6 @@ public:
     void heal(float amount) override;
     void move(int dx, int dy) override;
     void update(GameState& gameSTate) override;
+	void onDeath(GameState& gameState) override;
     std::shared_ptr<Entity> clone() const override;
 };

@@ -181,7 +181,36 @@ std::vector<std::shared_ptr<Tile>> Map::getAdjacentTiles(int x, int y) const
     return adjacentTiles;
 }
 
+std::shared_ptr<Tile> Map::getTileInDirection(int x, int y, Direction direction) const
+{
+    int dx = 0, dy = 0;
 
+    switch (direction) {
+        case Direction::UP:
+            dy = -1;
+            break;
+        case Direction::DOWN:
+            dy = 1;
+            break;
+        case Direction::LEFT:
+            dx = -1;
+            break;
+        case Direction::RIGHT:
+            dx = 1;
+            break;
+        default:
+            break;
+    }
+
+    const int targetX = x + dx;
+    const int targetY = y + dy;
+
+    if (isInsideMap(targetX, targetY)) {
+        return getTile(targetX, targetY);
+    }
+
+    return nullptr;
+}
 
 void Map::listEntitiesAndItems(const std::string& pathToWrite)
 {

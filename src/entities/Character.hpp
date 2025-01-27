@@ -40,7 +40,7 @@ private:
      */
     Direction facingDirection = Direction::UP;
 
-    const double FOV = 90.0;
+    const double FOV = 120.0;
 
 public:
     Character(const std::string& name, int x, int y, int z, char symbol);
@@ -76,10 +76,10 @@ public:
 
     void setFacingDirection(Direction direction);
     Direction getFacingDirection() const;
-
+    double calculateFacingAngle() const;
+    double getFov() const;
 private:
     void updateAttackRange();
-    double calculateFacingAngle() const;
 
     void forEachTileOnLine(int x0, int y0, int x1, int y1, const std::function<bool(int, int)>& callback) const;
 };

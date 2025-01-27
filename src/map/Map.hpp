@@ -2,7 +2,7 @@
 #include <utility>
 #include <vector>
 #include <memory>
-
+#include "commands/MoveCommand.hpp"
 #include "RoomGenerator.hpp"
 
 class Tile;
@@ -49,6 +49,7 @@ public:
     [[nodiscard]] std::vector<Position> getFreePositionsAround(int x, int y, int radius, int count) const;
     [[nodiscard]] Position getRandomFreePosition(int x, int y, int radius) const;
     [[nodiscard]] std::vector<std::shared_ptr<Tile>> getAdjacentTiles(int x, int y) const;
+    std::shared_ptr<Tile> getTileInDirection(int x, int y, Direction direction) const;
 
     void listEntitiesAndItems(const std::string& pathToWrite);
 

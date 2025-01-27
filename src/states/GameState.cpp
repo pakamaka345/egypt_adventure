@@ -146,60 +146,78 @@ std::shared_ptr<LevelState> GameState::createLevel(const int levelIndex)
 
 void GameState::handleInteraction()
 {
-    auto player = getPlayer();
-    auto adjacentTiles = currentLevel->getMap()->getAdjacentTiles(player->getX(), player->getY());
+    const auto player = getPlayer();
+    const auto facingTile = currentLevel->getMap()->getTileInDirection(
+        player->getX(),
+        player->getY(),
+        player->getFacingDirection()
+    );
 
-    for (const auto& tile : adjacentTiles) {
-        if (tile->hasItems()) {
-            const auto item = tile->removeItem();
-            player->getInventory().addItem(item);
-            EventManager::getInstance().addEvent(
-                EventType::System,
-                "You picked up " + item->getName()
-                );
-            return;
-        }
+    if (!facingTile) {
+        EventManager::getInstance().addEvent(
+            EventType::System,
+            "There's nothing to interact with"
+        );
+        return;
     }
 
-    for (auto& tile : adjacentTiles) {
-        if (const auto interactTile = std::dynamic_pointer_cast<InteractTile>(tile)) {
-            interactTile->onInteract(getInstance());
-            EventManager::getInstance().addEvent(
-                EventType::System,
-                "You interacted with " + interactTile->getName()
-                );
-            return;
-        }
+    if (facingTile->hasItems()) {
+        const auto item = facingTile->removeItem();
+        player->getInventory().addItem(item);
+        EventManager::getInstance().addEvent(
+            EventType::System,
+            "You picked up " + item->getName()
+        );
+        return;
+    }
+
+    if (const auto interactTile = std::dynamic_pointer_cast<InteractTile>(facingTile)) {
+        interactTile->onInteract(getInstance());
+        EventManager::getInstance().addEvent(
+            EventType::System,
+            "You interacted with " + interactTile->getName()
+        );
+        return;
     }
 
     EventManager::getInstance().addEvent(
         EventType::System,
         "There's nothing to interact with"
-        );
+    );
 }
 
 
-void GameState::onCollisionWithTile(const std::vector<std::shared_ptr<Tile>>& adjacent) const
+void GameState::onCollisionWithTile(const std::vector<std::shared_ptr<Tile>>& adjacent)
 {
-    for (auto& tile : adjacent) {
-        if (auto interactTile = std::dynamic_pointer_cast<InteractTile>(tile)) {
-            EventManager::getInstance().addEvent(
-                EventType::Interaction,
-                "Press 'E' to interact with " + interactTile->getName()
-                );
-        }
+    const auto player = getPlayer();
+    const auto facingTile = currentLevel->getMap()->getTileInDirection(
+        player->getX(),
+        player->getY(),
+        player->getFacingDirection()
+    );
+
+    if (const auto interactTile = std::dynamic_pointer_cast<InteractTile>(facingTile)) {
+        EventManager::getInstance().addEvent(
+            EventType::Interaction,
+            "Press 'E' to interact with " + interactTile->getName()
+        );
     }
 }
 
-void GameState::onCollisionWithItem(const std::vector<std::shared_ptr<Tile>>& adjacent) const
+void GameState::onCollisionWithItem(const std::vector<std::shared_ptr<Tile>>& adjacent)
 {
-    for (auto& tile : adjacent) {
-        if (tile->hasItems()) {
-            EventManager::getInstance().addEvent(
-                EventType::Interaction,
-                "Press 'E' to pick up " + tile->getItem()->getName()
-                );
-        }
+    const auto player = getPlayer();
+    const auto facingTile = currentLevel->getMap()->getTileInDirection(
+        player->getX(),
+        player->getY(),
+        player->getFacingDirection()
+    );
+
+    if (facingTile && facingTile->hasItems()) {
+        EventManager::getInstance().addEvent(
+            EventType::Interaction,
+            "Press 'E' to pick up " + facingTile->getItem()->getName()
+        );
     }
 }
 

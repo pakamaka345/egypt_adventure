@@ -52,6 +52,6 @@ public:
 private:
     std::shared_ptr<LevelState> createLevel(int levelIndex);
 
-    void onCollisionWithTile(const std::vector<std::shared_ptr<Tile>>& adjacent) const;
-    void onCollisionWithItem(const std::vector<std::shared_ptr<Tile>>& adjacent) const;
+    void onCollisionWithTile(const std::vector<std::shared_ptr<Tile>>& adjacent);
+    void onCollisionWithItem(const std::vector<std::shared_ptr<Tile>>& adjacent);
 };

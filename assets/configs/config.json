@@ -66,7 +66,7 @@
     "attackRange": 1,
     "physicalDamage": 1.0,
     "magicalDamage": 1.0,
-    "health": 200.0,
+    "health": 2.0,
     "defense": 0.5,
     "priority": 4.0,
     "dodgeChance": 0.3,

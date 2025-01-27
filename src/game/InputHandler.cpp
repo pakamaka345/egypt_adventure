@@ -48,10 +48,25 @@ std::shared_ptr<Command> InputHandler::attackCommand()
 	std::shared_ptr<Entity> bestTarget = nullptr;
 	float minDistance = std::numeric_limits<float>::max();
 	const auto& player = gameState.getPlayer();
+	const double halfFovAngle = player->getFov() / 2;
+	const double facingAngle = player->calculateFacingAngle();
+
 	for (auto& entity : gameState.getCurrentLevel().getEntities()) {
-		float distance = player->distanceTo(*entity);
-		if (entity->isAlive() && player->canAttack(*entity) && entity != player) {
-			if (distance < minDistance) {
+		if (!entity->isAlive() || entity == player) continue;
+
+		int distance = player->distanceTo(*entity);
+		if (distance > player->getAttackRange()) continue;
+
+		double dx = entity->getX() - player->getX();
+		double dy = entity->getY() - player->getY();
+		double angleToTarget = atan2(dy, dx) * 180 / M_PI;
+		if (angleToTarget < 0) angleToTarget += 360;
+
+		double angleDiff = std::fabs(std::remainder(angleToTarget - facingAngle, 360.0));
+		if (angleDiff > halfFovAngle) continue;
+
+		if (distance < minDistance) {
+			if (player->canAttack(*entity)) {
 				minDistance = distance;
 				bestTarget = entity;
 			}

@@ -157,20 +157,20 @@ void Character::createLight(const int x, const int y, GameState& gameState) cons
             if (angleDiff > halfFovAngle) continue;
 
             bool blocked = false;
-            forEachTileOnLine(x, y, nx, ny, [&](int x, int y)
+            forEachTileOnLine(x, y, nx, ny, [&](const int tx, const int ty)
             {
                 if (blocked) return false;
 
-                if (map->getTile(x, y)->getTileType() == TileType::WALL) {
-                    if (map->getLightType(x, y) == LightType::NONE) {
-                        map->setLightMap(x, y, LightType::DYNAMIC);
+                if (map->getTile(tx, ty)->getTileType() == TileType::WALL) {
+                    if (map->getLightType(tx, ty) == LightType::NONE) {
+                        map->setLightMap(tx, ty, LightType::DYNAMIC);
                     }
                     blocked = true;
                     return false;
                 }
 
-                if (map->getLightType(x, y) == LightType::NONE) {
-                    map->setLightMap(x, y, LightType::DYNAMIC);
+                if (map->getLightType(tx, ty) == LightType::NONE) {
+                    map->setLightMap(tx, ty, LightType::DYNAMIC);
                 }
                 return true;
             });
@@ -294,6 +294,12 @@ Direction Character::getFacingDirection() const
 {
     return facingDirection;
 }
+
+double Character::getFov() const
+{
+    return FOV;
+}
+
 
 
 

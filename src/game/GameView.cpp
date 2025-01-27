@@ -37,6 +37,15 @@ void GameView::render(GameState& gameState)
 		std::ostringstream row;
 		for (int x = startX; x < endX; ++x) {
 			auto tile = map->getTile(x, y);
+
+			bool isLineOfLight = (map->getLightType(x, y) == LightType::DYNAMIC);
+
+			if (isLineOfLight) {
+				row << "\e[0;37m";
+			} else {
+				row << "\e[1;30m";
+			}
+
 			if (map->getLightType(x, y) == LightType::NONE) {
 				row << "*";
 			} else if (tile->hasEntity()) {
@@ -46,6 +55,8 @@ void GameView::render(GameState& gameState)
 			} else {
 				row << tile->getSymbol();
 			}
+
+			row << "\e[0m";
 		}
 
 		appendPlayerStatsRow(row, y, startY, player);

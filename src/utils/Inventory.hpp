@@ -30,6 +30,7 @@ public:
     std::optional<std::shared_ptr<Item>> getItem(const std::string& itemName);
     int getItemCount(const std::string& itemName);
     std::unordered_map<std::string, InventoryItem> getItems() const { return items; }
+    int getItemsCount() const;
     bool hasItem(const std::string& itemName);
 
     static std::shared_ptr<Entity> getCharacter();

@@ -63,6 +63,15 @@ int Inventory::getItemCount(const std::string& itemName) {
     else return 0;
 }
 
+int Inventory::getItemsCount() const
+{
+    if (items.empty()) return 0;
+    return std::accumulate(items.begin(), items.end(), 0, [](int sum, const auto& item) {
+            return sum + item.second.count;
+        });
+}
+
+
 bool Inventory::hasItem(const std::string& itemName) {
     return items.find(itemName) != items.end();
 }

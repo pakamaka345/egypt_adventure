@@ -66,8 +66,10 @@ std::shared_ptr<Item> Tile::getItem() {
     return items.front();
 }
 
-void Tile::removeItem() {
-    return items.pop_front();
+std::shared_ptr<Item> Tile::removeItem() {
+    auto item = items.front();
+    items.pop_front();
+    return item;
 }
 
 bool Tile::hasItems() {

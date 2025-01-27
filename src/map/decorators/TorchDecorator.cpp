@@ -31,7 +31,7 @@ void TorchDecorator::placeTorchInRoom(Map& map, const std::shared_ptr<RoomGenera
 		auto pos = generateTorchPosition(room);
 
 		if (isValidTorchPosition(map, pos, torchPositions)) {
-			map.setTile(std::make_shared<TorchTile>(6, pos.x, pos.y, levelIndex));
+			map.setTile(std::make_shared<TorchTile>(12, pos.x, pos.y, levelIndex));
 			torchPositions.insert(pos);
 			placed = true;
 		}

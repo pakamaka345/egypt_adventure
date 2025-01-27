@@ -1,36 +1,94 @@
-//#include "GameView.hpp"
-//
-//GameView::GameView(std::string pathToInitFile)
-//    : Map(pathToInitFile)
-//{
-//}
-//
-//GameView::GameView(int width, int height)
-//    : Map(width, height)
-//{
-//}
-//
-//void GameView::draw()
-//{
-//    std::cout << "----------------------------------------------------\n";
-//    for (int y = 0; y < height; y++)
-//    {
-//        for (int x = 0; x < width; x++)
-//        {
-//
-//        }
-//        std::cout << "\n";
-//    }
-//    //TODO after I add the player class and it will be dynamic
-//    // std::cout << "Piter Miller\n";
-//    // std::cout << "Info: \n";
-//    // std::cout << "Health: 100\n";
-//    // std::cout << "Ammo: 6/6\n";
-//    // std::cout << "light 1:14";
-//    // std::cout << "3 artifacts are active\n";
-//    // std::cout << "press 'I' to open inventory\n";
-//    // std::cout << "w,a,s,d to move\n";
-//    // std::cout << "'e' to interact\n";
-//    // Move to interface class
-//    std::cout << "----------------------------------------------------\n";
-//}
+#include "GameView.hpp"
+
+#include <entities/Character.hpp>
+#include <map/Map.hpp>
+#include <states/GameState.hpp>
+#include <iomanip>
+#include <tiles/Tile.hpp>
+#include <weapons/Weapon.hpp>
+#include <iostream>
+
+#include "utils/EventManager.hpp"
+
+GameView::GameView(int width, int height)
+	: viewportWidth(width), viewportHeight(height)
+{
+}
+
+
+
+void GameView::render(GameState& gameState)
+{
+	auto map = gameState.getCurrentLevel().getMap();
+	auto player = gameState.getPlayer();
+
+	int startX = std::max(0, player->getX() - viewportWidth / 2);
+	int endX = std::min(map->getWidth(), player->getX() + viewportWidth / 2);
+	int startY = std::max(0, player->getY() - viewportHeight / 2);
+	int endY = std::min(map->getHeight(), player->getY() + viewportHeight / 2);
+
+#ifdef _WIN32
+	system("cls");
+#else
+	system("clear");
+#endif
+
+	for (int y = startY; y < endY; ++y) {
+		std::ostringstream row;
+		for (int x = startX; x < endX; ++x) {
+			auto tile = map->getTile(x, y);
+			if (map->getLightType(x, y) == LightType::NONE) {
+				row << "*";
+			} else if (tile->hasEntity()) {
+				row << tile->getEntity()->getSymbol();
+			} else if (tile->hasItems()) {
+				row << tile->getItem()->getSymbol();
+			} else {
+				row << tile->getSymbol();
+			}
+		}
+
+		appendPlayerStatsRow(row, y, startY, player);
+
+		std::cout << row.str() << std::endl;
+	}
+
+	if (gameState.getIsGameOver()) {
+		std::cout << "Game Over!" << std::endl;
+	}
+
+}
+
+void GameView::appendPlayerStatsRow(std::ostringstream& row, int y, int startY, const std::shared_ptr<Character>& player)
+{
+	if (y == startY) {
+		row << std::setw(10) << "\e[0;32m Hero Stats: \e[0m";
+	} else if (y == startY + 1) {
+		row << std::setw(10) << "\e[0;32m HP: " << player->getHealth() << "/" << player->getMaxHealth() << "\e[0m";
+	} else if (y == startY + 2) {
+		row << std::setw(10) << "\e[0;33m Physical damage: " << player->getPhysicalDamage() << " - Magical damage: " << player->getMagicalDamage() << "\e[0m";
+	} else if (y == startY + 3) {
+		row << std::setw(10) << "\e[0;34m AttackRange: " << player->getAttackRange() << "\e[0m";
+	} else if (y == startY + 4) {
+		row << std::setw(10) << "\e[0;35m Ammo: " << player->getRevolver()->getAmmo() << " / " << player->getInventory().getItemCount("bullet") << "\e[0m";
+	} else if (y == startY + 5) {
+		row << std::setw(10) << "\e[0;36m Visibility range: " << player->getVisibilityRange() << "\e[0m";
+	} else if (y == startY + 6) {
+		row << std::setw(10) << "\e[0;37m effects: " << player->getEffectManager().formatActiveEffects() << "\e[0m";
+	} else if (y == startY + 7) {
+		if (player->getCooldown() > 0) {
+			row << std::setw(10) << " Status: On Cooldown (" << player->getCooldown() << " turns left)";
+		} else {
+			row << std::setw(10) << " Status: Ready to attack";
+		}
+	} else if (y == startY + 8) {
+		if (player->getActiveTorch()) {
+			row << std::setw(10) << " Torch: " << player->getActiveTorch()->getDuration() << " turns left";
+		}
+	} else if (y == startY + 9) {
+		row << std::setw(10) << " Items in Inventory: " << player->getInventory().getItemsCount()  << " press 'i' to open inventory";
+	} else if (y == startY + 10) {
+		row << std::setw(10) << " " + EventManager::getInstance().formatInteractEvents();
+	}
+}
+

@@ -21,7 +21,7 @@ std::shared_ptr<Command> MummyAIComponent::makeDecision(GameState& gameState)
 
 	const auto& mummy = getMummy();
 	const auto& player = gameState.getPlayer();
-	const auto& map = gameState.getCurrentLevel().getMap();
+	const auto& map = gameState.getLevels()[getOwner()->getZ()]->getMap();
 
 	if (!mummy->isOnSameLevel(player)) {
 		if (mummy->getHealth() < mummy->getMaxHealth()) return heal(mummy, gen);

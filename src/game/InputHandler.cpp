@@ -9,6 +9,7 @@
 
 #include "commands/AttackCommand.hpp"
 #include "commands/ExitCommand.hpp"
+#include "commands/InteractCommand.hpp"
 #include "commands/ReloadCommand.hpp"
 #include "entities/Character.hpp"
 
@@ -34,6 +35,7 @@ std::shared_ptr<Command> InputHandler::handleInput()
 		case 's': return std::make_shared<MoveCommand>(Direction::DOWN, gameState.getPlayer());
 		case 'a': return std::make_shared<MoveCommand>(Direction::LEFT, gameState.getPlayer());
 		case 'd': return std::make_shared<MoveCommand>(Direction::RIGHT, gameState.getPlayer());
+		case 'e': return std::make_shared<InteractCommand>();
 		case 'r': return std::make_shared<ReloadCommand>();
 		case 'f': return attackCommand();
 		case 27: return std::make_shared<ExitCommand>();

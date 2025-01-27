@@ -5,6 +5,7 @@
 #include "entities/Character.hpp"
 #include "map/MapGenerator.hpp"
 #include "states/LevelState.hpp"
+#include "utils/EventManager.hpp"
 
 GameState::GameState() : player(nullptr), levelIndex(1), isGameOver(false)
 {
@@ -58,6 +59,7 @@ void GameState::nextLevel(const int newLevelIndex) {
     levelIndex = newLevelIndex;
     if (player) {
         player->setPos(currentLevel->getStartPosition());
+        player->createLight(player->getX(), player->getY(), getInstance());
         currentLevel->addEntity(player);
         currentLevel->getMap()->placeEntity(player->getX(), player->getY(), player);
     }
@@ -71,6 +73,7 @@ void GameState::previousLevel(const int newLevelIndex)
     currentLevel = levels[newLevelIndex];
     levelIndex = newLevelIndex;
     player->setPos(currentLevel->getStartPosition());
+    player->createLight(player->getX(), player->getY(), getInstance());
 }
 
 
@@ -141,11 +144,49 @@ std::shared_ptr<LevelState> GameState::createLevel(const int levelIndex)
     return level;
 }
 
+void GameState::handleInteraction()
+{
+    auto player = getPlayer();
+    auto adjacentTiles = currentLevel->getMap()->getAdjacentTiles(player->getX(), player->getY());
+
+    for (const auto& tile : adjacentTiles) {
+        if (tile->hasItems()) {
+            const auto item = tile->removeItem();
+            player->getInventory().addItem(item);
+            EventManager::getInstance().addEvent(
+                EventType::System,
+                "You picked up " + item->getName()
+                );
+            return;
+        }
+    }
+
+    for (auto& tile : adjacentTiles) {
+        if (const auto interactTile = std::dynamic_pointer_cast<InteractTile>(tile)) {
+            interactTile->onInteract(getInstance());
+            EventManager::getInstance().addEvent(
+                EventType::System,
+                "You interacted with " + interactTile->getName()
+                );
+            return;
+        }
+    }
+
+    EventManager::getInstance().addEvent(
+        EventType::System,
+        "There's nothing to interact with"
+        );
+}
+
+
 void GameState::onCollisionWithTile(const std::vector<std::shared_ptr<Tile>>& adjacent) const
 {
     for (auto& tile : adjacent) {
         if (auto interactTile = std::dynamic_pointer_cast<InteractTile>(tile)) {
-            //TODO add EventManager.
+            EventManager::getInstance().addEvent(
+                EventType::Interaction,
+                "Press 'E' to interact with " + interactTile->getName()
+                );
         }
     }
 }
@@ -154,7 +195,10 @@ void GameState::onCollisionWithItem(const std::vector<std::shared_ptr<Tile>>& ad
 {
     for (auto& tile : adjacent) {
         if (tile->hasItems()) {
-            //TODO add EventManager.
+            EventManager::getInstance().addEvent(
+                EventType::Interaction,
+                "Press 'E' to pick up " + tile->getItem()->getName()
+                );
         }
     }
 }

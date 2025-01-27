@@ -10,20 +10,10 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_library(EgyptAdventureLib ${SOURCES}
-        src/ai/AIComponent.cpp
-        src/ai/AIComponent.hpp
-        src/commands/AttackCommand.cpp
-        src/commands/AttackCommand.hpp
-        src/commands/HealCommand.cpp
-        src/commands/HealCommand.hpp
-        src/commands/ReloadCommand.cpp
-        src/commands/ReloadCommand.hpp
-        src/ai/MummyAIComponent.cpp
-        src/ai/MummyAIComponent.hpp
-        src/commands/SummonMinionsCommand.cpp
-        src/commands/SummonMinionsCommand.hpp
-        src/ai/SandAIComponent.cpp
-        src/ai/SandAIComponent.hpp)
+        src/utils/EventManager.cpp
+        src/utils/EventManager.hpp
+        src/commands/InteractCommand.cpp
+        src/commands/InteractCommand.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

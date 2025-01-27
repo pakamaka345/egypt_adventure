@@ -3,12 +3,11 @@
 //
 
 #include "MoveCommand.hpp"
-
 #include <map/Map.hpp>
 #include <states/GameState.hpp>
 #include <utility>
-
 #include "entities/Entity.hpp"
+#include "entities/Character.hpp"
 
 MoveCommand::MoveCommand(const Direction direction, std::shared_ptr<Entity> entity)
 	: direction(direction), entity(std::move(entity))
@@ -24,6 +23,9 @@ void MoveCommand::execute(GameState& gameState)
 		gameState.getCurrentLevel().getMap()->removeEntity(entity->getX(), entity->getY());
 		entity->move(offset.x, offset.y);
 		gameState.getCurrentLevel().getMap()->placeEntity(entity->getX(), entity->getY(), entity);
+	}
+	if (auto character = std::dynamic_pointer_cast<Character>(entity)) {
+		character->setFacingDirection(direction);
 	}
 }
 

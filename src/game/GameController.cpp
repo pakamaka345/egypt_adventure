@@ -14,7 +14,7 @@ GameController::GameController(GameState& gameState)
 {
 	const auto character = std::make_shared<Character>("Peter Miller", 0, 0, 1, '@');
 	for (int i = 0; i < 20; i++) {
-		character->addToInventory(std::make_shared<Bullet>(50, 50, 1));
+		character->addToInventory(std::make_shared<Bullet>(25, 25, 1));
 	}
 	gameState.initializePlayer(character);
 	character->reloadRevolver();

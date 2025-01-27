@@ -36,7 +36,7 @@ std::shared_ptr<Command> AIComponent::makeDecision(GameState& gameState)
 
 	const auto& monster = getOwner();
 	const auto& player = gameState.getPlayer();
-	const auto& map = gameState.getCurrentLevel().getMap();
+	const auto& map = gameState.getLevels()[getOwner()->getZ()]->getMap();
 
 	if (!monster->isOnSameLevel(player)) {
 		if (monster->getHealth() < monster->getMaxHealth()) return heal(monster, gen);

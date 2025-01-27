@@ -1,4 +1,7 @@
 #include "entities/SandGolem.hpp"
+
+#include <ai/SandGolemAIComponent.hpp>
+
 #include "dice/DiceRoll.hpp"
 #include "effects/EffectManager.hpp"
 #include "effects/Effect.hpp"
@@ -13,6 +16,7 @@ SandGolem::SandGolem(const std::string &name, int attackRange, float physicalDam
         : maxShieldHealth(0), shieldHealth(0),
         Entity(name, attackRange, physicalDamage, magicalDamage, health, defense, priority, dodgeChance, x, y, z, symbol)
 {
+    aiComponent = std::make_shared<SandGolemAIComponent>();
 }
 
 void SandGolem::attack(Entity &target) {
@@ -51,8 +55,20 @@ void SandGolem::update(GameState& gameState) {
     Entity::update(gameState);
 
     //auto map = GameState::getInstance().getCurrentLevel().getMap();
-    healOnSand(*gameState.getCurrentLevel().getMap());
+    healOnSand(*gameState.getLevels()[getZ()]->getMap());
 }
+
+void SandGolem::onDeath(GameState& gameState)
+{
+    Entity::onDeath(gameState);
+
+    chanceToDropGrenades(5, DiceRoll(), gameState.getLevels()[getZ()], 2);
+    chanceToDropGrenades(6, DiceRoll(), gameState.getLevels()[getZ()], 3);
+    chanceToDropAmulets(6, DiceRoll(), gameState.getLevels()[getZ()], 3);
+    chanceToDropPotions(1, DiceRoll(), gameState.getLevels()[getZ()], 2);
+    chanceToDropPotions(4, DiceRoll(), gameState.getLevels()[getZ()], 3);
+}
+
 
 std::shared_ptr<Entity> SandGolem::clone() const {
     return std::make_shared<SandGolem>(*this);
@@ -65,7 +81,7 @@ void SandGolem::activateSandShield() {
         }
     }
 
-    this->applyEffects(std::make_shared<SandShield>(3, 50));
+    this->applyEffects(std::make_shared<SandShield>(10, 50));
 }
 
 void SandGolem::coverWithSand(Map &map, int radius) {
@@ -76,9 +92,11 @@ void SandGolem::coverWithSand(Map &map, int radius) {
             if (map.isInsideMap(newX, newY)) {
                 DiceRoll dice(100);
                 int diceRoll = dice.roll();
-                if (diceRoll < 70) {
+                if (diceRoll < 40) {
                     if (map.getTile(newX, newY)->getTileType() == TileType::FLOOR) {
                         std::shared_ptr<Tile> sandTile = std::make_shared<SandTile>(newX, newY, getZ());
+                        sandTile->setEntity(map.getTile(newX, newY)->getEntity());
+                        sandTile->addItems(map.getTile(newX, newY)->getItems());
                         map.setTile(sandTile);
                     }
                 }
@@ -88,11 +106,11 @@ void SandGolem::coverWithSand(Map &map, int radius) {
 }
 
 void SandGolem::healOnSand(Map &map) {
-    static int sandTimer = 0;
     if (map.getTile(this->getX(), this->getY())->getTileType() == TileType::SAND) {
         sandTimer++;
-        if (sandTimer >= 3) {
-            shieldHealth = std::min(maxShieldHealth, shieldHealth + 15.0f);
+        if (sandTimer >= 2) {
+            float shieldAmount = DiceRoll().randomNumber(5, 15);
+            shieldHealth = std::min(maxShieldHealth, shieldHealth + shieldAmount);
             sandTimer = 0;
         }
     }
@@ -105,4 +123,9 @@ void SandGolem::setShieldHealth(float shieldHealth) {
 
 float SandGolem::getShieldHealth() const {
     return shieldHealth;
+}
+
+float SandGolem::getShieldMaxHealth() const
+{
+    return maxShieldHealth;
 }

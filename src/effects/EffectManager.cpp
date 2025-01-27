@@ -1,6 +1,7 @@
 #include "effects/EffectManager.hpp"
 #include "effects/Effect.hpp"
 #include "entities/Entity.hpp"
+#include <sstream>
 
 void EffectManager::addEffect(const std::shared_ptr<Effect> &effect, Entity &target) {
     activeEffects.push_back(effect);
@@ -33,4 +34,20 @@ void EffectManager::clearEffects(Entity& target) {
 
 std::vector<std::shared_ptr<Effect>> &EffectManager::getActiveEffects() {
     return activeEffects;
+}
+
+std::string EffectManager::formatActiveEffects() const
+{
+    if (activeEffects.empty()) {
+        return "none";
+    }
+
+    std::ostringstream oss;
+    std::for_each(activeEffects.begin(), activeEffects.end(), [&oss](const std::shared_ptr<Effect>& effect) {
+       if (effect) {
+           oss << effect->getName() << " ";
+       }
+    });
+
+    return oss.str();
 }

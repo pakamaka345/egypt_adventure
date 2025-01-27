@@ -13,6 +13,8 @@ private:
     float maxShieldHealth;
     float shieldHealth;
 
+	int sandTimer = 0;
+
 public:
     SandGolem(const std::string& name, int attackRange, float physicalDamage, float magicalDamage,
           float health, float defense, float priority, float dodgeChance,
@@ -24,6 +26,7 @@ public:
     void heal(float amount) override;
     void move(int dx, int dy) override;
     void update(GameState& gameState) override;
+	void onDeath(GameState& gameState) override;
     std::shared_ptr<Entity> clone() const override;
 
     void activateSandShield();
@@ -32,4 +35,5 @@ public:
 
     void setShieldHealth(float shieldHealth);
     float getShieldHealth() const;
+	float getShieldMaxHealth() const;
 };

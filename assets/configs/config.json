@@ -64,8 +64,8 @@
   "SandGolem": {
     "name": "SandGolem",
     "attackRange": 1,
-    "physicalDamage": 50.0,
-    "magicalDamage": 40.0,
+    "physicalDamage": 1.0,
+    "magicalDamage": 1.0,
     "health": 200.0,
     "defense": 0.5,
     "priority": 4.0,

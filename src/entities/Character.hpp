@@ -2,6 +2,7 @@
 #include "entities/Entity.hpp"
 #include "utils/Inventory.hpp"
 #include "items/Torch.hpp"
+#include "commands/MoveCommand.hpp"
 
 class Weapon;
 class Bullet;
@@ -31,6 +32,16 @@ private:
      */
     int visibilityRange;
 
+    /**
+     * \brief The direction the character is currently facing.
+     *
+     * This variable is used to store the last direction the character was facing.
+     * It helps in determining the character's orientation for various actions such as movement, attack, and interaction.
+     */
+    Direction facingDirection = Direction::UP;
+
+    const double FOV = 90.0;
+
 public:
     Character(const std::string& name, int x, int y, int z, char symbol);
     Character(const Character& other);
@@ -55,13 +66,20 @@ public:
     float getPhysicalDamage() const override;
     float getMagicalDamage() const override;
 
+    std::unique_ptr<Torch>& getActiveTorch();
     void setActiveTorch(std::unique_ptr<Torch> torch);
     int getVisibilityRange() const;
 
-private:
     void updateLight(GameState& gameState);
     void deleteLight(int x, int y, GameState& gameState) const;
     void createLight(int x, int y, GameState& gameState) const;
 
+    void setFacingDirection(Direction direction);
+    Direction getFacingDirection() const;
+
+private:
     void updateAttackRange();
+    double calculateFacingAngle() const;
+
+    void forEachTileOnLine(int x0, int y0, int x1, int y1, const std::function<bool(int, int)>& callback) const;
 };

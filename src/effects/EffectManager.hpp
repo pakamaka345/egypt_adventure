@@ -19,4 +19,6 @@ public:
 
     void clearEffects(Entity& target);
     std::vector<std::shared_ptr<Effect>>& getActiveEffects();
+
+    std::string formatActiveEffects() const;
 };

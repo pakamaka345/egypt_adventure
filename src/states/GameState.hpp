@@ -47,6 +47,8 @@ public:
 
     void update();
 
+    void handleInteraction();
+
 private:
     std::shared_ptr<LevelState> createLevel(int levelIndex);
 

@@ -43,7 +43,7 @@ public:
     void addItems(std::list<std::shared_ptr<Item>> items);
     std::list<std::shared_ptr<Item>>& getItems();
     std::shared_ptr<Item> getItem();
-    void removeItem();
+    std::shared_ptr<Item> removeItem();
     bool hasItems();
 
     TileType::Type getTileType();

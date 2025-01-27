@@ -18,4 +18,6 @@ public:
 
 	int getRadius() const { return radius; }
 	int decreaseDuration() { return duration--; }
+
+	int getDuration() const { return duration; }
 };

@@ -217,7 +217,7 @@ std::shared_ptr<Tile> Map::getTile(const int x, const int y) const {
 
 LightType Map::getLightType(const int x, const int y) const
 {
-    if (isInsideMap(x, y))
+    if (x >= 0 && x < width && y >= 0 && y < height)
         return lightMap[y][x];
     else
         throw std::runtime_error("Could not get light type at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
@@ -225,7 +225,7 @@ LightType Map::getLightType(const int x, const int y) const
 
 void Map::setLightMap(int x, int y, LightType lightType)
 {
-    if (isInsideMap(x, y))
+    if (x >= 0 && x < width && y >= 0 && y < height)
         lightMap[y][x] = lightType;
     else
         throw std::runtime_error("Could not set light type at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");

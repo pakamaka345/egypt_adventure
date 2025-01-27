@@ -1,18 +1,21 @@
-#include "map/Map.hpp"
-#include "interfaces/Interface.hpp"
+#pragma once
 #include <memory>
 
+class GameState;
+class Character;
 
 class GameView {
 private:
-    //std::shared_ptr<Interface> interface;
-
+	int viewportWidth;
+	int viewportHeight;
 
 public:
-//    explicit GameView(std::string pathToInitFile);
-//    GameView(int width, int height);
-//    virtual ~GameView() = default;
-//
-//    void draw() override;
+	GameView(int width, int height);
+    ~GameView() = default;
+
+    void render(GameState& gameState);
+
+private:
+	void appendPlayerStatsRow(std::ostringstream& row, int y, int startY, const std::shared_ptr<Character>& player);
 };
 

@@ -58,10 +58,10 @@ void Mummy::onDeath(GameState& gameState)
     Entity::onDeath(gameState);
 
     chanceToDropAmulets(2, DiceRoll(), gameState.getLevels()[getZ()], 1);
-    chanceToDropAmulets(6, DiceRoll(), gameState.getLevels()[getY()], 2);
+    chanceToDropAmulets(6, DiceRoll(), gameState.getLevels()[getZ()], 2);
     chanceToDropGrenades(4, DiceRoll(), gameState.getLevels()[getZ()], 2);
     chanceToDropPotions(2, DiceRoll(), gameState.getLevels()[getZ()], 2);
-    chanceToDropPotions(1, DiceRoll(), gameState.getLevels()[getY()], 1);
+    chanceToDropPotions(1, DiceRoll(), gameState.getLevels()[getZ()], 1);
 }
 
 

@@ -38,16 +38,20 @@ void GameView::render(GameState& gameState)
 		for (int x = startX; x < endX; ++x) {
 			auto tile = map->getTile(x, y);
 
-			bool isLineOfLight = (map->getLightType(x, y) == LightType::DYNAMIC);
-
-			if (isLineOfLight) {
+			if (map->getDynamicLight(x, y) != LightType::NONE) {
+				row << "\e[0;36m";
+			} else if (map->getStaticLight(x, y) != LightType::NONE) {
 				row << "\e[0;37m";
+			} else if (map->isSeen(x, y)) {
+				row << "\e[0;90m";
 			} else {
-				row << "\e[1;30m";
+				row << "\e[0;100m";
 			}
 
-			if (map->getLightType(x, y) == LightType::NONE) {
-				row << "*";
+			if (!map->isSeen(x, y) && map->getStaticLight(x, y) == LightType::NONE) {
+				row << " ";
+			} else if (map->isSeen(x, y) && map->getDynamicLight(x, y) == LightType::NONE && map->getStaticLight(x, y) == LightType::NONE) {
+				row << tile->getSymbol();
 			} else if (tile->hasEntity()) {
 				row << tile->getEntity()->getSymbol();
 			} else if (tile->hasItems()) {
@@ -64,10 +68,12 @@ void GameView::render(GameState& gameState)
 		std::cout << row.str() << std::endl;
 	}
 
+	std::cout << "------------Combat Logs: ------------" << std::endl;
+	std::cout << EventManager::getInstance().formatCombatEvents();
+
 	if (gameState.getIsGameOver()) {
 		std::cout << "Game Over!" << std::endl;
 	}
-
 }
 
 void GameView::appendPlayerStatsRow(std::ostringstream& row, int y, int startY, const std::shared_ptr<Character>& player)
@@ -100,6 +106,10 @@ void GameView::appendPlayerStatsRow(std::ostringstream& row, int y, int startY, 
 		row << std::setw(10) << " Items in Inventory: " << player->getInventory().getItemsCount()  << " press 'i' to open inventory";
 	} else if (y == startY + 10) {
 		row << std::setw(10) << " " + EventManager::getInstance().formatInteractEvents();
+	} else if (y == startY + 11) {
+		row << std::setw(10) << " System Events: ";
+	} else if (y == startY + 12) {
+		row << std::setw(10) << " " + EventManager::getInstance().formatSystemEvents();
 	}
 }
 

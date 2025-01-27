@@ -15,21 +15,26 @@ Map::Map(int width, int height, int levelIndex)
     : width(width), height(height)
 {
     map.resize(height);
-    lightMap.resize(height);
+    staticLightMap.resize(height);
+    dynamicLightMap.resize(height);
+    seenMap.resize(height);
     for (int y = 0; y < height; y++)
     {
         map[y].resize(width);
-        lightMap[y].resize(width);
+        staticLightMap[y].resize(width);
+        dynamicLightMap[y].resize(width);
+        seenMap[y].resize(width);
         for (int x = 0; x < width; x++)
         {
             if (x == 0 || y == 0 || x == width - 1 || y == height - 1)
             {
                 map[y][x] = std::make_shared<BedrockTile>(x, y, levelIndex);
-                lightMap[y][x] = LightType::STATIC;
+                staticLightMap[y][x] = LightType::STATIC;
+                seenMap[y][x] = true;
             } else
             {
                 map[y][x] = std::make_shared<WallTile>(x, y, levelIndex);
-                lightMap[y][x] = LightType::NONE;
+                staticLightMap[y][x] = LightType::NONE;
             }
         }
     }
@@ -42,7 +47,9 @@ Map::Map(const Map &generatedMap)
     this->height = generatedMap.height;
     this->leaves = generatedMap.leaves;
     this->rooms = generatedMap.rooms;
-    this->lightMap = generatedMap.lightMap;
+    this->dynamicLightMap = generatedMap.dynamicLightMap;
+    this->staticLightMap = generatedMap.staticLightMap;
+    this->seenMap = generatedMap.seenMap;
 }
 
 Map::Map(std::string& pathToInitFile) : width(0), height(0)
@@ -244,21 +251,7 @@ std::shared_ptr<Tile> Map::getTile(const int x, const int y) const {
     return map[y][x];
 }
 
-LightType Map::getLightType(const int x, const int y) const
-{
-    if (x >= 0 && x < width && y >= 0 && y < height)
-        return lightMap[y][x];
-    else
-        throw std::runtime_error("Could not get light type at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
-}
 
-void Map::setLightMap(int x, int y, LightType lightType)
-{
-    if (x >= 0 && x < width && y >= 0 && y < height)
-        lightMap[y][x] = lightType;
-    else
-        throw std::runtime_error("Could not set light type at (" + std::to_string(x) + ", " + std::to_string(y) + ")\n");
-}
 
 Position Map::getPositionNearStair()
 {
@@ -290,6 +283,43 @@ Position Map::getPositionNearStair()
 
     return {-1, -1};
 }
+
+void Map::setStaticLight(int x, int y, LightType lightType)
+{
+    if (isInsideMap(x, y)) {
+        staticLightMap[y][x] = lightType;
+    }
+}
+
+void Map::setDynamicLight(int x, int y, LightType lightType)
+{
+    if (isInsideMap(x, y)) {
+        dynamicLightMap[y][x] = lightType;
+    }
+}
+
+LightType Map::getStaticLight(int x, int y) const
+{
+    return isInsideMap(x, y) ? staticLightMap[y][x] : LightType::NONE;
+}
+
+LightType Map::getDynamicLight(int x, int y) const
+{
+    return isInsideMap(x, y) ? dynamicLightMap[y][x] : LightType::NONE;
+}
+
+void Map::markAsSeen(int x, int y)
+{
+    if (isInsideMap(x, y)) {
+        seenMap[y][x] = true;
+    }
+}
+
+bool Map::isSeen(int x, int y) const
+{
+    return isInsideMap(x, y) ? seenMap[y][x] : false;
+}
+
 
 
 void Map::initMap(std::string& pathToInitFile)

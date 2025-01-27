@@ -47,6 +47,31 @@ std::string EventManager::formatInteractEvents() const
 	return oss.str();
 }
 
+std::string EventManager::formatCombatEvents() const
+{
+	std::ostringstream oss;
+	std::for_each(events.begin(), events.end(), [&oss](const Event& event)
+	{
+		if (event.type == EventType::Combat) {
+			oss << event.message << "\n";
+		}
+	});
+
+	return oss.str();
+}
+
+std::string EventManager::formatSystemEvents() const
+{
+	std::ostringstream oss;
+	std::for_each(events.begin(), events.end(), [&oss](const Event& event)
+	{
+		if (event.type == EventType::System) {
+			oss << event.message << " ";
+		}
+	});
+
+	return oss.str();
+}
 
 void EventManager::clearEvents()
 {

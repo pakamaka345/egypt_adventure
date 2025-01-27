@@ -22,7 +22,9 @@ class Map
 {
 protected:
     std::vector<std::vector<std::shared_ptr<Tile>>> map;
-    std::vector<std::vector<LightType>> lightMap;
+    std::vector<std::vector<LightType>> staticLightMap;
+    std::vector<std::vector<LightType>> dynamicLightMap;
+    std::vector<std::vector<bool>> seenMap;
     std::vector<std::shared_ptr<RoomGenerator::Room>> rooms;
     std::vector<std::shared_ptr<BSPNode>> leaves;
     int width;
@@ -63,14 +65,18 @@ public:
     void setLeaves(std::vector<std::shared_ptr<BSPNode>> leaves) { this->leaves = std::move(leaves); }
     std::vector<std::shared_ptr<BSPNode>>& getLeaves() { return leaves; }
 
-    void setLightMap(int x, int y, LightType lightType);
-    [[nodiscard]] LightType getLightType(int x, int y) const;
-    std::vector<std::vector<LightType>>& getLightMap() { return lightMap; }
-
     Position getPositionNearStair();
 
     [[nodiscard]] int getWidth() const { return width; }
     [[nodiscard]] int getHeight() const { return height; }
+
+    void setStaticLight(int x, int y, LightType lightType);
+    void setDynamicLight(int x, int y, LightType lightType);
+    LightType getStaticLight(int x, int y) const;
+    LightType getDynamicLight(int x, int y) const;
+
+    void markAsSeen(int x, int y);
+    bool isSeen(int x, int y) const;
 
 private:
     void initMap(std::string& pathToInitFile);

@@ -19,16 +19,17 @@ void StairsDecorator::decorate(Map& map)
 		Position stair1 = firstRoom->getCenter();
 		Position start = map.getRandomFreePosition(stair1.x, stair1.y, 3);
 		if (start.x != -1 && start.y != -1) {
-			map.setTile(std::make_shared<StairTile>(StairType::UP, start.x, start.y, levelIndex));
+			map.setTile(std::make_shared<StairTile>(StairType::DOWN, start.x, start.y, levelIndex));
 		}
 	}
 
-	if (levelIndex != 2) {
+	if (levelIndex != 3) {
 		auto& lastRoom = map.getRooms().back();
 		Position stair2 = lastRoom->getCenter();
 		Position end = map.getRandomFreePosition(stair2.x, stair2.y, 3);
 		if (end.x != -1 && end.y != -1) {
-			map.setTile(std::make_shared<StairTile>(StairType::DOWN, end.x, end.y, levelIndex));
+			map.setTile(std::make_shared<StairTile>(StairType::UP, end.x, end.y, levelIndex));
+
 		}
 	}
 }

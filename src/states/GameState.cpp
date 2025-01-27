@@ -57,8 +57,12 @@ void GameState::nextLevel(const int newLevelIndex) {
 
     currentLevel = levels[newLevelIndex];
     levelIndex = newLevelIndex;
+    EventManager::getInstance().addEvent(
+        EventType::System,
+        "You have entered level " + std::to_string(levelIndex) + "!");
     if (player) {
         player->setPos(currentLevel->getStartPosition());
+        player->setZ(levelIndex);
         player->createLight(player->getX(), player->getY(), getInstance());
         currentLevel->addEntity(player);
         currentLevel->getMap()->placeEntity(player->getX(), player->getY(), player);
@@ -127,11 +131,11 @@ std::shared_ptr<LevelState> GameState::createLevel(const int levelIndex)
 {
     std::shared_ptr<LevelState> level;
     if (levelIndex == 1) {
-        level = MapGenerator::GenerateMap(levelIndex, 200, 200, 20, 25, 10);
+        level = MapGenerator::GenerateMap(levelIndex, 70, 70, 10, 15, 3);
     } else if (levelIndex == 2) {
-        level = MapGenerator::GenerateMap(levelIndex, 150, 150, 25, 35, 20);
+        level = MapGenerator::GenerateMap(levelIndex, 70, 70, 10, 15, 3);
     } else if (levelIndex == 3) {
-        level = MapGenerator::GenerateMap(levelIndex, 100, 100, 20, 30, 15);
+        level = MapGenerator::GenerateMap(levelIndex, 70, 70, 10, 15, 3);
     } else {
         throw std::runtime_error("Invalid level index");
     }

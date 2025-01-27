@@ -38,13 +38,15 @@ public:
 
 	std::vector<Event> getEvents(EventType type) const;
 	std::string formatInteractEvents() const;
+	std::string formatCombatEvents() const;
+	std::string formatSystemEvents() const;
 
 	void clearEvents();
 
 	void subscribe(const std::function<void(EventType, const std::string&)>& observer);
 
 private:
-	EventManager(size_t maxEvents = 5) : maxEvents(maxEvents) {}
+	EventManager(const size_t maxEvents = 15) : maxEvents(maxEvents) {}
 
 	void notifyObservers(EventType type, const std::string& message);
 

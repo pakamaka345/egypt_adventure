@@ -129,8 +129,8 @@ void Character::deleteLight(const int x, const int y, GameState& gameState) cons
     for (int nx = x - visibilityRange; nx <= x + visibilityRange; nx++) {
         for (int ny = y - visibilityRange; ny <= y + visibilityRange; ny++) {
             if (map->isInsideMap(nx, ny)) {
-                if (map->getLightType(nx, ny) == LightType::DYNAMIC) {
-                    map->setLightMap(nx, ny, LightType::NONE);
+                if (map->getDynamicLight(nx, ny) != LightType::NONE) {
+                    map->setDynamicLight(nx, ny, LightType::NONE);
                 }
             }
         }
@@ -162,23 +162,26 @@ void Character::createLight(const int x, const int y, GameState& gameState) cons
                 if (blocked) return false;
 
                 if (map->getTile(tx, ty)->getTileType() == TileType::WALL) {
-                    if (map->getLightType(tx, ty) == LightType::NONE) {
-                        map->setLightMap(tx, ty, LightType::DYNAMIC);
+                    if (map->getDynamicLight(tx, ty) == LightType::NONE) {
+                        map->setDynamicLight(tx, ty, LightType::DYNAMIC);
+                        map->markAsSeen(tx, ty);
                     }
                     blocked = true;
                     return false;
                 }
 
-                if (map->getLightType(tx, ty) == LightType::NONE) {
-                    map->setLightMap(tx, ty, LightType::DYNAMIC);
+                if (map->getDynamicLight(tx, ty) == LightType::NONE) {
+                    map->setDynamicLight(tx, ty, LightType::DYNAMIC);
+                    map->markAsSeen(tx, ty);
                 }
                 return true;
             });
         }
     }
 
-    if (map->getLightType(x, y) == LightType::NONE) {
-        map->setLightMap(x, y, LightType::DYNAMIC);
+    if (map->getDynamicLight(x, y) == LightType::NONE) {
+        map->setDynamicLight(x, y, LightType::DYNAMIC);
+        map->markAsSeen(x, y);
     }
 }
 

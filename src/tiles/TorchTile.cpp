@@ -32,12 +32,12 @@ void TorchTile::onInteract(GameState& gameState)
 				if (blocked) return false;
 
 				if (map->getTile(x, y)->getTileType() == TileType::WALL) {
-					map->setLightMap(x, y, LightType::STATIC);
+					map->setStaticLight(x, y, LightType::STATIC);
 					blocked = true;
 					return false;
 				}
 
-				map->setLightMap(x, y, LightType::STATIC);
+				map->setStaticLight(x, y, LightType::STATIC);
 				return true;
 			});
 		}

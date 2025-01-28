@@ -10,4 +10,7 @@ public:
     ~ThrowableItem() override = default;
 
     bool canBeUsedOnEnemies() const override;
+
+    int getRadius() const { return radius; }
+    void setRadius(int radius) { this->radius = radius; }
 };

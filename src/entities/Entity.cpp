@@ -20,7 +20,7 @@ constexpr float BulletDamageMultiplier = 1.2f;
 Entity::Entity(std::string  name, int attackRange,  float physicalDamage, float magicalDamage, float health, float defense, float priority,
                float dodgeChance, int x, int y, int z, char symbol)
                : name(std::move(name)), attackRange(attackRange), physicalDamage(physicalDamage), magicalDamage(magicalDamage), health(health), maxHealth(health), defense(defense), priority(priority), cooldown(0),
-               dodgeChance(dodgeChance), aiComponent(nullptr), GameObject(x, y, z, symbol)
+               dodgeChance(dodgeChance), aiComponent(nullptr), GameObject(x, y, z, symbol), eventManager(EventManager::getInstance())
 {
 }
 
@@ -28,22 +28,19 @@ Entity::Entity(std::string  name, int attackRange,  float physicalDamage, float 
 
 void Entity::addAmulet(const std::shared_ptr<Amulet>& amulet) {
     if (activeAmulets.size() >= 5) {
-        throw std::runtime_error("All amulet slots are already occupied");
+        eventManager.addEvent(EventType::System, "All amulet slots are full");
     }
     activeAmulets.push_back(amulet);
     amulet->applyAmuletEffect(*this);
 }
 
 void Entity::removeAmulet(const std::shared_ptr<Amulet>& amulet) {
-    if (std::find(activeAmulets.begin(), activeAmulets.end(), amulet) == activeAmulets.end())
-        throw std::invalid_argument("Amulet not found in active amulets");
-
     auto it = std::remove(activeAmulets.begin(), activeAmulets.end(), amulet);
     if (it != activeAmulets.end()) {
         activeAmulets.erase(it);
         amulet->removeAmuletEffect(*this);
     } else {
-        throw std::runtime_error("Amulet not found in active amulets");
+        eventManager.addEvent(EventType::System, "Amulet not found in active amulets");
     }
 }
 

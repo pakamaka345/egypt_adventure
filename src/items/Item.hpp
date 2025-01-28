@@ -23,4 +23,5 @@ public:
 
     std::string& getName();
     std::string& getDescription();
+    virtual std::string getSpecifications() = 0;
 };

@@ -9,7 +9,7 @@
 #include "modifiers/HealthModifier.hpp"
 
 HealthAmulet::HealthAmulet(float maxHealth, int levelIndex)
-	: Amulet("Amulet of Health", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, levelIndex, 'h'), m_maxHeath(maxHealth)
+	: Amulet("amulet of health", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, levelIndex, 'h'), m_maxHeath(maxHealth)
 {
 }
 
@@ -27,5 +27,12 @@ void HealthAmulet::removeAmuletEffect(Entity& target)
 		target.removeModifier(m_healthModifier);
 	}
 }
+
+std::string HealthAmulet::getSpecifications()
+{
+	std::string specs = "Max health: " + std::to_string(m_maxHeath);
+	return specs;
+}
+
 
 

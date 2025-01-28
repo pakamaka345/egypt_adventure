@@ -4,6 +4,7 @@
 #include <map/Map.hpp>
 #include <ai/AIComponent.hpp>
 #include <dice/DiceRoll.hpp>
+#include <utils/EventManager.hpp>
 
 Scarab::Scarab(const std::string &name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,
                float priority, float dodgeChance, int x, int y, int z, char symbol)
@@ -21,18 +22,28 @@ void Scarab::attack(Entity &target) {
             float physicalDamage = (getPhysicalDamage() * float(diceRoll) / 4.0f) * (1.0f - target.getDefense()) * groupAttackBonus;
             target.takeDamage(physicalDamage, getMagicalDamage());
             resetCooldown(this->getPriority());
+            eventManager.addEvent(EventType::Combat,
+                getName() + " attacks " + target.getName() + " for " + std::to_string(physicalDamage) + " physical damage and " + std::to_string(magicalDamage) + " magical damage"
+                );
         }
     } else {
-        throw std::runtime_error("Scarab is on cooldown");
+        eventManager.addEvent(EventType::Combat, getName() + " is still on cooldown");
     }
 }
 
 void Scarab::takeDamage(float physicalDamage, float magicalDamage) {
     health = std::max(0.0f, (health - physicalDamage - magicalDamage));
+
+    eventManager.addEvent(EventType::Combat,
+        getName() + " takes " + std::to_string(physicalDamage) + " physical damage" +
+        " and " + std::to_string(magicalDamage) + " magical damage" +
+        " left with " + std::to_string(health) + " hp"
+        );
 }
 
 void Scarab::heal(float amount) {
     health = std::min(getMaxHealth(), (health + amount));
+    eventManager.addEvent(EventType::Combat, getName() + " heals for " + std::to_string(amount) + " hp");
 }
 
 void Scarab::move(int dx, int dy) {
@@ -62,14 +73,18 @@ void Scarab::findNearestScarabs(const Map& map)
     for (int i = 0; i < scarabs.size(); i++) {
         this->applyEffects(std::make_shared<GroupAttackBonus>(1, 1.1f));
     }
+
+    eventManager.addEvent(EventType::Combat, getName() + " is now in a group with " + std::to_string(scarabs.size()) + " other scarabs. Damage increased by " + std::to_string(groupAttackBonus));
 }
 
 void Scarab::onDeath(GameState& gameState)
 {
     Entity::onDeath(gameState);
 
-    chanceToDropAmulets(8, DiceRoll(), gameState.getLevels()[getZ()], 1);
-    chanceToDropPotions(4, DiceRoll(), gameState.getLevels()[getZ()], 1);
+    eventManager.addEvent(EventType::Combat, getName() + " dies");
+
+    chanceToDropAmulets(8, DiceRoll(), gameState.getLevels()[getZ()], getZ());
+    chanceToDropPotions(4, DiceRoll(), gameState.getLevels()[getZ()], getZ());
 }
 
 

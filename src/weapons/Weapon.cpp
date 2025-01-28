@@ -7,7 +7,7 @@
 #include <dice/DiceRoll.hpp>
 
 Weapon::Weapon(std::string name, int magazineSize)
-    : name(std::move(name)), magazineSize(magazineSize)
+    : name(std::move(name)), magazineSize(magazineSize), eventManager(EventManager::getInstance())
 {
 }
 
@@ -15,14 +15,14 @@ void Weapon::addBullet(Bullet &bullet) {
     if (magazine.size() < magazineSize) {
         magazine.push_back(std::make_shared<Bullet>(bullet));
     } else {
-        throw std::runtime_error("Magazine is full");
+        eventManager.addEvent(EventType::System, "Magazine is full!");
     }
 }
 
 // Damage will be calculated in Character class (bad design)
 void Weapon::shoot() {
     if (magazine.empty()) {
-        throw std::runtime_error("No bullets in the magazine!");
+        eventManager.addEvent(EventType::System, "Magazine is empty!");
     }
 
     magazine.pop_back();

@@ -31,7 +31,7 @@ void Inventory::useItem(const std::string& itemName, const std::shared_ptr<Entit
         try {
             auto item = items[itemName].item;
             if (item->canBeUsedOnEnemies() && target == getCharacter()) {
-                //TODO change to EventManager
+                eventManager.addEvent(EventType::System, "You can't use this item on yourself");
                 return;
             }
 
@@ -41,16 +41,15 @@ void Inventory::useItem(const std::string& itemName, const std::shared_ptr<Entit
                 removeItem(itemName);
             }
         } catch (std::invalid_argument& e) {
-            throw std::runtime_error("Failed to use item: " + std::string(e.what()));
-            //TODO change to EventManager
+            eventManager.addEvent(EventType::System, "Failed to use item: " + std::string(e.what()));
         }
     } else {
+        eventManager.addEvent(EventType::System, "Item not found in inventory to use");
         throw std::invalid_argument("Item not found in inventory to use");
-        //TODO change to EventManager
     }
 }
 
-std::optional<std::shared_ptr<Item>> Inventory::getItem(const std::string& itemName) {
+std::optional<std::shared_ptr<Item>> Inventory::getItem(const std::string& itemName) const {
     auto it = items.find(itemName);
     if (it != items.end()) {
         return it->second.item;

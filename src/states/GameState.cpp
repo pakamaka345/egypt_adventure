@@ -78,6 +78,9 @@ void GameState::previousLevel(const int newLevelIndex)
     levelIndex = newLevelIndex;
     player->setPos(currentLevel->getStartPosition());
     player->createLight(player->getX(), player->getY(), getInstance());
+    EventManager::getInstance().addEvent(
+        EventType::System,
+        "You have entered level " + std::to_string(levelIndex) + "!");
 }
 
 

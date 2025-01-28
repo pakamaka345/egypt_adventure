@@ -1,7 +1,6 @@
 #include "entities/Skeleton.hpp"
-
 #include <states/GameState.hpp>
-
+#include <utils/EventManager.hpp>
 #include "dice/DiceRoll.hpp"
 #include "ai/AIComponent.hpp"
 
@@ -34,23 +33,42 @@ void Skeleton::attack(Entity &target) {
             target.takeDamage(physicalDamage, getMagicalDamage());
             this->takeDamage(0.1f * getHealth(), 0);
             resetCooldown(this->getPriority());
+            eventManager.addEvent(EventType::Combat,
+                getName() + " attacks " + target.getName() + " for " + std::to_string(physicalDamage) + " physical damage and " + std::to_string(magicalDamage) + " magical damage"
+                );
+
+            eventManager.addEvent(EventType::Combat,
+                getName() + " kicked himself for " + std::to_string(0.1f * getHealth()) + " damage due to the attack"
+                );
         }
     }  else {
-        throw std::runtime_error("Skeleton is on cooldown");
+        eventManager.addEvent(EventType::Combat, getName() + " is still on cooldown");
     }
 }
 
 void Skeleton::takeDamage(float physicalDamage, float magicalDamage) {
     health = std::max(0.0f, health - physicalDamage - (magicalDamage * 0.7f));
 
+    eventManager.addEvent(EventType::Combat,
+        getName() + " takes " + std::to_string(physicalDamage) + " physical damage" +
+        " and " + std::to_string(magicalDamage * 0.7) + " magical damage" +
+        " left with " + std::to_string(health) + " hp"
+        );
+
     if (health == 0 && resurrection > 0) {
         health = 0.5f * getMaxHealth();
         resurrection--;
+
+        eventManager.addEvent(EventType::Combat, getName() + " resurrected with 50% health");
     }
 }
 
 void Skeleton::heal(float amount) {
     health = std::max(0.0f, health + (amount * -1.0f));
+
+    eventManager.addEvent(EventType::Combat,
+        getName() + " tries to heal himself for " + std::to_string(amount) + " but he is skeleton so he takes damage"
+        );
 }
 
 void Skeleton::move(int dx, int dy) {
@@ -65,10 +83,11 @@ void Skeleton::onDeath(GameState& gameState)
 {
     Entity::onDeath(gameState);
 
-    chanceToDropGrenades(6, DiceRoll(), gameState.getLevels()[getZ()], 1);
-    chanceToDropAmulets(5, DiceRoll(), gameState.getLevels()[getZ()], 1);
-    chanceToDropGrenades(8, DiceRoll(), gameState.getLevels()[getZ()], 2);
-    chanceToDropPotions(3, DiceRoll(), gameState.getLevels()[getZ()], 1);
+    eventManager.addEvent(EventType::Combat, getName() + " dies");
+
+    chanceToDropGrenades(7, DiceRoll(), gameState.getLevels()[getZ()], getZ());
+    chanceToDropAmulets(5, DiceRoll(), gameState.getLevels()[getZ()], getZ());
+    chanceToDropPotions(3, DiceRoll(), gameState.getLevels()[getZ()], getZ());
 }
 
 

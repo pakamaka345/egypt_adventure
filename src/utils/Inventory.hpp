@@ -5,6 +5,8 @@
 #include <memory>
 #include <optional>
 
+#include "EventManager.hpp"
+
 class Item;
 class Entity;
 
@@ -18,16 +20,17 @@ private:
 
 private:
     std::unordered_map<std::string, InventoryItem> items;
+    EventManager& eventManager;
 
 public:
-    Inventory() = default;
+    Inventory() : eventManager(EventManager::getInstance()) {}
     ~Inventory() = default;
 
     void addItem(std::shared_ptr<Item> item);
     void removeItem(const std::string& itemName);
     void useItem(const std::string& itemName, const std::shared_ptr<Entity>& target = getCharacter());
 
-    std::optional<std::shared_ptr<Item>> getItem(const std::string& itemName);
+    std::optional<std::shared_ptr<Item>> getItem(const std::string& itemName) const;
     int getItemCount(const std::string& itemName);
     std::unordered_map<std::string, InventoryItem> getItems() const { return items; }
     int getItemsCount() const;

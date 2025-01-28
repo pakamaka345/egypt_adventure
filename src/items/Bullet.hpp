@@ -29,4 +29,5 @@ public:
 
     float getPhysicalDamage() const { return physicalDamage; }
     float getMagicalDamage() const { return magicalDamage; }
+    std::string getSpecifications() override;
 };

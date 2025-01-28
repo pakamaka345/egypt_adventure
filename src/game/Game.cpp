@@ -29,16 +29,22 @@ void Game::run()
 	while (true) {
 		// TODO не забути зробити всі runtime_error як EventManager
 		try {
-			gameView.render(gameState);
+			if (gameState.getIsInventoryOpen()) {
+				gameView.renderInventory(gameState);
+			} else if (gameState.getIsActiveAmuletsMenuOpen()) {
+				gameView.renderAmuletMenu(gameState);
+			} else {
+				gameView.render(gameState);
 
-			if (gameState.getIsGameOver()) {
-				break;
+				if (gameState.getIsGameOver()) {
+					break;
+				}
+
+				EventManager::getInstance().clearEvents();
+
+				auto command = inputHandler.handleInput();
+				gameController.executeCommand(command);
 			}
-
-			EventManager::getInstance().clearEvents();
-
-			auto command = inputHandler.handleInput();
-			gameController.executeCommand(command);
 			gameController.update();
 		} catch (const std::exception& e) {
 			std::cerr << e.what() << std::endl;

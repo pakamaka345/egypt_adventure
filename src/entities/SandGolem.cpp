@@ -1,7 +1,7 @@
 #include "entities/SandGolem.hpp"
 
 #include <ai/SandGolemAIComponent.hpp>
-
+#include "utils/EventManager.hpp"
 #include "dice/DiceRoll.hpp"
 #include "effects/EffectManager.hpp"
 #include "effects/Effect.hpp"
@@ -29,22 +29,33 @@ void SandGolem::attack(Entity &target) {
             float magicalDamage = (getMagicalDamage() * static_cast<float>(diceRoll) / 4.0f) * (1.0f - target.getDefense());
             target.takeDamage(physicalDamage, magicalDamage);
             resetCooldown(this->getPriority());
+            eventManager.addEvent(EventType::Combat,
+                getName() + " attacks " + target.getName() + " for " + std::to_string(physicalDamage) + " physical damage and " + std::to_string(magicalDamage) + " magical damage"
+                );
         }
     } else {
-        throw std::runtime_error("Sand golem is on cooldown");
+        eventManager.addEvent(EventType::Combat, getName() + " is still on cooldown");
     }
 }
 
 void SandGolem::takeDamage(float physicalDamage, float magicalDamage) {
     if (shieldHealth > 0) {
         shieldHealth = std::max(0.0f, shieldHealth - physicalDamage - magicalDamage);
+        eventManager.addEvent(EventType::Combat, getName() + " shield absorbs " + std::to_string(physicalDamage) + " physical damage and " + std::to_string(magicalDamage) + " magical damage. Shield health left: " + std::to_string(shieldHealth));
         return;
     }
     health = std::max(0.0f, health - physicalDamage - magicalDamage);
+    eventManager.addEvent(EventType::Combat,
+        getName() + " takes " + std::to_string(physicalDamage) + " physical damage" +
+        " and " + std::to_string(magicalDamage) + " magical damage" +
+        " left with " + std::to_string(health) + " hp"
+        );
+
 }
 
 void SandGolem::heal(float amount) {
     health = std::min(getMaxHealth(), health + amount);
+    eventManager.addEvent(EventType::Combat, getName() + " heals for " + std::to_string(amount) + " hp");
 }
 
 void SandGolem::move(int dx, int dy) {
@@ -62,11 +73,11 @@ void SandGolem::onDeath(GameState& gameState)
 {
     Entity::onDeath(gameState);
 
-    chanceToDropGrenades(5, DiceRoll(), gameState.getLevels()[getZ()], 2);
-    chanceToDropGrenades(6, DiceRoll(), gameState.getLevels()[getZ()], 3);
-    chanceToDropAmulets(6, DiceRoll(), gameState.getLevels()[getZ()], 3);
-    chanceToDropPotions(1, DiceRoll(), gameState.getLevels()[getZ()], 2);
-    chanceToDropPotions(4, DiceRoll(), gameState.getLevels()[getZ()], 3);
+    eventManager.addEvent(EventType::Combat, getName() + " dies");
+
+    chanceToDropGrenades(6, DiceRoll(), gameState.getLevels()[getZ()], getZ());
+    chanceToDropAmulets(6, DiceRoll(), gameState.getLevels()[getZ()], getZ());
+    chanceToDropPotions(4, DiceRoll(), gameState.getLevels()[getZ()], getZ());
 }
 
 
@@ -81,7 +92,9 @@ void SandGolem::activateSandShield() {
         }
     }
 
-    this->applyEffects(std::make_shared<SandShield>(10, 50));
+    eventManager.addEvent(EventType::Combat, getName() + " activates Sand Shield");
+
+    this->applyEffects(std::make_shared<SandShield>(10, 100));
 }
 
 void SandGolem::coverWithSand(Map &map, int radius) {
@@ -111,6 +124,7 @@ void SandGolem::healOnSand(Map &map) {
         if (sandTimer >= 2) {
             float shieldAmount = DiceRoll().randomNumber(5, 15);
             shieldHealth = std::min(maxShieldHealth, shieldHealth + shieldAmount);
+            eventManager.addEvent(EventType::Combat, getName() + " heals for " + std::to_string(shieldAmount) + " shield health. Current shield health: " + std::to_string(shieldHealth));
             sandTimer = 0;
         }
     }

@@ -14,6 +14,8 @@ public:
 	Grenade(float magicalDamage, float physicalDamage, int radius, int levelIndex);
 
 	void use(Entity& target) override;
+
+	std::string getSpecifications() override;
 };
 
 

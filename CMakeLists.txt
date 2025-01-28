@@ -13,7 +13,11 @@ add_library(EgyptAdventureLib ${SOURCES}
         src/utils/EventManager.cpp
         src/utils/EventManager.hpp
         src/commands/InteractCommand.cpp
-        src/commands/InteractCommand.hpp)
+        src/commands/InteractCommand.hpp
+        src/commands/InventoryCommand.cpp
+        src/commands/InventoryCommand.hpp
+        src/commands/AmuletsMenuCommand.cpp
+        src/commands/AmuletsMenuCommand.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

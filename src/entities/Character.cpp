@@ -30,7 +30,7 @@ void Character::reloadRevolver() {
             inventory.useItem("bullet");
         }
     } catch (const std::invalid_argument& e) {
-        throw std::runtime_error("No bullets in inventory");
+        eventManager.addEvent(EventType::Combat, "No bullets in inventory");
     }
 }
 
@@ -52,13 +52,12 @@ void Character::attack(Entity &target) {
             if (revolver->getAmmo() > 0)
                 revolver->shoot();
 
-            float physicalDamage = (getPhysicalDamage() * static_cast<float>(diceRoll) / 4.0f) * (1 - target.getDefense());
+            float physicalDamage = getPhysicalDamage() * static_cast<float>(diceRoll) / 4.0f * (1 - target.getDefense());
             float magicalDamage = getMagicalDamage() * static_cast<float>(diceRoll) / 4.0f * (1 - target.getDefense());
 
             target.takeDamage(physicalDamage, magicalDamage);
             resetCooldown(this->getPriority());
         }
-
     } else {
         //throw std::runtime_error("Character is on cooldown");
     }

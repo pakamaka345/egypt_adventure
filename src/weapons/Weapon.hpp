@@ -3,6 +3,8 @@
 #include <vector>
 #include <memory>
 
+#include "utils/EventManager.hpp"
+
 class Bullet;
 class Entity;
 
@@ -16,6 +18,7 @@ protected:
     std::string name;
     std::vector<std::shared_ptr<Bullet>> magazine;
     int magazineSize;
+    EventManager& eventManager;
 
 public:
     Weapon(std::string name, int magazineSize);

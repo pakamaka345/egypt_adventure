@@ -7,10 +7,12 @@
 #include <commands/MoveCommand.hpp>
 #include <states/GameState.hpp>
 
+#include "commands/AmuletsMenuCommand.hpp"
 #include "commands/AttackCommand.hpp"
 #include "commands/ExitCommand.hpp"
 #include "commands/InteractCommand.hpp"
 #include "commands/ReloadCommand.hpp"
+#include "commands/InventoryCommand.hpp"
 #include "entities/Character.hpp"
 
 #ifdef _WIN32
@@ -38,6 +40,8 @@ std::shared_ptr<Command> InputHandler::handleInput()
 		case 'e': return std::make_shared<InteractCommand>();
 		case 'r': return std::make_shared<ReloadCommand>();
 		case 'f': return attackCommand();
+		case 'i': return std::make_shared<InventoryCommand>();
+		case 'k': return std::make_shared<AmuletsMenuCommand>();
 		case 27: return std::make_shared<ExitCommand>();
 		default: return nullptr;
 	}

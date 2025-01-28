@@ -21,5 +21,7 @@ public:
 
 	void applyAmuletEffect(Entity& target) override;
 	void removeAmuletEffect(Entity& target) override;
+
+	std::string getSpecifications() override;
 };
 

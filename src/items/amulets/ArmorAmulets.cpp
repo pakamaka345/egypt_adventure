@@ -8,7 +8,7 @@
 #include <modifiers/DodgeChanceModifier.hpp>
 
 ArmorAmulets::ArmorAmulets(float defense, float dodgeChance, int levelIndex)
-	: Amulet("Amulet of Defense", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, levelIndex, 'd'), m_defense(defense), m_dodgeChance(dodgeChance)
+	: Amulet("amulet of defense", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, levelIndex, 'd'), m_defense(defense), m_dodgeChance(dodgeChance)
 {
 }
 
@@ -33,4 +33,12 @@ void ArmorAmulets::removeAmuletEffect(Entity& target)
 		target.removeModifier(m_dodgeChanceModifier);
 	}
 }
+
+std::string ArmorAmulets::getSpecifications()
+{
+	std::string specs = "Defense: " + std::to_string(m_defense) + "\n";
+	specs += "Dodge chance: " + std::to_string(m_dodgeChance) + "\n";
+	return specs;
+}
+
 

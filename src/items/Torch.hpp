@@ -20,4 +20,6 @@ public:
 	int decreaseDuration() { return duration--; }
 
 	int getDuration() const { return duration; }
+
+	std::string getSpecifications() override;
 };

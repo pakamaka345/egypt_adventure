@@ -16,3 +16,11 @@ void Torch::use(Entity& target)
 	}
 }
 
+std::string Torch::getSpecifications()
+{
+	std::string specs = "Radius: " + std::to_string(radius) + "\n";
+	specs += "Duration: " + std::to_string(duration) + "\n";
+	return specs;
+}
+
+

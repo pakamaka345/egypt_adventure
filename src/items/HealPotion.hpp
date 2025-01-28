@@ -20,4 +20,6 @@ public:
     ~HealPotion() override = default;
 
     void use(Entity& target) override;
+
+    std::string getSpecifications() override;
 };

@@ -31,3 +31,10 @@ void Bullet::decreasePhysicalDamage(float value) {
 void Bullet::decreaseMagicalDamage(float value) {
     magicalDamage -= value;
 }
+
+std::string Bullet::getSpecifications()
+{
+    std::string specs = "Physical damage: " + std::to_string(physicalDamage) + "\n";
+    specs += "Magical damage: " + std::to_string(magicalDamage) + "\n";
+    return specs;
+}

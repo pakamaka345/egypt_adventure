@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include "utils/GameObject.hpp"
 #include "effects/EffectManager.hpp"
+#include "utils/EventManager.hpp"
 
 class Item;
 class Amulet;
@@ -49,6 +50,8 @@ protected:
     ModifierList activeModifiers;
     EffectManager effectManager;
     std::shared_ptr<AIComponent> aiComponent;
+
+    EventManager& eventManager;
 
 public:
     Entity(std::string  name, int attackRange, float physicalDamage, float magicalDamage, float health, float defense,

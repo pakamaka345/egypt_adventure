@@ -20,6 +20,8 @@ private:
     PriorityQueue queue;
     int levelIndex;
     bool isGameOver;
+    bool isInventoryOpen;
+    bool isActiveAmuletsMenuOpen;
 
     GameState();
 
@@ -48,6 +50,11 @@ public:
     void update();
 
     void handleInteraction();
+
+    void setIsInventoryOpen(const bool newIsInventoryOpen) { isInventoryOpen = newIsInventoryOpen; }
+    [[nodiscard]] bool getIsInventoryOpen() const { return isInventoryOpen; }
+    void setIsActiveAmuletsMenuOpen(const bool newIsActiveAmuletsMenuOpen) { isActiveAmuletsMenuOpen = newIsActiveAmuletsMenuOpen; }
+    [[nodiscard]] bool getIsActiveAmuletsMenuOpen() const { return isActiveAmuletsMenuOpen; }
 
 private:
     std::shared_ptr<LevelState> createLevel(int levelIndex);

@@ -8,7 +8,7 @@
 #include <entities/Entity.hpp>
 
 DamageAmulet::DamageAmulet(float physicalDamage, float magicalDamage, int levelIndex)
-	: Amulet("Amulet of Strength", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, levelIndex, 's'), m_physicalDamage(physicalDamage), m_magicalDamage(magicalDamage)
+	: Amulet("amulet of strength", "Magical amulets. They were a gift for a pharaon. He had never worn them.", 0, 0, levelIndex, 's'), m_physicalDamage(physicalDamage), m_magicalDamage(magicalDamage)
 {
 }
 
@@ -34,4 +34,10 @@ void DamageAmulet::removeAmuletEffect(Entity& target)
 	}
 }
 
+
+std::string DamageAmulet::getSpecifications()
+{
+	std::string specs = "Physical damage: " + std::to_string(m_physicalDamage) + "\nMagical damage: " + std::to_string(m_magicalDamage) + "\n";
+	return specs;
+}
 

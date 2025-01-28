@@ -1,7 +1,7 @@
 #include "entities/Phantom.hpp"
 
 #include <states/GameState.hpp>
-
+#include <utils/EventManager.hpp>
 #include "effects/FearEffect.hpp"
 #include "dice/DiceRoll.hpp"
 #include "ai/AIComponent.hpp"
@@ -27,20 +27,36 @@ void Phantom::attack(Entity &target) {
             if (diceRoll <= 2) {
                 auto fearEffect = std::make_shared<FearEffect>(3, 1.5f);
                 target.applyEffects(fearEffect);
+
+                eventManager.addEvent(EventType::Combat,
+                    getName() + " inflicted fear on " + target.getName() + " for 3 turns"
+                    );
             }
             resetCooldown(this->getPriority());
+            eventManager.addEvent(EventType::Combat,
+                getName() + " attacks " + target.getName() + " for " + std::to_string(physicalDamage) + " physical damage and " + std::to_string(magicalDamage) + " magical damage"
+                );
         }
     } else {
-        throw std::runtime_error("Pharaon's phantom is on cooldown");
+        eventManager.addEvent(EventType::Combat, getName() + " is still on cooldown");
     }
 }
 
 void Phantom::takeDamage(float physicalDamage, float magicalDamage) {
     health = std::max(0.0f, health - (physicalDamage * 0.1f) - (magicalDamage * 1.3f));
+
+    eventManager.addEvent(EventType::Combat,
+        getName() + " takes " + std::to_string(physicalDamage * 0.1) + " physical damage" +
+        " and " + std::to_string(magicalDamage * 1.3) + " magical damage" +
+        " left with " + std::to_string(health) + " hp"
+        );
 }
 
 void Phantom::heal(float amount) {
     health = std::min(getMaxHealth(), health + amount);
+
+    auto& eventManager = EventManager::getInstance();
+    eventManager.addEvent(EventType::Combat, getName() + " heals for " + std::to_string(amount) + " hp");
 }
 
 void Phantom::move(int dx, int dy) {
@@ -55,12 +71,11 @@ void Phantom::onDeath(GameState& gameState)
 {
     Entity::onDeath(gameState);
 
-    chanceToDropAmulets(5, DiceRoll(), gameState.getLevels()[getZ()], 2);
-    chanceToDropAmulets(7, DiceRoll(), gameState.getLevels()[getZ()], 3);
-    chanceToDropPotions(2, DiceRoll(), gameState.getLevels()[getZ()], 2);
-    chanceToDropPotions(5, DiceRoll(), gameState.getLevels()[getZ()], 3);
-    chanceToDropGrenades(6, DiceRoll(), gameState.getLevels()[getZ()], 2);
-    chanceToDropGrenades(8, DiceRoll(), gameState.getLevels()[getZ()], 3);
+    eventManager.addEvent(EventType::Combat, getName() + " dies");
+
+    chanceToDropAmulets(7, DiceRoll(), gameState.getLevels()[getZ()], getZ());
+    chanceToDropPotions(4, DiceRoll(), gameState.getLevels()[getZ()], getZ());
+    chanceToDropGrenades(8, DiceRoll(), gameState.getLevels()[getZ()], getZ());
 }
 
 

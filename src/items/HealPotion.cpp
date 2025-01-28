@@ -11,3 +11,10 @@ HealPotion::HealPotion(float healAmount, int duration, int levelIndex)
 void HealPotion::use(Entity &target) {
     target.applyEffects(std::make_shared<HealEffect>(duration, healAmount));
 }
+
+std::string HealPotion::getSpecifications()
+{
+	std::string specs = "Heal amount: " + std::to_string(healAmount) + "\n";
+	specs += "Duration: " + std::to_string(duration) + "\n";
+	return specs;
+}

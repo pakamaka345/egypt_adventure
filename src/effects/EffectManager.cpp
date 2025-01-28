@@ -45,7 +45,7 @@ std::string EffectManager::formatActiveEffects() const
     std::ostringstream oss;
     std::for_each(activeEffects.begin(), activeEffects.end(), [&oss](const std::shared_ptr<Effect>& effect) {
        if (effect) {
-           oss << effect->getName() << " ";
+           oss << effect->getName() << " " << effect->getDuration() << "s\n";
        }
     });
 

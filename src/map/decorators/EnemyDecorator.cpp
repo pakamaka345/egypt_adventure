@@ -21,9 +21,12 @@ EnemyDecorator::EnemyDecorator(int enemyCount, int mapSection, std::string enemy
 
 	enemyCreationMap = {
 		{"Scarab", [this](Position pos) { return createSpecificEnemy<Scarab>(pos); }},
+		{"Scarab2", [this](Position pos) { return createSpecificEnemy<Scarab>(pos); }},
 		{"Skeleton", [this](Position pos) { return createSpecificEnemy<Skeleton>(pos); }},
+		{"Skeleton2", [this](Position pos) { return createSpecificEnemy<Skeleton>(pos); }},
 		{"Mummy", [this](Position pos) { return createSpecificEnemy<Mummy>(pos); }},
 		{"Phantom", [this](Position pos) { return createSpecificEnemy<Phantom>(pos); }},
+		{"Phantom2", [this](Position pos) { return createSpecificEnemy<Phantom>(pos); }},
 		{"SandGolem", [this](Position pos) { return createSpecificEnemy<SandGolem>(pos); }}
 	};
 }

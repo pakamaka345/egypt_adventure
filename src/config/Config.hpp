@@ -2,6 +2,7 @@
 #include <string>
 #include <memory>
 #include "nlohmann/json.hpp"
+#include <iostream>
 
 class Character;
 
@@ -12,8 +13,13 @@ public:
 
     template<typename T>
     std::shared_ptr<T> createEntity(const std::string& entityName) {
-        auto entityConfig = configJson.at(entityName);
-        return std::make_shared<T>(
+        try {
+            if (!configJson.contains(entityName)) {
+                throw std::runtime_error("Entity '" + entityName + "' not found in configJson.");
+            }
+
+            auto entityConfig = configJson.at(entityName);
+            return std::make_shared<T>(
                 entityConfig.at("name").get<std::string>(),
                 entityConfig.at("attackRange").get<int>(),
                 entityConfig.at("physicalDamage").get<float>(),
@@ -26,7 +32,11 @@ public:
                 entityConfig.at("y").get<int>(),
                 entityConfig.at("z").get<int>(),
                 entityConfig.at("symbol").get<std::string>()[0]
-        );
+            );
+        } catch (const std::exception& e) {
+            std::cerr << "Error creating entity: " << e.what() << std::endl;
+            return nullptr;
+        }
     }
 
     std::shared_ptr<Character> createCharacter();

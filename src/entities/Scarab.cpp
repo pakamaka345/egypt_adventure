@@ -71,10 +71,12 @@ void Scarab::findNearestScarabs(const Map& map)
     }
 
     for (int i = 0; i < scarabs.size(); i++) {
-        this->applyEffects(std::make_shared<GroupAttackBonus>(1, 1.1f));
+        this->applyEffects(std::make_shared<GroupAttackBonus>(1, 0.1f));
     }
 
-    eventManager.addEvent(EventType::Combat, getName() + " is now in a group with " + std::to_string(scarabs.size()) + " other scarabs. Damage increased by " + std::to_string(groupAttackBonus));
+    if (!scarabs.empty()) {
+        eventManager.addEvent(EventType::Combat, getName() + " is now in a group with " + std::to_string(scarabs.size()) + " other scarabs. Damage increased by " + std::to_string(groupAttackBonus));
+    }
 }
 
 void Scarab::onDeath(GameState& gameState)

@@ -130,15 +130,14 @@ int GameState::getLevelIndex() const {
     return levelIndex;
 }
 
-std::shared_ptr<LevelState> GameState::createLevel(const int levelIndex)
-{
+std::shared_ptr<LevelState> GameState::createLevel(const int levelIndex) {
     std::shared_ptr<LevelState> level;
     if (levelIndex == 1) {
-        level = MapGenerator::GenerateMap(levelIndex, 70, 70, 10, 15, 3);
+        level = MapGenerator::GenerateMap(levelIndex, 60, 60, 10, 15, 3); // Smaller map, simpler layout
     } else if (levelIndex == 2) {
-        level = MapGenerator::GenerateMap(levelIndex, 70, 70, 10, 15, 3);
+        level = MapGenerator::GenerateMap(levelIndex, 70, 70, 8, 14, 4); // Medium size map
     } else if (levelIndex == 3) {
-        level = MapGenerator::GenerateMap(levelIndex, 70, 70, 10, 15, 3);
+        level = MapGenerator::GenerateMap(levelIndex, 80, 80, 6, 12, 5); // Larger map, more complexity
     } else {
         throw std::runtime_error("Invalid level index");
     }
@@ -150,6 +149,7 @@ std::shared_ptr<LevelState> GameState::createLevel(const int levelIndex)
     }
     return level;
 }
+
 
 void GameState::handleInteraction()
 {

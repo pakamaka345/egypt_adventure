@@ -17,7 +17,9 @@ add_library(EgyptAdventureLib ${SOURCES}
         src/commands/InventoryCommand.cpp
         src/commands/InventoryCommand.hpp
         src/commands/AmuletsMenuCommand.cpp
-        src/commands/AmuletsMenuCommand.hpp)
+        src/commands/AmuletsMenuCommand.hpp
+        src/items/TutankhamunsСrown.cpp
+        src/items/TutankhamunsСrown.hpp)
 
 add_executable(EgyptAdventure src/main.cpp)
 target_link_libraries(EgyptAdventure PRIVATE EgyptAdventureLib)

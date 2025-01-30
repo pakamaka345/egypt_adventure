@@ -22,6 +22,7 @@
 #include "items/Bullet.hpp"
 #include "items/Torch.hpp"
 #include "items/Grenade.hpp"
+#include "items/TutankhamunsСrown.hpp"
 
 std::shared_ptr<LevelState> MapGenerator::GenerateMap(int levelIndex, int width, int height, const int MinLeafSize, const int MaxLeafSize, const int MinRoomSize) {
     Map map(width, height, levelIndex);
@@ -55,6 +56,11 @@ std::shared_ptr<LevelState> MapGenerator::GenerateMap(int levelIndex, int width,
         mapGenerator.addDecorator(std::make_unique<EnemyDecorator>(5, 2, "Phantom2", levelState, levelIndex));
         mapGenerator.addDecorator(std::make_unique<ItemDecorator>(3, false, std::make_shared<ArmorAmulets>(0.3, 0.2, levelIndex), levelState, levelIndex));
         mapGenerator.addDecorator(std::make_unique<ItemDecorator>(1, true, std::make_shared<Torch>(30, 20, levelIndex), levelState, levelIndex));
+
+        auto crownPosition = map.getRooms().back()->getCenter();
+        auto crown = std::make_shared<TutankhamunsСrown>(levelIndex);
+        levelState->addItem(crown);
+        levelState->getMap()->placeItem(crownPosition.x, crownPosition.y, crown);
     }
 
     mapGenerator.decorate(map);

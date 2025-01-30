@@ -5,9 +5,9 @@
 #pragma once
 #include "items/Item.hpp"
 
-class TutankhamunsСrown : public Item {
+class TutankhamunsCrown : public Item {
 public:
-	explicit TutankhamunsСrown(int levelIndex);
+	explicit TutankhamunsCrown(int levelIndex);
 
 	void use(Entity& target) override;
 
